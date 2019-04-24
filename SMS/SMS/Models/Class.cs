@@ -17,8 +17,8 @@ namespace SMS.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Class()
         {
+            this.ClassSections = new HashSet<ClassSection>();
             this.DateSheets = new HashSet<DateSheet>();
-            this.Sections = new HashSet<Section>();
         }
     
         public int ClassId { get; set; }
@@ -27,8 +27,8 @@ namespace SMS.Models
         public System.DateTime CreatedOn { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DateSheet> DateSheets { get; set; }
+        public virtual ICollection<ClassSection> ClassSections { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Section> Sections { get; set; }
+        public virtual ICollection<DateSheet> DateSheets { get; set; }
     }
 }

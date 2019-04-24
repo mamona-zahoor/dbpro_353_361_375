@@ -29,6 +29,7 @@ namespace SMS.Models
         public virtual DbSet<Attendance> Attendances { get; set; }
         public virtual DbSet<Class> Classes { get; set; }
         public virtual DbSet<ClassDateSheet> ClassDateSheets { get; set; }
+        public virtual DbSet<ClassSection> ClassSections { get; set; }
         public virtual DbSet<Cours> Courses { get; set; }
         public virtual DbSet<DateSheet> DateSheets { get; set; }
         public virtual DbSet<FeeChallan> FeeChallans { get; set; }
@@ -42,7 +43,6 @@ namespace SMS.Models
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<StudentAttendance> StudentAttendances { get; set; }
         public virtual DbSet<Suggestion> Suggestions { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Teacher> Teachers { get; set; }
         public virtual DbSet<Timetable> Timetables { get; set; }
         public virtual DbSet<Admin> Admins { get; set; }

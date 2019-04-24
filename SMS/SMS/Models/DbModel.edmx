@@ -54,11 +54,11 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
         </EntityType>
         <EntityType Name="ClassSections">
           <Key>
-            <PropertyRef Name="ClassId" />
-            <PropertyRef Name="SectionId" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="ClassId" Type="int" Nullable="false" />
           <Property Name="SectionId" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Courses">
           <Key>
@@ -210,21 +210,11 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
           <Property Name="Description" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="Teacher">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Salary" Type="int" Nullable="false" />
           <Property Name="InchSec" Type="int" />
@@ -701,7 +691,6 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudentAttendance" EntityType="Self.StudentAttendance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suggestions" EntityType="Self.Suggestions" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Timetable" EntityType="Self.Timetable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Admin" EntityType="Self.Admin" store:Type="Tables" store:Schema="dbo">
@@ -904,8 +893,8 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
           <Property Name="Name" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NumOfStudents" Type="Int32" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ClassSections" Relationship="Self.FK_ClassSections_Class" FromRole="Class" ToRole="ClassSections" />
           <NavigationProperty Name="DateSheets" Relationship="Self.FK_DateSheet_Class" FromRole="Class" ToRole="DateSheet" />
-          <NavigationProperty Name="Sections" Relationship="Self.ClassSections" FromRole="Class" ToRole="Section" />
         </EntityType>
         <EntityType Name="ClassDateSheet">
           <Key>
@@ -917,6 +906,16 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Cours" Relationship="Self.FK_ClassDateSheet_Courses" FromRole="ClassDateSheet" ToRole="Courses" />
           <NavigationProperty Name="DateSheet" Relationship="Self.FK_ClassDateSheet_DateSheet" FromRole="ClassDateSheet" ToRole="DateSheet" />
+        </EntityType>
+        <EntityType Name="ClassSection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="ClassId" Type="Int32" Nullable="false" />
+          <Property Name="SectionId" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Class" Relationship="Self.FK_ClassSections_Class" FromRole="ClassSections" ToRole="Class" />
+          <NavigationProperty Name="Section" Relationship="Self.FK_ClassSections_Section" FromRole="ClassSections" ToRole="Section" />
         </EntityType>
         <EntityType Name="Cours">
           <Key>
@@ -1021,12 +1020,12 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
           <Property Name="NumOfStudents" Type="Int32" Nullable="false" />
           <Property Name="TeacherId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Assignments" Relationship="Self.FK_Assignments_Section" FromRole="Section" ToRole="Assignments" />
+          <NavigationProperty Name="ClassSections" Relationship="Self.FK_ClassSections_Section" FromRole="Section" ToRole="ClassSections" />
           <NavigationProperty Name="Courses" Relationship="Self.FK_Courses_Section" FromRole="Section" ToRole="Courses" />
           <NavigationProperty Name="Results" Relationship="Self.FK_Results_Section" FromRole="Section" ToRole="Results" />
           <NavigationProperty Name="Teacher" Relationship="Self.FK_Section_Teacher" FromRole="Section" ToRole="Teacher" />
           <NavigationProperty Name="Teachers" Relationship="Self.FK_Teacher_Section" FromRole="Section" ToRole="Teacher" />
           <NavigationProperty Name="Timetables" Relationship="Self.FK_Timetable_Section" FromRole="Section" ToRole="Timetable" />
-          <NavigationProperty Name="Classes" Relationship="Self.ClassSections" FromRole="Section" ToRole="Class" />
           <NavigationProperty Name="Students" Relationship="Self.SectionStudents" FromRole="Section" ToRole="Student" />
         </EntityType>
         <EntityType Name="SectionTimetable">
@@ -1097,21 +1096,11 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
           <NavigationProperty Name="LookUp" Relationship="Self.FK_Suggestions_LookUp" FromRole="Suggestions" ToRole="LookUp" />
           <NavigationProperty Name="Person" Relationship="Self.FK_Suggestions_Person" FromRole="Suggestions" ToRole="Person" />
         </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="Teacher">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Salary" Type="Int32" Nullable="false" />
           <Property Name="InchSec" Type="Int32" />
@@ -1225,6 +1214,18 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ClassSections_Class">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="ClassSections" Type="Self.ClassSection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ClassId" />
+            </Principal>
+            <Dependent Role="ClassSections">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DateSheet_Class">
           <End Role="Class" Type="Self.Class" Multiplicity="1" />
           <End Role="DateSheet" Type="Self.DateSheet" Multiplicity="*" />
@@ -1258,6 +1259,18 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
             </Principal>
             <Dependent Role="ClassDateSheet">
               <PropertyRef Name="DateSheetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassSections_Section">
+          <End Role="Section" Type="Self.Section" Multiplicity="1" />
+          <End Role="ClassSections" Type="Self.ClassSection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="ClassSections">
+              <PropertyRef Name="SectionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1549,10 +1562,6 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ClassSections">
-          <End Role="Class" Type="Self.Class" Multiplicity="*" />
-          <End Role="Section" Type="Self.Section" Multiplicity="*" />
-        </Association>
         <Association Name="SectionStudents">
           <End Role="Section" Type="Self.Section" Multiplicity="*" />
           <End Role="Student" Type="Self.Student" Multiplicity="*" />
@@ -1562,6 +1571,7 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
           <EntitySet Name="Attendances" EntityType="Self.Attendance" />
           <EntitySet Name="Classes" EntityType="Self.Class" />
           <EntitySet Name="ClassDateSheets" EntityType="Self.ClassDateSheet" />
+          <EntitySet Name="ClassSections" EntityType="Self.ClassSection" />
           <EntitySet Name="Courses" EntityType="Self.Cours" />
           <EntitySet Name="DateSheets" EntityType="Self.DateSheet" />
           <EntitySet Name="FeeChallans" EntityType="Self.FeeChallan" />
@@ -1575,7 +1585,6 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
           <EntitySet Name="Students" EntityType="Self.Student" />
           <EntitySet Name="StudentAttendances" EntityType="Self.StudentAttendance" />
           <EntitySet Name="Suggestions" EntityType="Self.Suggestion" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Teachers" EntityType="Self.Teacher" />
           <EntitySet Name="Timetables" EntityType="Self.Timetable" />
           <EntitySet Name="Admins" EntityType="Self.Admin" />
@@ -1604,6 +1613,10 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
             <End Role="Attendance" EntitySet="Attendances" />
             <End Role="StudentAttendance" EntitySet="StudentAttendances" />
           </AssociationSet>
+          <AssociationSet Name="FK_ClassSections_Class" Association="Self.FK_ClassSections_Class">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="ClassSections" EntitySet="ClassSections" />
+          </AssociationSet>
           <AssociationSet Name="FK_DateSheet_Class" Association="Self.FK_DateSheet_Class">
             <End Role="Class" EntitySet="Classes" />
             <End Role="DateSheet" EntitySet="DateSheets" />
@@ -1615,6 +1628,10 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
           <AssociationSet Name="FK_ClassDateSheet_DateSheet" Association="Self.FK_ClassDateSheet_DateSheet">
             <End Role="DateSheet" EntitySet="DateSheets" />
             <End Role="ClassDateSheet" EntitySet="ClassDateSheets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassSections_Section" Association="Self.FK_ClassSections_Section">
+            <End Role="Section" EntitySet="Sections" />
+            <End Role="ClassSections" EntitySet="ClassSections" />
           </AssociationSet>
           <AssociationSet Name="FK_Courses_Section" Association="Self.FK_Courses_Section">
             <End Role="Section" EntitySet="Sections" />
@@ -1712,10 +1729,6 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
             <End Role="Student" EntitySet="Students" />
             <End Role="StudentResult" EntitySet="StudentResults" />
           </AssociationSet>
-          <AssociationSet Name="ClassSections" Association="Self.ClassSections">
-            <End Role="Class" EntitySet="Classes" />
-            <End Role="Section" EntitySet="Sections" />
-          </AssociationSet>
           <AssociationSet Name="SectionStudents" Association="Self.SectionStudents">
             <End Role="Section" EntitySet="Sections" />
             <End Role="Student" EntitySet="Students" />
@@ -1764,6 +1777,15 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
                 <ScalarProperty Name="DateSheetId" ColumnName="DateSheetId" />
                 <ScalarProperty Name="CourseId" ColumnName="CourseId" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassSections">
+            <EntityTypeMapping TypeName="DB35Model.ClassSection">
+              <MappingFragment StoreEntitySet="ClassSections">
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1906,17 +1928,6 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="DB35Model.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Teachers">
             <EntityTypeMapping TypeName="DB35Model.Teacher">
               <MappingFragment StoreEntitySet="Teacher">
@@ -1953,14 +1964,6 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="ClassSections" TypeName="DB35Model.ClassSections" StoreEntitySet="ClassSections">
-            <EndProperty Name="Class">
-              <ScalarProperty Name="ClassId" ColumnName="ClassId" />
-            </EndProperty>
-            <EndProperty Name="Section">
-              <ScalarProperty Name="SectionId" ColumnName="SectionId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <AssociationSetMapping Name="SectionStudents" TypeName="DB35Model.SectionStudents" StoreEntitySet="SectionStudents">
             <EndProperty Name="Section">
               <ScalarProperty Name="SectionId" ColumnName="SectionId" />
