@@ -38,6 +38,8 @@
           <ScalarProperty Name="DateSheetId" ColumnName="DateSheetId" />
           <ScalarProperty Name="CourseId" ColumnName="CourseId" />
           <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -143,6 +145,7 @@
           <ScalarProperty Name="CourseId" ColumnName="CourseId" />
           <ScalarProperty Name="TimeStart" ColumnName="TimeStart" />
           <ScalarProperty Name="TimeEnd" ColumnName="TimeEnd" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

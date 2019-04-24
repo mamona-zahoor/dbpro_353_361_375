@@ -59,17 +59,7 @@ namespace SMS.Controllers
         {
             DB35Entities db = new DB35Entities();
             List<ClassSection> t = db.ClassSections.Where(b => b.ClassId == Item).ToList();
-            //List<Section> f = new List<Section>();
-            //Section g = new Section();
-            //foreach (ClassSection s in t)
-            //{
-            //    g.SectionId = s.SectionId;
-            //    g.Name = db.Sections.Where(b => b.SectionId == g.SectionId).SingleOrDefault().Name;
-
-            //    f.Add(g);
-            //}
-
-            // List<Section> tr = db.Sections.Where(x => x.SectionId = db.ClassSections.Where(g => g.SectionId== )
+          
             return Json(t.Select(x => new
             {
                 ID = x.SectionId,
@@ -83,7 +73,87 @@ namespace SMS.Controllers
         {
             return View();
         }
+        private void MsgBox(string sMessage)
+        {
+            string msg = "<script language=\"javascript\">";
+            msg += "alert('" + sMessage + "');";
+            msg += "</script>";
+            Response.Write(msg);
+        }
 
+
+        public JsonResult Loaddtcourses(int item)
+        {
+            List<Cours> C = new List<Cours>();
+            DB35Entities db = new DB35Entities();
+            List<ClassSection> Class = db.ClassSections.Where(x => x.ClassId == item).ToList();
+
+            List<Cours> Course = db.Courses.ToList();
+          
+            
+            foreach (ClassSection c in Class)
+            {
+
+                foreach (Cours ci in db.Courses)
+                {
+                    if (c.SectionId == ci.SectionId )
+                    {
+                        Cours cs = new Cours();
+                        cs.CourseId = ci.CourseId;
+
+                        cs.Title = ci.Title;
+                      
+                        C.Add(cs);
+                       
+                       
+                    }
+                }
+            }
+            
+            return Json(C.Select(x => new
+            {
+                ID = x.CourseId,
+                Name = x.Title
+
+            }));
+        }
+
+        public ActionResult AddDatesheet()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddDatesheet(DatesheetVM t)
+        {
+            bool check = true;
+            DB35Entities db = new DB35Entities();
+            ClassDateSheet cd = new ClassDateSheet();
+            DateSheet dt = new DateSheet();
+            foreach (DateSheet d in db.DateSheets)
+            {
+                
+                if(d.ClassId == t.ClassId)
+                {
+                    cd.DateSheetId = d.DateSheetId;
+                    check = false;
+                    break;
+                }
+            }
+            if(check == true)
+            {
+                dt.ClassId = t.ClassId;
+                db.DateSheets.Add(dt);
+                cd.DateSheetId = dt.DateSheetId;
+                db.SaveChanges();
+            }
+            cd.CourseId = t.CourseId;
+            cd.EndTime =  t.EndTime;
+            cd.StartTime = t.StartTime;
+            cd.Date = t.Date;
+            db.ClassDateSheets.Add(cd);
+            db.SaveChanges();
+            return View();
+        }
 
 
 
@@ -123,6 +193,7 @@ namespace SMS.Controllers
                 db.SaveChanges();
                 u.TimetableId = tt.TimetableId;
             }
+            u.Day = t.Day;
             u.TimeStart = t.StartTime;
             u.TimeEnd = t.EndTime;
             u.CourseId = t.CourseId;

@@ -1,38 +1,28 @@
-﻿@model SMS.Models.TimeTableVM
+﻿@model SMS.Models.DatesheetVM
 
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>TimeTable</h4>
+        <h4>Date Sheet</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.ClassName, htmlAttributes: new { @class = "control-label col-md-2" })
-      
             <div class="col-md-10">
                 <select id="Class" name="ClassId" class="form-control">
                     <option></option>
                 </select>
             </div>
-            </div>
+        </div>
 
-      
 
-        <div class="form-group">
-        @Html.LabelFor(model => model.SectionName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select id="Section" name="SectionId" class="form-control">
-                    <option></option>
-                </select>
-            </div>
-    </div>
-        
+
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CourseName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <select id="Course" name="CourseId" class="form-control">
                     <option></option>
@@ -41,13 +31,21 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
             @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -55,22 +53,6 @@
                 @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
             </div>
         </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Day, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select id="Day" name="Day" class="form-control">
-                    <option>Monday</option>
-                    <option>Tuesday</option>
-                    <option>Wednesday</option>
-                    <option>Thursday</option>
-                    <option>Friday</option>
-                    <option>Saturday</option>
-                </select>
-            </div>
-        </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -114,36 +96,10 @@
                // alert($url);
 
                 $.ajax({
-                    url: '@Url.Action("LoadSections", "Admin")',
+                    url: '@Url.Action("Loaddtcourses", "Admin")',
                     type: 'POST',
                     datatype: "json",
                     data: "Item=" + $("#Class option:selected").val(),
-                    success: function (r) {
-                        $("#Section").empty();
-                        $("#Section").prepend("option value='' selected='selected'></option>");
-                        for (var i = 0; i < r.length; i++) {
-                            $("#Section").append('<option value="' + r[i].ID + '">' + r[i].Name + '</option>');
-                        }
-                    }
-                });
-            });
-        });
-</script>
-
-<script type="text/javascript">
-        $(document).ready(function () {
-            $("#Section").change(function () {
-                debugger;
-                event.preventDefault();
-                var selectedValue = $("#Section").select();
-                var $url = '/Admin/LoadCourses';
-                //alert($url);
-
-                $.ajax({
-                    url: $url,
-                    type: 'POST',
-                    datatype: "json",
-                    data: "Item=" + $("#Section option:selected").val(),
                     success: function (r) {
                         $("#Course").empty();
                         $("#Course").prepend("option value='' selected='selected'></option>");
@@ -155,5 +111,4 @@
             });
         });
 </script>
-
 }

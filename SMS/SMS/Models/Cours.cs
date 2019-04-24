@@ -36,6 +36,8 @@ namespace SMS.Models
         public virtual ICollection<Attendance> Attendances { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClassDateSheet> ClassDateSheets { get; set; }
+        public virtual Cours Courses1 { get; set; }
+        public virtual Cours Cours1 { get; set; }
         public virtual Section Section { get; set; }
         public virtual Teacher Teacher { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

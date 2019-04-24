@@ -231,6 +231,7 @@
     <Compile Include="Models\DateSheet.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DatesheetVM.cs" />
     <Compile Include="Models\DbModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -472,6 +473,7 @@
     <Content Include="Views\Admin\CreateClass.cshtml" />
     <Content Include="Views\Admin\EditClass.cshtml" />
     <Content Include="Views\Admin\AddTimetable.cshtml" />
+    <Content Include="Views\Admin\AddDatesheet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
