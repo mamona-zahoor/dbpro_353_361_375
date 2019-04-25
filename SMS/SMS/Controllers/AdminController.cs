@@ -246,16 +246,112 @@ namespace SMS.Controllers
                 return View();
             }
         }
+
+
+        public ActionResult Section(int id)
+        {
+            List<Section> slist = new List<Section>();
+            DB35Entities db = new DB35Entities();
+            int i = 0;
+            using (db)
+            {
+                var cs = (db.ClassSections.Where(m => m.ClassId == id).ToList());
+                foreach (Section sec in db.Sections)
+                {
+                    if (i < cs.Count)
+                    {
+                        if (sec.SectionId == cs[i].SectionId)
+                        {
+                            slist.Add(sec);
+                            i++;
+                        }
+                    }
+                }
+
+            }
+            return View(slist);
+        }
+
+        public ActionResult CreateSection(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            List<string> TNames = new List<string>();
+            List<int> Ids = new List<int>();
+            foreach (Teacher t in db.Teachers)
+            {
+                if (t.InchSec == null)
+                {
+                    foreach (Person p in db.People)
+                    {
+                        if (p.Id == t.Id)
+                        {
+                            Ids.Add(p.Id);
+                            TNames.Add(p.FirstName + ' ' + p.LastName);
+                            break;
+                        }
+                    }
+                }
+            }
+            ViewBag.Teachers = TNames;
+            ViewBag.Ids = Ids;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateSection(SectionVM obj, int id, int TeacherNames)
+        {
+            DB35Entities db = new DB35Entities();
+            Section sec = new Models.Section();
+            sec.Name = obj.Name;
+            sec.TeacherId = TeacherNames;
+            sec.NumOfStudents = 0;
+            db.Sections.Add(sec);
+            db.SaveChanges();
+            ClassSection cs = new ClassSection();
+            cs.ClassId = id;
+            foreach (Section s in db.Sections)
+            {
+                if (s.TeacherId == TeacherNames)
+                {
+                    cs.SectionId = s.SectionId;
+                    db.Teachers.Find(TeacherNames).InchSec = id;
+                    break;
+                }
+            }
+            db.ClassSections.Add(cs);
+            //added section
+            db.SaveChanges();
+            return RedirectToAction("CreateSection");
+        }
         public ActionResult CreateClass()
         {
             return View();
         }
+
+
+
         public ActionResult Class(string Name)
         {
+
             DB35Entities db = new DB35Entities();
+            var c = db.Classes.ToList();
             using (db)
             {
-                return View(db.Classes.Where(x => x.Name.Contains(Name) || Name == null).ToList());
+                if (Name != null)
+                {
+
+                    foreach (Class cl in db.Classes)
+                    {
+                        if (cl.Name == Convert.ToInt32(Name))
+                        {
+                            c = db.Classes.Where(x => (x.ClassId) == cl.ClassId || Name == null).ToList();
+                            break;
+                        }
+
+                        c = db.Classes.Where(x => (x.ClassId) == 0 || Name == null).ToList();
+
+                    }
+                }
+                return View(c);
 
             }
         }

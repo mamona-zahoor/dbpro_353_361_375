@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SMS.Models.Class>
+﻿@model IEnumerable<SMS.Models.Section>
 <title>Manage Classes</title>
 
 <head>
@@ -127,37 +127,24 @@
             </div>
         </div>
     </div>
-    <h1 style="color  :#b18757; font-family : Calisto MT">&emsp; &emsp; Manage Classes </h1>
+    <h1 style="color  :#b18757; font-family : Calisto MT">&emsp; &emsp; Manage Sections </h1>
     <br>
-    @using (Html.BeginForm("Class", "Admin", FormMethod.Get))
-    {
-        <h3 style="font-family : Calisto MT">
-            &emsp; &emsp; Search Class&emsp; &emsp; &nbsp;
-            <input type="text" name="Name" id="Search" />
-
-            &emsp; &emsp; &emsp; &emsp;<input type="submit" class="submit-link submit" font-size="100px" value="Search" />
-            &emsp; &emsp; &emsp; &emsp;
-        </h3>
+    @{
+        var id = Request.Url.Segments[3];
     }
     <h3>
-        &emsp; &emsp;    @Html.ActionLink("Add New Class", "CreateClass")
+        &emsp; &emsp;    @Html.ActionLink("Add New Section", "CreateSection", new { id = id })
     </h3>
-    <br />
-
     <table class="table" style="margin-top: 2cm;" border=0 align='center'>
-
         <tr>
             <th>
-                Name
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                Total Students
+                @Html.DisplayNameFor(model => model.NumOfStudents)
             </th>
             <th>
-                Sections
-            </th>
-            <th>
-                Created On
+                @Html.DisplayNameFor(model => model.TeacherId)
             </th>
             <th></th>
         </tr>
@@ -172,19 +159,14 @@
                     @Html.DisplayFor(modelItem => item.NumOfStudents)
                 </td>
                 <td>
-                    @Html.ActionLink("Manage Sections", "Section", new { id = item.ClassId })
+                    @Html.DisplayFor(modelItem => item.TeacherId)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CreatedOn)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "EditClass", new { id = item.ClassId }) |
-
-                    @Html.ActionLink("Delete", "DeleteClass", new { id = item.ClassId })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.SectionId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.SectionId })
                 </td>
             </tr>
         }
 
     </table>
-
 </body>
