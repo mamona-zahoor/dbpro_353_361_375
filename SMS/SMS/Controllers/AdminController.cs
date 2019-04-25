@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data;
 using System.Data.SqlClient;
-
+using System.ComponentModel.DataAnnotations;
 namespace SMS.Controllers
 {
     public class AdminController : Controller
@@ -116,6 +116,75 @@ namespace SMS.Controllers
                 Name = x.Title
 
             }));
+        }
+
+        public JsonResult LoadTeacher()
+        {
+            DB35Entities db = new DB35Entities();
+            List<Teacher> teacher = db.Teachers.ToList();
+            return Json(teacher.Select(x => new
+            {
+                Id = x.Id,
+                Name = x.Person.FirstName+' '+x.Person.LastName
+            }));
+
+            }
+        
+
+        public ActionResult AllCourses()
+        {
+            DB35Entities db = new DB35Entities();
+            List<Cours> C = db.Courses.ToList();
+            List<Course> CO = new List<Course>();
+
+            foreach (Cours cs in db.Courses)
+            {
+                Course CP = new Course();
+
+                CP.SectionName = db.Sections.Where(x => x.SectionId == cs.SectionId).SingleOrDefault().Name;
+                CP.ClassId = db.ClassSections.Where(x => x.SectionId == cs.SectionId).SingleOrDefault().ClassId;
+                CP.TeacherName = db.People.Where(x => x.Id == cs.TeacherId).SingleOrDefault().FirstName + ' ' + db.People.Where(x => x.Id == cs.TeacherId).SingleOrDefault().LastName;
+                CP.ClassName = db.Classes.Where(x => x.ClassId == CP.ClassId).SingleOrDefault().Name;
+                CP.SectionId = cs.SectionId;
+                CP.TeacherId = cs.TeacherId;
+                CP.Title = cs.Title;
+                CP.Description = cs.Description;
+                CP.CourseId = cs.CourseId;
+                CO.Add(CP);
+            }
+
+            return View(CO);
+        }
+        public ActionResult AllCourse()
+        {
+            DB35Entities db = new DB35Entities();
+             return View(db.Courses.ToList());
+        }
+        public ActionResult AddCourse()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddCourse(Course obj)
+        {
+            DB35Entities db = new DB35Entities();
+            Cours cs = new Cours();
+            Course CN = new Course();
+          
+            cs.TeacherId = obj.TeacherId;
+            cs.Title = obj.Title;
+            cs.SectionId = obj.SectionId;
+            cs.Description = obj.Description;
+            db.Courses.Add(cs);
+            obj.sectionName(obj.SectionId);
+            obj.teacherName(obj.TeacherId);
+            obj.className(obj.ClassId);
+            
+            
+            
+            
+            db.SaveChanges();
+            return View();
         }
 
         public ActionResult AddDatesheet()
@@ -341,7 +410,7 @@ namespace SMS.Controllers
 
                     foreach (Class cl in db.Classes)
                     {
-                        if (cl.Name == Convert.ToInt32(Name))
+                        if (cl.Name == (Name))
                         {
                             c = db.Classes.Where(x => (x.ClassId) == cl.ClassId || Name == null).ToList();
                             break;
@@ -398,6 +467,56 @@ namespace SMS.Controllers
          return RedirectToAction("Class");
 
         }
+       // [HttpGet]
+        public ActionResult EditCourse(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            Course cs = new Course();
+            foreach (Cours C in db.Courses)
+            {
+                if (C.CourseId == id)
+                {
+                   // cs.ClassName = db.Classes.Where(x => x.Sect == cs.ClassId).SingleOrDefault().Name;
+                     cs.ClassId = db.ClassSections.Where(x => x.SectionId == C.SectionId).SingleOrDefault().ClassId;
+                    cs.ClassName = db.Classes.Where(x => x.ClassId == cs.ClassId).SingleOrDefault().Name;
+                    cs.SectionName = db.Sections.Where(x => x.SectionId == C.SectionId).SingleOrDefault().Name;
+                    //cs.SectionId = db
+                   // cs.TeacherName = db.People.Where(x => x.Id == cs.TeacherId).SingleOrDefault().FirstName + ' ' + db.People.Where(x => x.Id == cs.TeacherId).SingleOrDefault().LastName;
+                    cs.Title = C.Title;
+                    cs.Description = C.Description;
+                }
+            }
+            return View(cs);
+        }
+        [HttpPost]
+        public ActionResult EditCourse(int id , Course CS)
+        {
+            DB35Entities db = new DB35Entities();
+            //id = 9;
+            db.Courses.Find(id).Title = CS.Title;
+            db.Courses.Find(id).Description = CS.Description;
+            db.Courses.Find(id).SectionId = CS.SectionId;
+            db.Courses.Find(id).TeacherId = CS.TeacherId;
+            
+
+            db.SaveChanges();
+            return RedirectToAction("AllCourses");
+        }
+        public ActionResult DeleteCourse(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            foreach(Cours C in db.Courses)
+            {
+                if(C.CourseId == id)
+                {
+                    db.Courses.Remove(C);
+                    break;
+                }
+            }
+            db.SaveChanges();
+            return RedirectToAction("AllCourses");
+        }
+
 
         public ActionResult DeleteClass(int id)
         {

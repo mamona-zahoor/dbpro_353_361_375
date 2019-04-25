@@ -17,14 +17,17 @@ namespace SMS.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Class()
         {
+            this.ClassSections = new HashSet<ClassSection>();
             this.DateSheets = new HashSet<DateSheet>();
         }
     
         public int ClassId { get; set; }
-        public int Name { get; set; }
+        public string Name { get; set; }
         public int NumOfStudents { get; set; }
         public System.DateTime CreatedOn { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ClassSection> ClassSections { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DateSheet> DateSheets { get; set; }
     }

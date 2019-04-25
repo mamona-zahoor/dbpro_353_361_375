@@ -17,5 +17,8 @@ namespace SMS.Models
         public int ClassId { get; set; }
         public int SectionId { get; set; }
         public int Id { get; set; }
+    
+        public virtual Class Class { get; set; }
+        public virtual Section Section { get; set; }
     }
 }
