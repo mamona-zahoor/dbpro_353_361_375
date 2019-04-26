@@ -14,17 +14,9 @@ namespace SMS.Models
     
     public partial class DateSheet
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DateSheet()
-        {
-            this.ClassDateSheets = new HashSet<ClassDateSheet>();
-        }
-    
         public int DateSheetId { get; set; }
         public int ClassId { get; set; }
     
         public virtual Class Class { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ClassDateSheet> ClassDateSheets { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace SMS.Models
         }
     
         public int ClassId { get; set; }
-        public string Name { get; set; }
+        public int Name { get; set; }
         public int NumOfStudents { get; set; }
         public System.DateTime CreatedOn { get; set; }
     

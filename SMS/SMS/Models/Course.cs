@@ -10,7 +10,7 @@ namespace SMS.Models
     {
         public static List<Course> C = new List<Course>();
         public int ClassId { get; set; }
-        public string ClassName { get; set; }
+        public int ClassName { get; set; }
         public int CourseId { get; set; }
         //    public string CourseName { get; set; }
         public int TeacherId { get; set; }

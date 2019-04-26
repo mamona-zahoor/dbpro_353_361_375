@@ -251,6 +251,7 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LoginUsers.cs" />
     <Compile Include="Models\LookUp.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -285,6 +286,9 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Suggestion.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Teacher.cs">
@@ -344,6 +348,8 @@
     <Content Include="images\o.jpg" />
     <Content Include="images\ol.jpg" />
     <Content Include="images\op.jpg" />
+    <Content Include="images\p.jpeg" />
+    <Content Include="images\p.jpg" />
     <Content Include="images\personal-page-gallery-1-320x320.jpg" />
     <Content Include="images\personal-page-gallery-1-original.jpg" />
     <Content Include="images\personal-page-gallery-2-320x320.jpg" />
@@ -357,6 +363,8 @@
     <Content Include="images\personal-page-gallery-6-320x320.jpg" />
     <Content Include="images\personal-page-gallery-6-original.jpg" />
     <Content Include="images\preloader.gif" />
+    <Content Include="images\s.jpeg" />
+    <Content Include="images\s.jpg" />
     <Content Include="images\swiper-slide-1.jpg" />
     <Content Include="images\swiper-slide-2.jpg" />
     <Content Include="images\swiper-slide-3.jpg" />
@@ -365,6 +373,8 @@
     <Content Include="images\testimonials-3-68x68.jpg" />
     <Content Include="images\typography-1-340x250.jpg" />
     <Content Include="images\typography-1-770x430.jpg" />
+    <Content Include="images\v.jpeg" />
+    <Content Include="images\v.jpg" />
     <Content Include="images\video-play.png" />
     <Content Include="images\video-preview-1-570x416.jpg" />
     <Content Include="images\vimeo-play.png" />
@@ -479,6 +489,8 @@
     <Content Include="Views\Admin\AddCourse.cshtml" />
     <Content Include="Views\Admin\AllCourses.cshtml" />
     <Content Include="Views\Admin\EditCourse.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Admin\EditSection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

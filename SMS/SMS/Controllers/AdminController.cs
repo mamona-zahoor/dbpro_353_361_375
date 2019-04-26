@@ -67,9 +67,34 @@ namespace SMS.Controllers
             }));
         }
 
-       
 
-            public ActionResult AddTimetable()
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Login(LoginUsers obj)
+        {
+            string u = "";
+            string p = "";
+            DB35Entities db = new DB35Entities();
+            using (db)
+            {
+                foreach (Admin a in db.Admins)
+                {
+                    u = a.UserName;
+                    p = a.Password;
+                    break;
+
+                }
+            }
+            if (obj.UserName == u && obj.Password == p)
+            {
+                return RedirectToAction("Class", "Admin");
+            }
+            return View();
+        }
+        public ActionResult AddTimetable()
         {
             return View();
         }
@@ -317,6 +342,7 @@ namespace SMS.Controllers
         }
 
 
+
         public ActionResult Section(int id)
         {
             List<Section> slist = new List<Section>();
@@ -337,6 +363,35 @@ namespace SMS.Controllers
                     }
                 }
 
+
+                List<string> TNames = new List<string>();
+                List<int> Ids = new List<int>();
+                foreach (Teacher t in db.Teachers)
+                {
+                    if (t.InchSec != null)
+                    {
+                        foreach (Person p in db.People)
+                        {
+                            if (p.Id == t.Id)
+                            {
+                                Ids.Add(p.Id);
+                                TNames.Add(p.FirstName + ' ' + p.LastName);
+                                break;
+                            }
+                        }
+                    }
+                }
+                ViewBag.Teachers = TNames;
+                ViewBag.Ids = Ids;
+                int count = 0;
+                foreach (ClassSection c in db.ClassSections)
+                {
+                    if (c.ClassId == id)
+                    {
+                        count++;
+                    }
+                }
+                ViewBag.NumOfSec = count;
             }
             return View(slist);
         }
@@ -382,7 +437,7 @@ namespace SMS.Controllers
                 if (s.TeacherId == TeacherNames)
                 {
                     cs.SectionId = s.SectionId;
-                    db.Teachers.Find(TeacherNames).InchSec = id;
+                    db.Teachers.Find(TeacherNames).InchSec = s.SectionId;
                     break;
                 }
             }
@@ -391,12 +446,120 @@ namespace SMS.Controllers
             db.SaveChanges();
             return RedirectToAction("CreateSection");
         }
+
+
         public ActionResult CreateClass()
         {
+            DB35Entities db = new DB35Entities();
+            int count = 0;
+            foreach (Class c in db.Classes)
+            {
+                count++;
+            }
+            ViewBag.Classes = count;
             return View();
         }
 
 
+
+        public ActionResult EditSection(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            SectionVM s = new SectionVM();
+            foreach (Section sec in db.Sections)
+            {
+                if (sec.SectionId == id)
+                {
+                    db.Teachers.Find(sec.TeacherId).InchSec = null;
+                  
+                    break;
+                }
+            }
+            db.SaveChanges();
+            foreach (Section sec in db.Sections)
+            {
+                if (sec.SectionId == id)
+                {
+                    ViewBag.SecName = sec.Name;
+                    List<string> TNames = new List<string>();
+                    List<int> Ids = new List<int>();
+                    foreach (Teacher t in db.Teachers)
+                    {
+                        if (t.InchSec == null)
+                        {
+                            foreach (Person p in db.People)
+                            {
+                                if (p.Id == t.Id)
+                                {
+                                    Ids.Add(p.Id);
+                                    TNames.Add(p.FirstName + ' ' + p.LastName);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    ViewBag.Teachers = TNames;
+                    ViewBag.Ids = Ids;
+                }
+            }
+            return View(s);
+        }
+
+
+        [HttpPost]
+        public ActionResult EditSection(int id, SectionVM obj, int TeacherNames)
+        {
+            DB35Entities db = new DB35Entities();
+            db.Sections.Find(id).TeacherId = TeacherNames;
+            int ClassId = 0;
+            foreach (ClassSection cs in db.ClassSections)
+            {
+                if (cs.SectionId == id)
+                {
+                    ClassId = cs.ClassId;
+                    break;
+                }
+            }
+            db.Teachers.Find(TeacherNames).InchSec = id;
+            db.SaveChanges();
+            return RedirectToAction("Section", "Admin", new { id = ClassId });
+        }
+
+        public ActionResult DeleteSection(int id, int ClassId)
+        {
+            DB35Entities db = new DB35Entities();
+            ClassSection cs = new ClassSection();
+            foreach (ClassSection c in db.ClassSections)
+            {
+                if (c.ClassId == ClassId && c.SectionId == id)
+                {
+                    db.ClassSections.Remove(c);
+                 
+                    break;
+                }
+            }
+            foreach (Section s in db.Sections)
+            {
+                if (s.SectionId == id)
+                {
+                    db.Sections.Remove(s);
+                    break;
+                }
+            }
+
+            foreach (Teacher t in db.Teachers)
+            {
+                if (t.InchSec == id)
+                {
+                    int i = t.Id;
+                    db.Teachers.Find(i).InchSec = null;
+                    break;
+                }
+            }
+            db.SaveChanges();
+            return RedirectToAction("Section", "Admin", new { id = ClassId });
+
+        }
 
         public ActionResult Class(string Name)
         {
@@ -407,10 +570,9 @@ namespace SMS.Controllers
             {
                 if (Name != null)
                 {
-
                     foreach (Class cl in db.Classes)
                     {
-                        if (cl.Name == (Name))
+                        if (cl.Name == Convert.ToInt32(Name))
                         {
                             c = db.Classes.Where(x => (x.ClassId) == cl.ClassId || Name == null).ToList();
                             break;
@@ -420,12 +582,21 @@ namespace SMS.Controllers
 
                     }
                 }
+                int count = 0;
+                foreach (Class ci in db.Classes)
+                {
+                    count++;
+                }
+                ViewBag.Classes = count;
+
                 return View(c);
 
             }
         }
 
-        [HttpPost]
+    
+
+    [HttpPost]
         public ActionResult CreateClass(School_Class c)
         {
             if (ModelState.IsValid)

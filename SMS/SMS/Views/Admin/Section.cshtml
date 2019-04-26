@@ -95,7 +95,7 @@
             vertical-align: middle;
             padding: 12px 0;
             text-align: center;
-            color: 153;
+         
         }
 
             .submit-link:hover {
@@ -130,21 +130,25 @@
     <h1 style="color  :#b18757; font-family : Calisto MT">&emsp; &emsp; Manage Sections </h1>
     <br>
     @{
-        var id = Request.Url.Segments[3];
+        var Classid = Request.Url.Segments[3];
     }
-    <h3>
-        &emsp; &emsp;    @Html.ActionLink("Add New Section", "CreateSection", new { id = id })
-    </h3>
+    @if (ViewBag.NumOfSec < 4)
+    {
+        <h3>
+            &emsp; &emsp;    @Html.ActionLink("Add New Section", "CreateSection", new { id = Classid })
+        </h3>
+    }
+    <br />
     <table class="table" style="margin-top: 2cm;" border=0 align='center'>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NumOfStudents)
+                Total Students in Section
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TeacherId)
+                Section Incharge
             </th>
             <th></th>
         </tr>
@@ -158,15 +162,30 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.NumOfStudents)
                 </td>
+
                 <td>
-                    @Html.DisplayFor(modelItem => item.TeacherId)
+                    @{
+                        var id = Request.Url.Segments[3];
+                        int i = 0;
+                        string name = "";
+                    }
+                    @foreach (var t in ViewBag.Teachers)
+                    {
+                        if (@ViewBag.Ids[i] == item.TeacherId)
+                        {
+                            name = t;
+                            <p>@name</p>
+
+                        }
+                        i++;
+                    }
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.SectionId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.SectionId })
+                    @Html.ActionLink("Edit Class Incharge", "EditSection", new { id = item.SectionId }) |
+                    @Html.ActionLink("Delete", "DeleteSection", new { id = item.SectionId, ClassId = Classid })
                 </td>
             </tr>
-        }
+                        }
 
     </table>
 </body>
