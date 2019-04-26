@@ -707,5 +707,184 @@ namespace SMS.Controllers
 
 
         }
+
+
+        // -------------------Student Management---------------
+
+
+
+        public ActionResult Student(string RegNo)
+        {
+
+            DB35Entities db = new DB35Entities();
+            var c = db.Students.ToList();
+            using (db)
+            {
+                if (RegNo != null)
+                {
+
+                    foreach (Student cl in db.Students)
+                    {
+                        if (cl.RegNo == RegNo)
+                        {
+                            c = db.Students.Where(x => (x.Id) == cl.Id || RegNo == null).ToList();
+                            break;
+                        }
+
+                        c = db.Students.Where(x => (x.Id) == 0 || RegNo == null).ToList();
+
+                    }
+                }
+                return View(c);
+
+            }
+        }
+
+
+        public ActionResult AddStudent()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddStudent(PersonVM p)
+        {
+
+
+            DB35Entities db = new DB35Entities();
+            Student st = new Student();
+            Class cs = new Class();
+            Section sec = new Section();
+            Person pe = new Person();
+
+            pe.FirstName = p.FirstName;
+            pe.LastName = p.LastName;
+            pe.Contact = p.Contact;
+            //con.Open();
+            //string query = "Select Id From Lookup where Value= 'Male' OR Value = 'Female' ";
+            //SqlCommand cmd = new SqlCommand(query, con);
+            //var a = cmd.ExecuteNonQuery();
+            //con.Close();
+            pe.Gender = 2;
+            pe.DateOfBirth = p.DateOfBirth;
+            pe.Address = p.Address;
+
+            db.People.Add(pe);
+
+            p.RegNo = "02-B-38";
+
+            st.Id = p.Id;
+            st.RegNo = p.RegNo;
+
+            string clas = (p.RegNo.Split('-'))[0];
+            string sectn = (p.RegNo.Split('-'))[1];
+            int ce = Convert.ToInt32(clas);
+
+            foreach (Student s in db.Students)
+            {
+
+                if (ce == cs.Name)
+                {
+                    st.ClassId = cs.ClassId;
+                }
+            }
+
+            foreach (Student s in db.Students)
+            {
+
+                if (sectn == sec.Name)
+                {
+                    st.SectionId = sec.SectionId;
+                }
+            }
+
+            st.Password = "any";
+            st.SecretQuestion = "any";
+            st.SecretAnswer = "any";
+
+            db.Students.Add(st);
+            db.SaveChanges();
+
+
+            return RedirectToAction("AddStudent");
+
+        }
+
+        public ActionResult EditStudent(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            StudentVM st = new StudentVM();
+            foreach (Student s in db.Students)
+            {
+                if (s.Id == st.Id)
+                {
+                    st.RegNo = s.RegNo;
+                    StudentVM stt = new StudentVM();
+                    School_Class cs = new School_Class();
+                    SectionVM sec = new SectionVM();
+                    PersonVM p = new PersonVM();
+
+                    string clas = (st.RegNo.Split('-'))[0];
+                    string sectn = (st.RegNo.Split('-'))[1];
+                    int ce = Convert.ToInt32(clas);
+
+                    foreach (Student ss in db.Students)
+                    {
+
+                        if (ce == cs.Name)
+                        {
+                            stt.ClassId = cs.ClassId;
+                        }
+                    }
+
+                    foreach (Student sss in db.Students)
+                    {
+
+                        if (sectn == sec.Name)
+                        {
+                            st.SectionId = sec.SectionId;
+                        }
+                    }
+                    break;
+                }
+
+
+            }
+            return View(st);
+
+        }
+        [HttpPost]
+        public ActionResult EditStudent(int id, Student obj/*, Person p*/)
+        {
+            DB35Entities db = new DB35Entities();
+            db.Students.Find(id).RegNo = obj.RegNo;
+            //db.People.Find(id).Address = p.Address;
+            //db.People.Find(id).Contact= p.Contact;
+            //db.Students.Find(id).SectionId = obj.SectionId;
+            db.SaveChanges();
+            return RedirectToAction("Student");
+
+        }
+
+        public ActionResult DeleteStudent(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            foreach (Student s in db.Students)
+            {
+                if (s.Id == id)
+                {
+                    db.Students.Remove(s);
+                    break;
+
+                }
+            }
+            db.SaveChanges();
+
+            return RedirectToAction("Student");
+
+
+        }
+
+
     }
-    }
+}

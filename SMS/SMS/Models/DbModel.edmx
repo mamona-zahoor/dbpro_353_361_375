@@ -213,16 +213,6 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
           <Property Name="Description" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="Teacher">
           <Key>
             <PropertyRef Name="Id" />
@@ -644,7 +634,6 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudentAttendance" EntityType="Self.StudentAttendance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suggestions" EntityType="Self.Suggestions" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Timetable" EntityType="Self.Timetable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Admin" EntityType="Self.Admin" store:Type="Tables" store:Schema="dbo">
@@ -1024,16 +1013,6 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
           <Property Name="Status" Type="Int32" Nullable="false" />
           <NavigationProperty Name="LookUp" Relationship="Self.FK_Suggestions_LookUp" FromRole="Suggestions" ToRole="LookUp" />
           <NavigationProperty Name="Person" Relationship="Self.FK_Suggestions_Person" FromRole="Suggestions" ToRole="Person" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Teacher">
           <Key>
@@ -1462,7 +1441,6 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
           <EntitySet Name="Students" EntityType="Self.Student" />
           <EntitySet Name="StudentAttendances" EntityType="Self.StudentAttendance" />
           <EntitySet Name="Suggestions" EntityType="Self.Suggestion" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Teachers" EntityType="Self.Teacher" />
           <EntitySet Name="Timetables" EntityType="Self.Timetable" />
           <EntitySet Name="Admins" EntityType="Self.Admin" />
@@ -1786,17 +1764,6 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
                 <ScalarProperty Name="Subject" ColumnName="Subject" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="DB35Model.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

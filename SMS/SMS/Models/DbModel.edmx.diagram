@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="49da0cc3c7564ebb96706ca6109ad29a" Name="Diagram1">
+      <Diagram DiagramId="c79fa9568b294a09931acd86ae0a5190" Name="Diagram1">
         <EntityTypeShape EntityType="DB35Model.Assignment" Width="1.5" PointX="12" PointY="35.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DB35Model.Attendance" Width="1.5" PointX="7.5" PointY="31.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DB35Model.Class" Width="1.5" PointX="10.5" PointY="44.875" IsExpanded="true" />
@@ -23,10 +23,9 @@
         <EntityTypeShape EntityType="DB35Model.Student" Width="1.5" PointX="9.75" PointY="31.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DB35Model.StudentAttendance" Width="1.5" PointX="12" PointY="24.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DB35Model.Suggestion" Width="1.5" PointX="5.25" PointY="21.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.sysdiagram" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB35Model.Teacher" Width="1.5" PointX="5.25" PointY="31.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DB35Model.Timetable" Width="1.5" PointX="9.75" PointY="41.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.Admin" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.Admin" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB35Model.StudentResult" Width="1.5" PointX="12" PointY="28.875" IsExpanded="true" />
         <AssociationConnector Association="DB35Model.FK_Assignments_Courses" ManuallyRouted="false" />
         <AssociationConnector Association="DB35Model.FK_Assignments_Section" ManuallyRouted="false" />
