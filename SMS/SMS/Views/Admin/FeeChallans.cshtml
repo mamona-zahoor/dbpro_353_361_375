@@ -1,0 +1,54 @@
+﻿@model IEnumerable<SMS.Models.FeeChallan>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Scholarships)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fine)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalFee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th></th>
+    </tr>
+@{
+    var id = Request.Url.Segments[3];   
+}
+   @foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.StudentId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fee)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Scholarships)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fine)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalFee)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.ActionLink("Update", "EditFeeChallans", new {id = item.FeeChallanId, StudentId = id }) 
+            </td>
+    </tr>
+}
+
+</table>

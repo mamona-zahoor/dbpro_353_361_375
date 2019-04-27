@@ -511,15 +511,7 @@ namespace SMS.Controllers
         {
             DB35Entities db = new DB35Entities();
             db.Sections.Find(id).TeacherId = TeacherNames;
-            int ClassId = 0;
-            foreach (ClassSection cs in db.ClassSections)
-            {
-                if (cs.SectionId == id)
-                {
-                    ClassId = cs.ClassId;
-                    break;
-                }
-            }
+            int ClassId = db.ClassSections.First(cs => cs.SectionId == id).ClassId;
             db.Teachers.Find(TeacherNames).InchSec = id;
             db.SaveChanges();
             return RedirectToAction("Section", "Admin", new { id = ClassId });
@@ -561,6 +553,55 @@ namespace SMS.Controllers
 
         }
 
+        public ActionResult FeeChallans(int id)
+        {
+            List<FeeChallan> fvm = new List<FeeChallan>();
+            DB35Entities db = new DB35Entities();
+            fvm.Add(db.FeeChallans.First(f => f.StudentId == id));
+            return View(fvm);
+        }
+
+        public ActionResult EditFeeChallans(int id, int StudentId)
+        {
+            DB35Entities db = new DB35Entities();
+            ViewBag.RegNo = db.Students.First(s => s.Id == StudentId).RegNo;
+            FeeChallanVM fvm = new FeeChallanVM();
+            foreach (FeeChallan f in db.FeeChallans)
+            {
+                if (f.FeeChallanId == id)
+                {
+                    fvm.StudentId = f.StudentId;
+                    fvm.Status = f.Status;
+                    fvm.Fee = f.Fee;
+                    fvm.Fine = Convert.ToDecimal(f.Fine);
+                    fvm.Scholarships = Convert.ToDecimal(f.Scholarships);
+                    fvm.TotalFee = f.TotalFee;
+
+                }
+            }
+            return View(fvm);
+        }
+
+
+        [HttpPost]
+        public ActionResult EditFeeChallans(int id, FeeChallanVM obj)
+        {
+            DB35Entities db = new DB35Entities();
+            int StuId = db.FeeChallans.Find(id).StudentId;
+            db.FeeChallans.Find(id).Fee = obj.Fee;
+            db.FeeChallans.Find(id).Scholarships = obj.Scholarships;
+            string s = "Unpaid";
+            if (obj.Status == 0)
+            {
+                s = "Paid";
+            }
+            db.FeeChallans.Find(id).Status = db.LookUps.First(l => l.Value == s).Id;
+            db.FeeChallans.Find(id).Fine = obj.Fine;
+            db.FeeChallans.Find(id).TotalFee = (obj.Fee + obj.Fine) - obj.Scholarships;
+            db.SaveChanges();
+            return RedirectToAction("FeeChallans", "Admin", new { id = StuId });
+
+        }
         public ActionResult Class(string Name)
         {
 
@@ -747,7 +788,7 @@ namespace SMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddStudent(PersonVM p)
+        public ActionResult AddStudent(PersonVM p, decimal Fee)
         {
 
 
@@ -756,7 +797,7 @@ namespace SMS.Controllers
             Class cs = new Class();
             Section sec = new Section();
             Person pe = new Person();
-
+            FeeChallan fe = new FeeChallan();
             pe.FirstName = p.FirstName;
             pe.LastName = p.LastName;
             pe.Contact = p.Contact;
@@ -801,11 +842,16 @@ namespace SMS.Controllers
             st.Password = "any";
             st.SecretQuestion = "any";
             st.SecretAnswer = "any";
-
+            st.Fee = Fee;
             db.Students.Add(st);
+         
             db.SaveChanges();
-
-
+            fe.Fee = Fee;
+            fe.StudentId = db.Students.Max(u => u.Id);
+            fe.TotalFee = Fee;
+            fe.Status =  db.LookUps.First(l => l.Value == "Unpaid").Id;
+            db.FeeChallans.Add(fe);
+            db.SaveChanges();
             return RedirectToAction("AddStudent");
 
         }
@@ -819,7 +865,9 @@ namespace SMS.Controllers
                 if (s.Id == st.Id)
                 {
                     st.RegNo = s.RegNo;
-                    StudentVM stt = new StudentVM();
+
+                    st.Fee = s.Fee;
+                        StudentVM stt = new StudentVM();
                     School_Class cs = new School_Class();
                     SectionVM sec = new SectionVM();
                     PersonVM p = new PersonVM();
@@ -847,17 +895,17 @@ namespace SMS.Controllers
                     }
                     break;
                 }
-
-
             }
             return View(st);
 
         }
         [HttpPost]
-        public ActionResult EditStudent(int id, Student obj/*, Person p*/)
+        public ActionResult EditStudent(int id, Student obj, decimal Fee)
         {
             DB35Entities db = new DB35Entities();
             db.Students.Find(id).RegNo = obj.RegNo;
+            db.Students.Find(id).Fee = obj.Fee;
+            db.FeeChallans.First(f => f.StudentId == id).Fee = Fee;
             //db.People.Find(id).Address = p.Address;
             //db.People.Find(id).Contact= p.Contact;
             //db.Students.Find(id).SectionId = obj.SectionId;

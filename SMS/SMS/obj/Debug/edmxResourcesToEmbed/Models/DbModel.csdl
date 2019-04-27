@@ -198,8 +198,9 @@
     <Property Name="ClassId" Type="Int32" Nullable="false" />
     <Property Name="SectionId" Type="Int32" Nullable="false" />
     <Property Name="Password" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SecretQuestion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SecretAnswer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SecretQuestion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SecretAnswer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Fee" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
     <NavigationProperty Name="FeeChallans" Relationship="Self.FK_FeeChallans_Student" FromRole="Student" ToRole="FeeChallans" />
     <NavigationProperty Name="Person" Relationship="Self.FK_Student_Person1" FromRole="Student" ToRole="Person" />
     <NavigationProperty Name="StuAssignmentMarks" Relationship="Self.FK_StuAssignmentMarks_Student" FromRole="Student" ToRole="StuAssignmentMarks" />
@@ -230,6 +231,16 @@
     <Property Name="Status" Type="Int32" Nullable="false" />
     <NavigationProperty Name="LookUp" Relationship="Self.FK_Suggestions_LookUp" FromRole="Suggestions" ToRole="LookUp" />
     <NavigationProperty Name="Person" Relationship="Self.FK_Suggestions_Person" FromRole="Suggestions" ToRole="Person" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="Teacher">
     <Key>
@@ -658,6 +669,7 @@
     <EntitySet Name="Students" EntityType="Self.Student" />
     <EntitySet Name="StudentAttendances" EntityType="Self.StudentAttendance" />
     <EntitySet Name="Suggestions" EntityType="Self.Suggestion" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="Teachers" EntityType="Self.Teacher" />
     <EntitySet Name="Timetables" EntityType="Self.Timetable" />
     <EntitySet Name="Admins" EntityType="Self.Admin" />

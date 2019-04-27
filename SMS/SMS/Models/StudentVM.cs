@@ -13,5 +13,6 @@ namespace SMS.Models
         public string SecretQuestion { get; set; }
         public string SecretAnswer { get; set; }
         public string Name { get; set; }
+        public decimal Fee { get; set; }
     }
 }
