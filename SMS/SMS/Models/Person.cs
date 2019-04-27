@@ -27,6 +27,7 @@ namespace SMS.Models
         public int Gender { get; set; }
         public string Address { get; set; }
         public System.DateTime DateOfBirth { get; set; }
+        public decimal Salary { get; set; }
     
         public virtual LookUp LookUp { get; set; }
         public virtual Student Student { get; set; }

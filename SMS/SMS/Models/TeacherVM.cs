@@ -10,6 +10,7 @@ namespace SMS.Models
         public int Salary { get; set; }
         public Nullable<int> InchSec { get; set; }
         public string ResetPassword { get; set; }
+        public string Password { get; set; }
         public string Name { get; set; }
         public decimal Pay { get; set; }
 

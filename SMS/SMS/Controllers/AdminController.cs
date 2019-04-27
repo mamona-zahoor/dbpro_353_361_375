@@ -873,9 +873,13 @@ namespace SMS.Controllers
             }
         }
 
-        public ActionResult StudentDetails()
+        public ActionResult StudentDetails(int id)
         {
-            return View();
+            DB35Entities db = new DB35Entities();
+            using (db)
+            {
+                return View(db.People.First(f => f.Id == id));
+            }
         }
 
 
@@ -885,7 +889,7 @@ namespace SMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddStudent(PersonVM p, decimal Fee)
+        public ActionResult AddStudent(PersonVM p, decimal Fee, string regNum)
         {
 
 
@@ -898,48 +902,26 @@ namespace SMS.Controllers
             pe.FirstName = p.FirstName;
             pe.LastName = p.LastName;
             pe.Contact = p.Contact;
-            //con.Open();
-            //string query = "Select Id From Lookup where Value= 'Male' OR Value = 'Female' ";
-            //SqlCommand cmd = new SqlCommand(query, con);
-            //var a = cmd.ExecuteNonQuery();
-            //con.Close();
-            //pe.Id = db.People.Max(u => u.Id);
-            pe.Gender = 2;
+            pe.Gender = db.LookUps.First(l => l.Value == "Male").Id;
             pe.DateOfBirth = p.DateOfBirth;
             pe.Address = p.Address;
-
             db.People.Add(pe);
 
-            p.RegNo = "2-B-38";
 
+            p.RegNo = regNum;
             st.Id = p.Id;
             st.RegNo = p.RegNo;
 
-            string clas = (st.RegNo.Split('-'))[0];
-            string sectn = (st.RegNo.Split('-'))[1];
+            string clas = st.RegNo.Split('-')[0];
+            string sectn = st.RegNo.Split('-')[1];
+
             int ce = Convert.ToInt32(clas);
-
-            foreach (Student s in db.Students)
-            {
-
-                if (ce == cs.Name)
-                {
-                    st.ClassId = cs.ClassId;
-                }
-            }
-
-            foreach (Student s in db.Students)
-            {
-
-                if (sectn == sec.Name)
-                {
-                    st.SectionId = sec.SectionId;
-                }
-            }
+            st.ClassId = db.Classes.First(l => l.Name == ce).ClassId;
+            st.SectionId = db.Sections.First(l => l.Name == sectn).SectionId;
 
             st.Password = "any";
-            st.SecretQuestion = "any";
-            st.SecretAnswer = "any";
+            st.SecretQuestion = "";
+            st.SecretAnswer = "";
             st.Fee = Fee;
             db.Students.Add(st);
          
@@ -964,33 +946,13 @@ namespace SMS.Controllers
                 {
                     st.RegNo = s.RegNo;
 
-                    st.Fee = s.Fee;
-                    StudentVM stt = new StudentVM();
-                    School_Class cs = new School_Class();
-                    SectionVM sec = new SectionVM();
-                    PersonVM p = new PersonVM();
+                    string clas = s.RegNo.Split('-')[0];
+                    string sectn = s.RegNo.Split('-')[1];
 
-                    string clas = (st.RegNo.Split('-'))[0];
-                    string sectn = (st.RegNo.Split('-'))[1];
                     int ce = Convert.ToInt32(clas);
+                    s.ClassId = db.Classes.First(l => l.Name == ce).ClassId;
+                    s.SectionId = db.Sections.First(l => l.Name == sectn).SectionId;
 
-                    foreach (Student ss in db.Students)
-                    {
-
-                        if (ce == cs.Name)
-                        {
-                            stt.ClassId = cs.ClassId;
-                        }
-                    }
-
-                    foreach (Student sss in db.Students)
-                    {
-
-                        if (sectn == sec.Name)
-                        {
-                            st.SectionId = sec.SectionId;
-                        }
-                    }
                     break;
                 }
             }
@@ -998,15 +960,10 @@ namespace SMS.Controllers
 
         }
         [HttpPost]
-        public ActionResult EditStudent(int id, Student obj, decimal Fee)
+        public ActionResult EditStudent(int id, Student obj)
         {
             DB35Entities db = new DB35Entities();
             db.Students.Find(id).RegNo = obj.RegNo;
-            db.Students.Find(id).Fee = obj.Fee;
-            db.FeeChallans.First(f => f.StudentId == id).Fee = Fee;
-            //db.People.Find(id).Address = p.Address;
-            //db.People.Find(id).Contact= p.Contact;
-            //db.Students.Find(id).SectionId = obj.SectionId;
             db.SaveChanges();
             return RedirectToAction("Student");
 
@@ -1015,10 +972,12 @@ namespace SMS.Controllers
         public ActionResult DeleteStudent(int id)
         {
             DB35Entities db = new DB35Entities();
+            FeeChallan fc = new FeeChallan();
             foreach (Student s in db.Students)
             {
                 if (s.Id == id)
                 {
+                    db.FeeChallans.Remove(fc);
                     db.Students.Remove(s);
                     break;
 
@@ -1036,6 +995,16 @@ namespace SMS.Controllers
 
         //---------------------Manage Teachers--------------
 
+
+
+        public ActionResult TeacherDetails(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            using (db)
+            {
+                return View(db.People.First(f => f.Id == id));
+            }
+        }
 
 
         public ActionResult Teacher(string Id)
@@ -1071,37 +1040,39 @@ namespace SMS.Controllers
             }
         }
 
+
         public ActionResult AddTeacher()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult AddTeacher(PersonVM p, TeacherVM s)
+        public ActionResult AddTeacher(PersonVM p, TeacherVM s, string Email)
         {
 
             DB35Entities db = new DB35Entities();
             Teacher st = new Models.Teacher();
-            //Class c = new Class();
             Person pe = new Models.Person();
 
             pe.FirstName = p.FirstName;
             pe.LastName = p.LastName;
             pe.Contact = p.Contact;
-            pe.Gender = 2;
+            pe.Gender = db.LookUps.First(l => l.Value == "Male").Id;
             pe.DateOfBirth = p.DateOfBirth;
             pe.Address = p.Address;
             db.People.Add(pe);
 
-            p.Email = p.Email;
+            p.Email = Email;
 
             st.Id = p.Id;
             st.Email = p.Email;
             st.Salary = s.Salary;
             st.InchSec = s.InchSec;
             st.ResetPassword = null;
+            st.Password = "any";
             db.Teachers.Add(st);
             db.SaveChanges();
+
             Payroll pr = new Payroll();  
             pr.TeacherId = db.Teachers.Max(t => t.Id);
             pr.Salary = s.Salary;
@@ -1109,6 +1080,7 @@ namespace SMS.Controllers
             pr.Payable = s.Salary;
             db.Payrolls.Add(pr);
             db.SaveChanges();
+
             return RedirectToAction("AddTeacher");
         }
 
@@ -1186,11 +1158,9 @@ namespace SMS.Controllers
         public ActionResult EditTeacher(int id, Teacher obj)
         {
             DB35Entities db = new DB35Entities();
-            db.Teachers.Find(id).InchSec = obj.InchSec;
             db.Teachers.Find(id).Email = obj.Email;
             db.Teachers.Find(id).Salary = obj.Salary;
             db.Teachers.Find(id).InchSec = obj.InchSec;
-            //db.Students.Find(id).SectionId = obj.SectionId;
             db.SaveChanges();
             return RedirectToAction("Teacher");
 
@@ -1199,10 +1169,14 @@ namespace SMS.Controllers
         public ActionResult DeleteTeacher(int id)
         {
             DB35Entities db = new DB35Entities();
-            foreach (Teacher s in db.Teachers)
+            ClassSection cs = new ClassSection();
+            Section sec = new Section();
+            foreach (Teacher s in db.Teachers )
             {
                 if (s.Id == id)
                 {
+                    db.ClassSections.Remove(cs);
+                    db.Sections.Remove(sec);
                     db.Teachers.Remove(s);
                     break;
 
@@ -1211,8 +1185,6 @@ namespace SMS.Controllers
             db.SaveChanges();
 
             return RedirectToAction("Teacher");
-
-
         }
 
 

@@ -162,9 +162,6 @@
                 Salary Details
             </th>
             <th>
-                Teacher Details
-            </th>
-            <th>
                 Update
             </th>
         </tr>
@@ -187,13 +184,9 @@
                 <td>
                     @Html.ActionLink("Pay Details", "Payrolls", new { id = item.Id })
                 </td>
-
-                <td>
-                    @Html.ActionLink("View Teacher Details", "TeacherDetails", new { id = item.Id })
-                </td>
                 <td>
                     @Html.ActionLink("Edit", "EditTeacher", new { id = item.Id }) |
-
+                    @Html.ActionLink("Details", "TeacherDetails", new { id = item.Id }) |
                     @Html.ActionLink("Delete", "DeleteTeacher", new { id = item.Id })
                 </td>
             </tr>
