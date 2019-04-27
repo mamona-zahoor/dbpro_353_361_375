@@ -291,9 +291,6 @@
     <Compile Include="Models\Suggestion.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Teacher.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -301,6 +298,7 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TimeTableVM.cs" />
+    <Compile Include="Models\ViewTimeTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -499,6 +497,8 @@
     <Content Include="Views\Admin\EditStudent.cshtml" />
     <Content Include="Views\Admin\FeeChallans.cshtml" />
     <Content Include="Views\Admin\EditFeeChallans.cshtml" />
+    <Content Include="Views\Admin\ViewTimeTable.cshtml" />
+    <Content Include="Views\Admin\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

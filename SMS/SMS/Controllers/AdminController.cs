@@ -12,6 +12,31 @@ namespace SMS.Controllers
     public class AdminController : Controller
     {
         // GET: Admin
+
+        public ActionResult ViewTimeTable()
+        {
+            DB35Entities db = new DB35Entities();
+            List<ViewTimeTable> Time = new List<ViewTimeTable>();
+            List<ClassSection> C = db.ClassSections.ToList();
+
+            foreach(ClassSection c in C)
+            {
+                ViewTimeTable t = new Models.ViewTimeTable();
+                t.ClassId = c.ClassId;
+                t.ClassName = db.Classes.Where(x => x.ClassId == c.ClassId).SingleOrDefault().Name;
+                t.SectionId = c.SectionId;
+                t.SectionName = db.Sections.Where(x => x.SectionId == c.SectionId).SingleOrDefault().Name;
+                int ti = db.Timetables.Where(x => x.SectionId == t.SectionId).SingleOrDefault().TimetableId;
+                t.CourseId = db.SectionTimetables.Where(x => x.TimetableId == ti).SingleOrDefault().CourseId;
+                t.CourseName = db.Courses.Where(x => x.CourseId == t.CourseId).SingleOrDefault().Title;
+                t.Starttime = db.SectionTimetables.Where(x => x.TimetableId == ti).SingleOrDefault().TimeStart;
+                t.EndTime = db.SectionTimetables.Where(x => x.TimetableId == ti).SingleOrDefault().TimeEnd;
+                t.day = db.SectionTimetables.Where(x => x.TimetableId == ti).SingleOrDefault().Day;
+                Time.Add(t);
+            }
+            return View(Time);
+        }
+       
         public ActionResult Index()
         {
             return View();
@@ -20,7 +45,66 @@ namespace SMS.Controllers
         // GET: Admin/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            DB35Entities db = new DB35Entities();
+            ViewTimeTable to = new Models.ViewTimeTable();
+            int t = db.Timetables.Where(x => x.SectionId == id).SingleOrDefault().TimetableId;
+            if(db.SectionTimetables.Where(x => x.TimetableId == t).SingleOrDefault().TimeEnd == DateTime.Parse("9:00 AM").TimeOfDay)
+            {
+                int cid = db.SectionTimetables.Where(x => x.TimetableId == t).SingleOrDefault().CourseId;
+                to.R8to9 = db.Courses.Where(x => x.CourseId == cid).SingleOrDefault().Title;
+                to.day = db.SectionTimetables.Where(x => x.CourseId == cid && x.TimetableId == t).SingleOrDefault().Day;
+            }
+            if (db.SectionTimetables.Where(x => x.TimetableId == t).SingleOrDefault().TimeEnd == DateTime.Parse("10:00 AM").TimeOfDay)
+            {
+                int cid = db.SectionTimetables.Where(x => x.TimetableId == t).SingleOrDefault().CourseId;
+                to.R9to10 = db.Courses.Where(x => x.CourseId == cid).SingleOrDefault().Title;
+                to.day = db.SectionTimetables.Where(x => x.CourseId == cid && x.TimetableId == t).SingleOrDefault().Day;
+            }
+            if (db.SectionTimetables.Where(x => x.TimetableId == t).SingleOrDefault().TimeEnd == DateTime.Parse("11:00 AM").TimeOfDay)
+            {
+                int cid = db.SectionTimetables.Where(x => x.TimetableId == t).SingleOrDefault().CourseId;
+                to.R10to11 = db.Courses.Where(x => x.CourseId == cid).SingleOrDefault().Title;
+                to.day = db.SectionTimetables.Where(x => x.CourseId == cid && x.TimetableId == t).SingleOrDefault().Day;
+            }
+            if (db.SectionTimetables.Where(x => x.TimetableId == t).SingleOrDefault().TimeEnd == DateTime.Parse("12:00 AM").TimeOfDay)
+            {
+                int cid = db.SectionTimetables.Where(x => x.TimetableId == t).SingleOrDefault().CourseId;
+                to.R11to12 = db.Courses.Where(x => x.CourseId == cid).SingleOrDefault().Title;
+                to.day = db.SectionTimetables.Where(x => x.CourseId == cid && x.TimetableId == t).SingleOrDefault().Day;
+            }
+            if (db.SectionTimetables.Where(x => x.TimetableId == t).SingleOrDefault().TimeEnd == DateTime.Parse("2:00 AM").TimeOfDay)
+            {
+                int cid = db.SectionTimetables.Where(x => x.TimetableId == t).SingleOrDefault().CourseId;
+                to.R1to2 = db.Courses.Where(x => x.CourseId == cid).SingleOrDefault().Title;
+                to.day = db.SectionTimetables.Where(x => x.CourseId == cid && x.TimetableId == t).SingleOrDefault().Day;
+            }
+
+
+
+
+
+            List<ViewTimeTable> Time = new List<ViewTimeTable>();
+            //List<ClassSection> C = db.ClassSections.ToList();
+
+            //foreach (ClassSection c in db.ClassSections.Where(x => x.SectionId == id))
+            //{
+            //    ViewTimeTable t = new Models.ViewTimeTable();
+            //    t.ClassId = c.ClassId;
+            //    t.ClassName = db.Classes.Where(x => x.ClassId == c.ClassId).SingleOrDefault().Name;
+            //    t.SectionId = c.SectionId;
+            //    t.SectionName = db.Sections.Where(x => x.SectionId == c.SectionId).SingleOrDefault().Name;
+            //    int ti = db.Timetables.Where(x => x.SectionId == t.SectionId).SingleOrDefault().TimetableId;
+            //    t.CourseId = db.SectionTimetables.Where(x => x.TimetableId == ti).SingleOrDefault().CourseId;
+            //    t.CourseName = db.Courses.Where(x => x.CourseId == t.CourseId).SingleOrDefault().Title;
+            //    t.Starttime = db.SectionTimetables.Where(x => x.TimetableId == ti).SingleOrDefault().TimeStart;
+            //    t.EndTime = db.SectionTimetables.Where(x => x.TimetableId == ti).SingleOrDefault().TimeEnd;
+            //    t.day = db.SectionTimetables.Where(x => x.TimetableId == ti).SingleOrDefault().Day;
+            //    Time.Add(t);
+            //}
+            Time.Add(to);
+
+
+            return View(Time);
         }
 
         // GET: Admin/Create
