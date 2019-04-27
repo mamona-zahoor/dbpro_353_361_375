@@ -867,7 +867,7 @@ namespace SMS.Controllers
                     st.RegNo = s.RegNo;
 
                     st.Fee = s.Fee;
-                        StudentVM stt = new StudentVM();
+                    StudentVM stt = new StudentVM();
                     School_Class cs = new School_Class();
                     SectionVM sec = new SectionVM();
                     PersonVM p = new PersonVM();
