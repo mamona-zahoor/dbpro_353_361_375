@@ -860,9 +860,21 @@ namespace SMS.Controllers
 
                     }
                 }
+
+                int count = 0;
+                foreach (Student s in db.Students)
+                {
+                    count++;
+                }
+                ViewBag.Students = count;
                 return View(c);
 
             }
+        }
+
+        public ActionResult StudentDetails()
+        {
+            return View();
         }
 
 
@@ -890,19 +902,20 @@ namespace SMS.Controllers
             //SqlCommand cmd = new SqlCommand(query, con);
             //var a = cmd.ExecuteNonQuery();
             //con.Close();
+            //pe.Id = db.People.Max(u => u.Id);
             pe.Gender = 2;
             pe.DateOfBirth = p.DateOfBirth;
             pe.Address = p.Address;
 
             db.People.Add(pe);
 
-            p.RegNo = "02-B-38";
+            p.RegNo = "2-B-38";
 
             st.Id = p.Id;
             st.RegNo = p.RegNo;
 
-            string clas = (p.RegNo.Split('-'))[0];
-            string sectn = (p.RegNo.Split('-'))[1];
+            string clas = (st.RegNo.Split('-'))[0];
+            string sectn = (st.RegNo.Split('-'))[1];
             int ce = Convert.ToInt32(clas);
 
             foreach (Student s in db.Students)
@@ -1013,6 +1026,131 @@ namespace SMS.Controllers
             db.SaveChanges();
 
             return RedirectToAction("Student");
+
+
+        }
+
+
+
+
+        //---------------------Manage Teachers--------------
+
+
+
+        public ActionResult Teacher(string Id)
+        {
+            DB35Entities db = new DB35Entities();
+            var c = db.Teachers.ToList();
+            using (db)
+            {
+                if (Id != null)
+                {
+
+                    foreach (Teacher cl in db.Teachers)
+                    {
+                        if (cl.Id == Convert.ToInt32(Id))
+                        {
+                            c = db.Teachers.Where(x => (x.Id) == cl.Id || Id == null).ToList();
+                            break;
+                        }
+
+                        c = db.Teachers.Where(x => (x.Id) == 0 || Id == null).ToList();
+
+                    }
+                }
+
+                int count = 0;
+                foreach (Teacher t in db.Teachers)
+                {
+                    count++;
+                }
+                ViewBag.Teachers = count;
+                return View(c);
+
+            }
+        }
+
+        public ActionResult AddTeacher()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddTeacher(PersonVM p, TeacherVM s)
+        {
+
+            DB35Entities db = new DB35Entities();
+            Teacher st = new Models.Teacher();
+            //Class c = new Class();
+            Person pe = new Models.Person();
+
+            pe.FirstName = p.FirstName;
+            pe.LastName = p.LastName;
+            pe.Contact = p.Contact;
+            pe.Gender = 2;
+            pe.DateOfBirth = p.DateOfBirth;
+            pe.Address = p.Address;
+            db.People.Add(pe);
+
+            p.Email = "teacher123@gmail.com";
+
+            st.Id = p.Id;
+            st.Email = p.Email;
+            st.Salary = s.Salary;
+            st.InchSec = s.InchSec;
+            st.ResetPassword = null;
+
+            db.Teachers.Add(st);
+            db.SaveChanges();
+
+            return RedirectToAction("AddTeacher");
+        }
+
+        public ActionResult EditTeacher(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            TeacherVM s = new TeacherVM();
+            foreach (Teacher st in db.Teachers)
+            {
+                if (st.Id == s.Id)
+                {
+                    st.Email = s.Email;
+                    break;
+                }
+
+            }
+            return View(s);
+
+        }
+        [HttpPost]
+        public ActionResult EditTeacher(int id, Teacher obj)
+        {
+            DB35Entities db = new DB35Entities();
+            db.Teachers.Find(id).InchSec = obj.InchSec;
+            db.Teachers.Find(id).Email = obj.Email;
+            db.Teachers.Find(id).Salary = obj.Salary;
+            db.Teachers.Find(id).InchSec = obj.InchSec;
+            //db.Students.Find(id).SectionId = obj.SectionId;
+            db.SaveChanges();
+            return RedirectToAction("Teacher");
+
+        }
+
+        public ActionResult DeleteTeacher(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            foreach (Teacher s in db.Teachers)
+            {
+                if (s.Id == id)
+                {
+                    db.Teachers.Remove(s);
+                    break;
+
+                }
+            }
+            db.SaveChanges();
+
+            return RedirectToAction("Teacher");
 
 
         }

@@ -1,5 +1,5 @@
-﻿@model IEnumerable<SMS.Models.Student>
-<title>Manage Students</title>
+﻿@model IEnumerable<SMS.Models.Teacher>
+<title>Manage Teachers</title>
 
 <head>
     <style>
@@ -126,20 +126,20 @@
             </div>
         </div>
     </div>
-    <h1 style="color  :#b18757; font-family : Calisto MT">&emsp; &emsp; Manage Student </h1>
+    <h1 style="color  :#b18757; font-family : Calisto MT">&emsp; &emsp; Manage Teacher </h1>
     <br>
-    @using (Html.BeginForm("Student", "Admin", FormMethod.Get))
+    @using (Html.BeginForm("Teacher", "Admin", FormMethod.Get))
     {
         <h3 style="font-family : Calisto MT">
-            &emsp; &emsp; Search Student&emsp; &emsp; &nbsp;
-            <input type="text" name="RegNo" id="Search" />
+            &emsp; &emsp; Search Teacher&emsp; &emsp; &nbsp;
+            <input type="text" name="Id" id="Search" />
 
             &emsp; &emsp; &emsp; &emsp;<input type="submit" class="submit-link submit" font-size="100px" value="Search" />
             &emsp; &emsp; &emsp; &emsp;
         </h3>
     }
     <h3>
-        &emsp; &emsp;    @Html.ActionLink("Add New Student", "AddStudent")
+        &emsp; &emsp;    @Html.ActionLink("Add New Teacher", "AddTeacher")
     </h3>
     <br />
 
@@ -147,19 +147,19 @@
 
         <tr>
             <th>
-                RegNo.
+                Id
             </th>
             <th>
-                ClassId
+                Email
             </th>
             <th>
-                SectionId
+                Salary
             </th>
             <th>
-                Fee Details
+                InchargeOfSection
             </th>
             <th>
-                Student Details
+                Teacher Details
             </th>
             <th>
                 Update
@@ -170,23 +170,24 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RegNo)
+                    @Html.DisplayFor(modelItem => item.Id)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ClassId)
+                    @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.SectionId)
+                    @Html.DisplayFor(modelItem => item.Salary)
                 </td>
                 <td>
-                    @Html.ActionLink("View Fee Details", "FeeChallans", new { id = item.Id })
+                    @Html.DisplayFor(modelItem => item.InchSec)
                 </td>
                 <td>
-                    @Html.ActionLink("View Student Details", "StudentDetails", new { id = item.Id })
+                    @Html.ActionLink("View Teacher Details", "TeacherDetails", new { id = item.Id })
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "EditStudent", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "DeleteStudent", new { id = item.Id })
+                    @Html.ActionLink("Edit", "EditTeacher", new { id = item.Id }) |
+
+                    @Html.ActionLink("Delete", "DeleteTeacher", new { id = item.Id })
                 </td>
             </tr>
         }
@@ -194,5 +195,7 @@
     </table>
 
 </body>
+
+
 
 

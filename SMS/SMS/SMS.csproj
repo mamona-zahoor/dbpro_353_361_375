@@ -294,6 +294,7 @@
     <Compile Include="Models\Teacher.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TeacherVM.cs" />
     <Compile Include="Models\Timetable.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -499,6 +500,11 @@
     <Content Include="Views\Admin\EditFeeChallans.cshtml" />
     <Content Include="Views\Admin\ViewTimeTable.cshtml" />
     <Content Include="Views\Admin\Details.cshtml" />
+    <Content Include="Views\Admin\Teacher.cshtml" />
+    <Content Include="Views\Admin\AddTeacher.cshtml" />
+    <Content Include="Views\Admin\EditTeacher.cshtml" />
+    <Content Include="Views\Admin\StudentDetails.cshtml" />
+    <Content Include="Views\Admin\TeacherDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

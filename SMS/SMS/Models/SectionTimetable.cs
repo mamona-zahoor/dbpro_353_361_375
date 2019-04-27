@@ -19,8 +19,5 @@ namespace SMS.Models
         public System.TimeSpan TimeStart { get; set; }
         public System.TimeSpan TimeEnd { get; set; }
         public string Day { get; set; }
-    
-        public virtual Cours Cours { get; set; }
-        public virtual Timetable Timetable { get; set; }
     }
 }
