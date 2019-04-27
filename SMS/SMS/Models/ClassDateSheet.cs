@@ -19,5 +19,8 @@ namespace SMS.Models
         public System.DateTime Date { get; set; }
         public System.TimeSpan StartTime { get; set; }
         public System.TimeSpan EndTime { get; set; }
+    
+        public virtual Cours Cours { get; set; }
+        public virtual DateSheet DateSheet { get; set; }
     }
 }

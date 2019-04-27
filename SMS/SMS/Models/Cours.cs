@@ -19,7 +19,9 @@ namespace SMS.Models
         {
             this.Assignments = new HashSet<Assignment>();
             this.Attendances = new HashSet<Attendance>();
+            this.ClassDateSheets = new HashSet<ClassDateSheet>();
             this.Results = new HashSet<Result>();
+            this.SectionTimetables = new HashSet<SectionTimetable>();
         }
     
         public int CourseId { get; set; }
@@ -32,9 +34,13 @@ namespace SMS.Models
         public virtual ICollection<Assignment> Assignments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attendance> Attendances { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ClassDateSheet> ClassDateSheets { get; set; }
         public virtual Section Section { get; set; }
         public virtual Teacher Teacher { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Result> Results { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SectionTimetable> SectionTimetables { get; set; }
     }
 }
