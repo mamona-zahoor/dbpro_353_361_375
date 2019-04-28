@@ -18,31 +18,18 @@ namespace SMS.Controllers
         {
             DB35Entities db = new DB35Entities();
             List<ViewTimeTable> Time = new List<ViewTimeTable>();
-            List<ClassSection> C = db.ClassSections.ToList();
+            List<Timetable> C = db.Timetables.OrderBy(a => a.TimetableId).ToList();
 
-            foreach (ClassSection c in C)
+            int i = 0;
+            foreach (Timetable t in C)
             {
-
-
-                int ti = db.Timetables.Where(x => x.SectionId == c.SectionId).SingleOrDefault().TimetableId;
-             //   List<SectionTimetable> Course = db.SectionTimetables.Where(x => x.TimetableId == ti).ToList();
-            //    foreach (SectionTimetable v in Course)
-             //   {
-                    ViewTimeTable t = new Models.ViewTimeTable();
-                    t.ClassId = c.ClassId;
-                    t.ClassName = db.Classes.Where(x => x.ClassId == c.ClassId).SingleOrDefault().Name;
-                    t.SectionId = c.SectionId;
-                    t.SectionName = db.Sections.Where(x => x.SectionId == c.SectionId).SingleOrDefault().Name;
-              //      t.CourseId = db.SectionTimetables.Where(x => x.CourseId == v.CourseId && x.TimetableId == ti).SingleOrDefault().CourseId;
-             //       t.CourseName = db.Courses.Where(x => x.CourseId == t.CourseId).SingleOrDefault().Title;
-             //       t.Starttime = db.SectionTimetables.Where(x => x.TimetableId == ti && x.CourseId == t.CourseId).SingleOrDefault().TimeStart;
-             //       t.EndTime = db.SectionTimetables.Where(x => x.TimetableId == ti && x.CourseId == t.CourseId).SingleOrDefault().TimeEnd;
-             //       t.day = db.SectionTimetables.Where(x => x.TimetableId == ti && x.CourseId == t.CourseId).SingleOrDefault().Day;
-                    Time.Add(t);
-          //      }
-
-
-
+                int s = db.Timetables.OrderBy(a => a.TimetableId).Skip(i).First().SectionId;
+                ViewTimeTable y = new Models.ViewTimeTable();
+                y.SectionName = db.Sections.Where(x => x.SectionId == s).SingleOrDefault().Name;
+                int c = db.ClassSections.Where(x => x.SectionId == s).SingleOrDefault().ClassId;
+                y.ClassName = db.Classes.Where(x => x.ClassId == c).SingleOrDefault().Name;
+                Time.Add(y);
+                i++;
             }
             return View(Time);
         }
@@ -56,49 +43,67 @@ namespace SMS.Controllers
         public ActionResult Details(int id)
         {
             DB35Entities db = new DB35Entities();
-
-            int t = db.Timetables.Where(x => x.SectionId == id).SingleOrDefault().TimetableId;
-            List<ViewTimeTable> Time = new List<ViewTimeTable>();
-            foreach (SectionTimetable y in db.SectionTimetables.Where(x => x.TimetableId == t))
+            List<ViewTimeTable> Time = new List<Models.ViewTimeTable>();
+            int tid = db.Timetables.Where(x => x.SectionId == id).SingleOrDefault().TimetableId;
+            List<SectionTimetable> S = db.SectionTimetables.Where(x => x.TimetableId == tid).ToList();
+            foreach (SectionTimetable m in S)
             {
-                ViewTimeTable to = new Models.ViewTimeTable();
+                ViewTimeTable v = new Models.ViewTimeTable();
+                int s = m.Id;
+                v.day = m.Day;
 
-                if (db.SectionTimetables.Where(x => x.TimetableId == t && x.CourseId == y.CourseId).SingleOrDefault().TimeEnd == DateTime.Parse("9:00 AM").TimeOfDay)
+                Nullable<int> r = db.Lectures.Where(x => x.Id == s).SingleOrDefault().Lecture1;
+                if (r == null)
                 {
-                    int cid = y.CourseId;
-                    to.R8to9 = db.Courses.Where(x => x.CourseId == cid).SingleOrDefault().Title;
-                    to.day = db.SectionTimetables.Where(x => x.CourseId == cid && x.TimetableId == t).SingleOrDefault().Day;
+                    v.R8to9 = "";
                 }
-                if (db.SectionTimetables.Where(x => x.TimetableId == t && x.CourseId == y.CourseId).SingleOrDefault().TimeEnd == DateTime.Parse("10:00 AM").TimeOfDay)
+                else
                 {
-                    int cid = y.CourseId;
-                    to.R9to10 = db.Courses.Where(x => x.CourseId == cid).SingleOrDefault().Title;
-                    to.day = db.SectionTimetables.Where(x => x.CourseId == cid && x.TimetableId == t).SingleOrDefault().Day;
+                    //
+                    v.R8to9 = db.Courses.Where(x => x.CourseId == r).SingleOrDefault().Title;
+
                 }
-                if (db.SectionTimetables.Where(x => x.TimetableId == t && x.CourseId == y.CourseId).SingleOrDefault().TimeEnd == DateTime.Parse("11:00 AM").TimeOfDay)
+                r = db.Lectures.Where(x => x.Id == s).SingleOrDefault().Lecture2;
+                if (r == null)
                 {
-                    int cid = y.CourseId;
-                    to.R10to11 = db.Courses.Where(x => x.CourseId == cid).SingleOrDefault().Title;
-                    to.day = db.SectionTimetables.Where(x => x.CourseId == cid && x.TimetableId == t).SingleOrDefault().Day;
+                    v.R9to10 = "";
                 }
-                if (db.SectionTimetables.Where(x => x.TimetableId == t && x.CourseId == y.CourseId).SingleOrDefault().TimeEnd == DateTime.Parse("12:00 AM").TimeOfDay)
+                else
                 {
-                    int cid = y.CourseId;
-                    to.R11to12 = db.Courses.Where(x => x.CourseId == cid && x.CourseId == y.CourseId).SingleOrDefault().Title;
-                    to.day = db.SectionTimetables.Where(x => x.CourseId == cid && x.TimetableId == t).SingleOrDefault().Day;
+                    v.R9to10 = db.Courses.Where(x => x.CourseId == r).SingleOrDefault().Title;
                 }
-                if (db.SectionTimetables.Where(x => x.TimetableId == t && x.CourseId == y.CourseId).SingleOrDefault().TimeEnd == DateTime.Parse("2:00 AM").TimeOfDay)
+                r = db.Lectures.Where(x => x.Id == s).SingleOrDefault().Lecture3;
+                if (r == null)
                 {
-                    int cid = y.CourseId;
-                    to.R1to2 = db.Courses.Where(x => x.CourseId == cid && x.CourseId == y.CourseId).SingleOrDefault().Title;
-                    to.day = db.SectionTimetables.Where(x => x.CourseId == cid && x.TimetableId == t).SingleOrDefault().Day;
+                    v.R10to11 = "";
+                }
+                else
+                {
+                    v.R10to11 = db.Courses.Where(x => x.CourseId == r).SingleOrDefault().Title;
+                }
+                r = db.Lectures.Where(x => x.Id == s).SingleOrDefault().Lecture4;
+                if (r == null)
+                {
+                    v.R11to12 = "";
+
+                }
+                else
+                {
+                    v.R11to12 = db.Courses.Where(x => x.CourseId == r).SingleOrDefault().Title;
+                }
+                r = db.Lectures.Where(x => x.Id == s).SingleOrDefault().Lecture5;
+                if (r == null)
+                {
+                    v.R1to2 = "";
+                }
+                else
+                {
+                    v.R1to2 = db.Courses.Where(x => x.CourseId == r).SingleOrDefault().Title;
                 }
 
-                Time.Add(to);
+                Time.Add(v);
+
             }
-
-
-
 
 
 
@@ -413,32 +418,98 @@ namespace SMS.Controllers
             DB35Entities db = new DB35Entities();
             Timetable tt = new Timetable();
             bool check = true;
+            Lecture l = new Lecture();
             SectionTimetable u = new SectionTimetable();
-            foreach(Timetable y in db.Timetables)
+            foreach (Timetable y in db.Timetables)
             {
-                if(y.SectionId == t.SectionId)
+                if (y.SectionId == t.SectionId)
                 {
                     u.TimetableId = y.TimetableId;
                     check = false;
                     break;
                 }
             }
-          
-            if(check == true)
+            bool iss = true;
+            if (check == true)
             {
                 tt.SectionId = t.SectionId;
                 db.Timetables.Add(tt);
                 db.SaveChanges();
                 u.TimetableId = tt.TimetableId;
             }
-            u.Day = t.Day;
-            u.TimeStart = t.StartTime;
-            u.TimeEnd = t.EndTime;
-            u.CourseId = t.CourseId;
-            db.SectionTimetables.Add(u);
+            foreach (SectionTimetable c in db.SectionTimetables)
+            {
+                if (c.TimetableId == u.TimetableId && c.Day == t.Day)
+                {
+                    iss = false;
+                    if (t.EndTime == DateTime.Parse("9:00 AM").TimeOfDay)
+                    {
+
+                        db.Lectures.Where(x => x.Id == c.Id).SingleOrDefault().Lecture1 = t.CourseId;
+                    }
+                    if (t.EndTime == DateTime.Parse("10:00 AM").TimeOfDay)
+                    {
+                        db.Lectures.Where(x => x.Id == c.Id).SingleOrDefault().Lecture2 = t.CourseId;
+                    }
+                    if (t.EndTime == DateTime.Parse("11:00 AM").TimeOfDay)
+                    {
+                        db.Lectures.Where(x => x.Id == c.Id).SingleOrDefault().Lecture3 = t.CourseId;
+                    }
+                    if (t.EndTime == DateTime.Parse("12:00 PM").TimeOfDay)
+                    {
+                        db.Lectures.Where(x => x.Id == c.Id).SingleOrDefault().Lecture4 = t.CourseId;
+                    }
+                    if (t.EndTime == DateTime.Parse("2:00 PM").TimeOfDay)
+                    {
+                        var query = from o in db.Lectures where o.Id == c.Id select o;
+                        foreach (Lecture o in query)
+                        {
+                            o.Lecture5 = t.CourseId;
+                        }
+                        // db.Lectures.Find(c.Id).Lecture5 = t.CourseId;
+                        //db.Lectures.Where(x => x.Id == c.Id).SingleOrDefault().Lecture5 = t.CourseId;
+                    }
+
+                }
+            }
+            if (iss == true)
+            {
+                u.Day = t.Day;
+                db.SectionTimetables.Add(u);
+                if (t.EndTime == DateTime.Parse("9:00 AM").TimeOfDay)
+                {
+                    l.Lecture1 = t.CourseId;
+                }
+                if (t.EndTime == DateTime.Parse("10:00 AM").TimeOfDay)
+                {
+                    l.Lecture2 = t.CourseId;
+                }
+                if (t.EndTime == DateTime.Parse("11:00 AM").TimeOfDay)
+                {
+                    l.Lecture3 = t.CourseId;
+                }
+                if (t.EndTime == DateTime.Parse("12:00 PM").TimeOfDay)
+                {
+                    l.Lecture4 = t.CourseId;
+                }
+                if (t.EndTime == DateTime.Parse("2:00 PM").TimeOfDay)
+                {
+
+                    l.Lecture5 = t.CourseId;
+                }
+                l.Id = u.Id;
+                db.Lectures.Add(l);
+
+
+            }
+
+
+
+
+
             db.SaveChanges();
             return View();
-           
+
         }
 
         // GET: Admin/Edit/5
