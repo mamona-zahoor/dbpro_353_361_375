@@ -1,24 +1,8 @@
-﻿@model IEnumerable<SMS.Models.Student>
-<title>Manage Students</title>
+﻿@model IEnumerable<SMS.Models.Payroll>
+   <title>Payroll Details</title>
+@{ Layout = null;}
 
-<head>
-    <style>
-        .ie-panel {
-            display: none;
-            background: #212121;
-            padding: 10px 0;
-            box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);
-            clear: both;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {
-            display: block;
-        }
-    </style>
-
+   
     <style>
         body {
             font-family: Calisto MT;
@@ -29,6 +13,7 @@
             font-family: Calisto MT, sans-serif;
             border-collapse: collapse;
             width: 70%;
+            
         }
 
         td, th {
@@ -47,14 +32,6 @@
             overflow: hidden;
             background-color: #333;
             font-family: Calisto MT;
-        }
-
-        #cmb {
-            text-align: center;
-            height: 40px;
-            width: 240px;
-            border: 1px solid transparent;
-            border-color: black;
         }
 
         .navbar a {
@@ -115,84 +92,83 @@
             font-size: 19px;
         }
     </style>
-</head>
-<body>
-    <div class="navbar">
-        <div class="dropdown">
+    <body>
+        <br/>
+      
+        <h2 style="color  :#b18757; font-family : Calisto MT">&emsp; &emsp; Payroll Details </h2>
+        <br>
 
-            <div class="dropdown-content">
-                <a href="PersonalInformation.html">My Account</a>
-                <a href="">Logout</a>
-            </div>
-        </div>
-    </div>
-    <h1 style="color  :#b18757; font-family : Calisto MT">&emsp; &emsp; Manage Student </h1>
-    <br>
-    @using (Html.BeginForm("Student", "Admin", FormMethod.Get))
-    {
-        <h3 style="font-family : Calisto MT">
-            &emsp; &emsp; Search Student&emsp; &emsp; &nbsp;
-            <input type="text" name="RegNo" id="Search" />
+        <br/>
+        &emsp; &emsp; &emsp;
+        <b>Teacher Name :   &emsp;&emsp;   &emsp; &emsp;  @ViewBag.TName</b>
 
-            &emsp; &emsp; &emsp; &emsp;<input type="submit" class="submit-link submit" font-size="100px" value="Search" />
-            &emsp; &emsp; &emsp; &emsp;
-        </h3>
-    }
-    <h3>
-        &emsp; &emsp;    @Html.ActionLink("Add New Student", "AddStudent")
-    </h3>
-    <br />
-
-    <table class="table" style="margin-top: 2cm;" border=0 align='center'>
-
-        <tr>
-            <th>
-                RegNo.
+        <br />
+        <br />
+    <table align="center">
+        <tr><th>
+                @Html.DisplayNameFor(model => model.Salary)
             </th>
             <th>
-                ClassId
+                @Html.DisplayNameFor(model => model.Bonus)
             </th>
             <th>
-                SectionId
+                @Html.DisplayNameFor(model => model.Deductions)
             </th>
             <th>
-                Fee Details
+                @Html.DisplayNameFor(model => model.Payable)
             </th>
             <th>
-                Student Details
+               @Html.DisplayNameFor(model => model.Status)
+               
             </th>
-            <th>
-                Update
-            </th>
+            <th></th>
         </tr>
+
+        @{
+            var id = Request.Url.Segments[3];
+        }
+
+
 
         @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RegNo)
+                    @Html.DisplayFor(modelItem => item.Salary)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ClassId)
+                    @Html.DisplayFor(modelItem => item.Bonus)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.SectionId)
+                    @Html.DisplayFor(modelItem => item.Deductions)
                 </td>
                 <td>
-                    @Html.ActionLink("Fee Details", "FeeChallans", new { id = item.Id })
+                    @Html.DisplayFor(modelItem => item.Payable)
                 </td>
-                <td>
-                    @Html.ActionLink("View Student Details", "StudentDetails", new { id = item.Id })
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "EditStudent", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "DeleteStudent", new { id = item.Id })
+               
+                    @if (item.Status == 4)
+                    {
+                        <td>
+                            UnPaid       
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            Paid
+                        </td>
+                   }
+                                <td>
+                    @Html.ActionLink("Update", "EditPay", new { id = item.PayrollId, TeacherId = id })
                 </td>
             </tr>
         }
 
     </table>
-
 </body>
-
-
+<br/>
+<br />
+<br />
+<div>
+    &emsp; &emsp; &emsp;    @Html.ActionLink("Back to Students", "Teacher")
+</div>

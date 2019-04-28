@@ -640,6 +640,8 @@ namespace SMS.Controllers
         {
             List<FeeChallan> fvm = new List<FeeChallan>();
             DB35Entities db = new DB35Entities();
+            ViewBag.RegNo = db.Students.First(s => s.Id == id).RegNo;
+
             fvm.Add(db.FeeChallans.First(f => f.StudentId == id));
             return View(fvm);
         }
@@ -1091,17 +1093,22 @@ namespace SMS.Controllers
             pe.Address = p.Address;
             db.People.Add(pe);
 
-            p.Email = "teacher123@gmail.com";
+            p.Email = p.Email;
 
             st.Id = p.Id;
             st.Email = p.Email;
             st.Salary = s.Salary;
             st.InchSec = s.InchSec;
             st.ResetPassword = null;
-
             db.Teachers.Add(st);
             db.SaveChanges();
-
+            Payroll pr = new Payroll();  
+            pr.TeacherId = db.Teachers.Max(t => t.Id);
+            pr.Salary = s.Salary;
+            pr.Status = db.LookUps.First(l => l.Value == "Unpaid").Id;
+            pr.Payable = s.Salary;
+            db.Payrolls.Add(pr);
+            db.SaveChanges();
             return RedirectToAction("AddTeacher");
         }
 
@@ -1121,6 +1128,60 @@ namespace SMS.Controllers
             return View(s);
 
         }
+
+        public ActionResult Payrolls(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            ViewBag.TName = db.People.First(d => d.Id == id).FirstName + ' ' + db.People.First(d => d.Id == id).LastName;
+            return View(db.Payrolls.Where(p => p.TeacherId == id));
+
+        }
+
+        public ActionResult EditPay(int id , int TeacherId)
+        {
+            DB35Entities db = new DB35Entities();
+            ViewBag.TName = db.People.First(d => d.Id == TeacherId).FirstName + ' ' + db.People.First(d => d.Id == TeacherId).LastName;
+
+            PayrollVM pvm = new PayrollVM();
+            foreach (Payroll p in db.Payrolls)
+            {
+                if (p.PayrollId == id)
+                {
+                    pvm.Salary = p.Salary;
+                    pvm.Bonus = Convert.ToDecimal(p.Bonus);
+                    pvm.Deductions = Convert.ToDecimal(p.Deductions);
+                    pvm.Status = p.Status;
+                    break;
+                }
+            }
+            return View(pvm);
+
+        }
+
+        [HttpPost]
+        public ActionResult EditPay(int id, PayrollVM p)
+        {
+            DB35Entities db = new DB35Entities();
+            db.Payrolls.Find(id).Salary = p.Salary;
+            db.Payrolls.Find(id).Bonus = p.Bonus;
+            db.Payrolls.Find(id).Deductions = p.Deductions;
+            db.Payrolls.Find(id).Payable = p.Salary + p.Bonus - p.Deductions;
+            int TId = db.Payrolls.Find(id).TeacherId;
+            db.Teachers.Find(TId).Salary = p.Salary;
+            ViewBag.TName = db.People.First(d => d.Id == id).FirstName + ' ' + db.People.First(d =>d.Id == id).LastName;
+
+            string s = "Unpaid";
+            if (p.Status == 0)
+            {
+                s = "Paid";
+            }
+            db.Payrolls.Find(id).Status = db.LookUps.First(l => l.Value == s).Id;
+            db.SaveChanges();
+            return RedirectToAction("Payrolls", "Admin", new { id = TId });
+
+        }
+
+
         [HttpPost]
         public ActionResult EditTeacher(int id, Teacher obj)
         {

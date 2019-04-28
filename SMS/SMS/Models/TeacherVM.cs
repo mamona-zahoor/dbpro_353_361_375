@@ -11,5 +11,7 @@ namespace SMS.Models
         public Nullable<int> InchSec { get; set; }
         public string ResetPassword { get; set; }
         public string Name { get; set; }
+        public decimal Pay { get; set; }
+
     }
 }

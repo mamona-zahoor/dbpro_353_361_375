@@ -260,6 +260,7 @@
     <Compile Include="Models\Payroll.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PayrollVM.cs" />
     <Compile Include="Models\Person.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -289,6 +290,9 @@
     </Compile>
     <Compile Include="Models\StudentVM.cs" />
     <Compile Include="Models\Suggestion.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Teacher.cs">
@@ -505,6 +509,8 @@
     <Content Include="Views\Admin\EditTeacher.cshtml" />
     <Content Include="Views\Admin\StudentDetails.cshtml" />
     <Content Include="Views\Admin\TeacherDetails.cshtml" />
+    <Content Include="Views\Admin\Payrolls.cshtml" />
+    <Content Include="Views\Admin\EditPay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

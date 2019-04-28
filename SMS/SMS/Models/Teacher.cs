@@ -26,7 +26,7 @@ namespace SMS.Models
     
         public int Id { get; set; }
         public string Email { get; set; }
-        public int Salary { get; set; }
+        public decimal Salary { get; set; }
         public Nullable<int> InchSec { get; set; }
         public string ResetPassword { get; set; }
     
@@ -39,7 +39,6 @@ namespace SMS.Models
         public virtual Person Person { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Section> Sections { get; set; }
-        public virtual Section Section { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StuAssignmentMark> StuAssignmentMarks { get; set; }
     }
