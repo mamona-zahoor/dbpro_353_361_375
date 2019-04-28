@@ -508,6 +508,7 @@
     <Content Include="Views\Admin\TeacherDetails.cshtml" />
     <Content Include="Views\Admin\Payrolls.cshtml" />
     <Content Include="Views\Admin\EditPay.cshtml" />
+    <Content Include="Views\Admin\SecretQuestionAnswer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -16,5 +16,6 @@ namespace SMS.Models
         public System.DateTime DateOfBirth { get; set; }
         public string RegNo { get; set; }
         public string Email { get; set; }
+        public decimal Salary { get; set; }
     }
 }

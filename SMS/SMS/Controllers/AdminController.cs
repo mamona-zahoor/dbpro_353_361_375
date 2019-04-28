@@ -160,6 +160,8 @@ namespace SMS.Controllers
         {
             string u = "";
             string p = "";
+            string su = "";
+            string sp = "";
             DB35Entities db = new DB35Entities();
             using (db)
             {
@@ -175,8 +177,46 @@ namespace SMS.Controllers
             {
                 return RedirectToAction("Class", "Admin");
             }
+
+            if (obj.UserName == su && obj.Password == sp)
+            {
+                return RedirectToAction("SecretQuestionAnswer", "Admin");
+
+            }
             return View();
         }
+
+
+        public ActionResult SecretQuestionAnswer()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SecretQuestionAnswer(Student obj)
+        {
+            DB35Entities db = new DB35Entities();
+            LoginUsers lo = new LoginUsers();
+            //Student s = new Student();
+            using (db)
+            {
+                foreach (Student s in db.Students)
+                {
+                    if (lo.UserName == s.RegNo)
+                    {
+                        if (s.SecretQuestion == "" && s.SecretAnswer == "")
+                        {
+                            s.SecretQuestion = obj.SecretQuestion;
+                            s.SecretAnswer = obj.SecretAnswer;
+                        }
+                    }
+                }
+                db.SaveChanges();
+                return View();
+            }
+        }
+
+
         public ActionResult AddTimetable()
         {
             return View();
@@ -945,14 +985,8 @@ namespace SMS.Controllers
                 if (s.Id == st.Id)
                 {
                     st.RegNo = s.RegNo;
-
-                    string clas = s.RegNo.Split('-')[0];
-                    string sectn = s.RegNo.Split('-')[1];
-
-                    int ce = Convert.ToInt32(clas);
-                    s.ClassId = db.Classes.First(l => l.Name == ce).ClassId;
-                    s.SectionId = db.Sections.First(l => l.Name == sectn).SectionId;
-
+                    st.ClassId = s.ClassId;
+                    st.SectionId = s.SectionId;
                     break;
                 }
             }
@@ -964,6 +998,14 @@ namespace SMS.Controllers
         {
             DB35Entities db = new DB35Entities();
             db.Students.Find(id).RegNo = obj.RegNo;
+
+            string clas = obj.RegNo.Split('-')[0];
+            string sectn = obj.RegNo.Split('-')[1];
+            int ce = Convert.ToInt32(clas);
+
+            db.Students.Find(id).ClassId = db.Classes.First(l => l.Name == ce).ClassId;
+            db.Students.Find(id).SectionId = db.Sections.First(l => l.Name == sectn).SectionId;
+
             db.SaveChanges();
             return RedirectToAction("Student");
 
@@ -972,12 +1014,19 @@ namespace SMS.Controllers
         public ActionResult DeleteStudent(int id)
         {
             DB35Entities db = new DB35Entities();
-            FeeChallan fc = new FeeChallan();
+
+            foreach(FeeChallan fc in db.FeeChallans)
+            {
+                if(fc.StudentId == id)
+                {
+                    db.FeeChallans.Remove(fc);
+                    break;
+                }
+            }
             foreach (Student s in db.Students)
             {
                 if (s.Id == id)
                 {
-                    db.FeeChallans.Remove(fc);
                     db.Students.Remove(s);
                     break;
 
@@ -1051,7 +1100,7 @@ namespace SMS.Controllers
         {
 
             DB35Entities db = new DB35Entities();
-            Teacher st = new Models.Teacher();
+          
             Person pe = new Models.Person();
 
             pe.FirstName = p.FirstName;
@@ -1060,10 +1109,12 @@ namespace SMS.Controllers
             pe.Gender = db.LookUps.First(l => l.Value == "Male").Id;
             pe.DateOfBirth = p.DateOfBirth;
             pe.Address = p.Address;
+            pe.Salary = p.Salary;
             db.People.Add(pe);
 
             p.Email = Email;
 
+            Teacher st = new Models.Teacher();
             st.Id = p.Id;
             st.Email = p.Email;
             st.Salary = s.Salary;
@@ -1134,7 +1185,7 @@ namespace SMS.Controllers
         public ActionResult EditPay(int id, PayrollVM p)
         {
             DB35Entities db = new DB35Entities();
-            db.Payrolls.Find(id).Salary = p.Salary;
+           // db.Payrolls.Find(id).Salary = p.Salary;
             db.Payrolls.Find(id).Bonus = p.Bonus;
             db.Payrolls.Find(id).Deductions = p.Deductions;
             db.Payrolls.Find(id).Payable = p.Salary + p.Bonus - p.Deductions;
@@ -1159,7 +1210,7 @@ namespace SMS.Controllers
         {
             DB35Entities db = new DB35Entities();
             db.Teachers.Find(id).Email = obj.Email;
-            db.Teachers.Find(id).Salary = obj.Salary;
+           // db.Teachers.Find(id).Salary = obj.Salary;
             db.Teachers.Find(id).InchSec = obj.InchSec;
             db.SaveChanges();
             return RedirectToAction("Teacher");
@@ -1169,14 +1220,28 @@ namespace SMS.Controllers
         public ActionResult DeleteTeacher(int id)
         {
             DB35Entities db = new DB35Entities();
-            ClassSection cs = new ClassSection();
-            Section sec = new Section();
+            foreach (Payroll f in db.Payrolls)
+            {
+                if (f.TeacherId == id)
+                {
+                    db.Payrolls.Remove(f);
+                    break;
+                }
+            }
+            foreach (Section fc in db.Sections)
+            {
+                if(fc.TeacherId == id)
+                {
+                    db.Sections.Remove(fc);
+                    break;
+                }
+            }
+           
             foreach (Teacher s in db.Teachers )
             {
                 if (s.Id == id)
                 {
-                    db.ClassSections.Remove(cs);
-                    db.Sections.Remove(sec);
+                    
                     db.Teachers.Remove(s);
                     break;
 
