@@ -164,6 +164,7 @@ namespace SMS.Controllers
         [HttpPost]
         public ActionResult Login(LoginUsers obj)
         {
+            int Id = 0;
             string u = "";
             string p = "";
             string su = "";
@@ -191,6 +192,7 @@ namespace SMS.Controllers
                 {
                     tu = t.Email;
                     tp = t.Password;
+                    Id = t.Id;
                 }
             }
             if (obj.UserName == u && obj.Password == p)
@@ -206,13 +208,13 @@ namespace SMS.Controllers
 
             if (obj.UserName == tu && obj.Password == tp)
             {
-                return RedirectToAction("Teacher", "Admin");
+                return RedirectToAction("LoggedInView", "Teacher", new { id = Id });
 
             }
             return View();
         }
 
-
+       
         public ActionResult SecretQuestionAnswer()
         {
             return View();
@@ -298,6 +300,7 @@ namespace SMS.Controllers
             List<Teacher> teacher = db.Teachers.ToList();
             return Json(teacher.Select(x => new
             {
+               
                 Id = x.Id,
                 Name = x.Person.FirstName+' '+x.Person.LastName
             }));
@@ -1218,7 +1221,7 @@ namespace SMS.Controllers
             pe.Gender = db.LookUps.First(l => l.Value == "Male").Id;
             pe.DateOfBirth = p.DateOfBirth;
             pe.Address = p.Address;
-            pe.Salary = p.Salary;
+            
             db.People.Add(pe);
 
             p.Email = Email;

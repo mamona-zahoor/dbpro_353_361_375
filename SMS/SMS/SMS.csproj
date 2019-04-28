@@ -201,6 +201,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -252,6 +253,9 @@
     </Compile>
     <Compile Include="Models\FeeChallanVM.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Lecture.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\LoginUsers.cs" />
     <Compile Include="Models\LookUp.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
@@ -290,6 +294,9 @@
     </Compile>
     <Compile Include="Models\StudentVM.cs" />
     <Compile Include="Models\Suggestion.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Teacher.cs">
@@ -509,6 +516,9 @@
     <Content Include="Views\Admin\Payrolls.cshtml" />
     <Content Include="Views\Admin\EditPay.cshtml" />
     <Content Include="Views\Admin\SecretQuestionAnswer.cshtml" />
+    <Content Include="Views\Teacher\LoggedInView.cshtml" />
+    <Content Include="Views\Teacher\TeacherSections.cshtml" />
+    <Content Include="Views\Teacher\Result.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -19,6 +19,11 @@ namespace SMS.Models
         {
             this.Assignments = new HashSet<Assignment>();
             this.Attendances = new HashSet<Attendance>();
+            this.Lectures = new HashSet<Lecture>();
+            this.Lectures1 = new HashSet<Lecture>();
+            this.Lectures2 = new HashSet<Lecture>();
+            this.Lectures3 = new HashSet<Lecture>();
+            this.Lectures4 = new HashSet<Lecture>();
             this.Results = new HashSet<Result>();
         }
     
@@ -34,6 +39,16 @@ namespace SMS.Models
         public virtual ICollection<Attendance> Attendances { get; set; }
         public virtual Section Section { get; set; }
         public virtual Teacher Teacher { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Lecture> Lectures { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Lecture> Lectures1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Lecture> Lectures2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Lecture> Lectures3 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Lecture> Lectures4 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Result> Results { get; set; }
     }

@@ -86,6 +86,18 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     <Property Name="TotalFee" Type="decimal" Precision="18" Scale="0" Nullable="false" />
     <Property Name="Status" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Lectures">
+    <Key>
+      <PropertyRef Name="L" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Lecture1" Type="int" />
+    <Property Name="Lecture2" Type="int" />
+    <Property Name="Lecture3" Type="int" />
+    <Property Name="Lecture4" Type="int" />
+    <Property Name="Lecture5" Type="int" />
+    <Property Name="L" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
   <EntityType Name="LookUp">
     <Key>
       <PropertyRef Name="Id" />
@@ -117,7 +129,6 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     <Property Name="Gender" Type="int" Nullable="false" />
     <Property Name="Address" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="DateOfBirth" Type="date" Nullable="false" />
-    <Property Name="Salary" Type="decimal" Precision="18" Scale="0" Nullable="false" />
   </EntityType>
   <EntityType Name="Results">
     <Key>
@@ -146,14 +157,11 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
   </EntityType>
   <EntityType Name="SectionTimetable">
     <Key>
-      <PropertyRef Name="TimetableId" />
-      <PropertyRef Name="CourseId" />
+      <PropertyRef Name="Id" />
     </Key>
     <Property Name="TimetableId" Type="int" Nullable="false" />
-    <Property Name="CourseId" Type="int" Nullable="false" />
-    <Property Name="TimeStart" Type="time" Precision="6" Nullable="false" />
-    <Property Name="TimeEnd" Type="time" Precision="6" Nullable="false" />
     <Property Name="Day" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityType Name="StuAssignmentMarks">
     <Key>
@@ -175,8 +183,8 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     <Property Name="ClassId" Type="int" Nullable="false" />
     <Property Name="SectionId" Type="int" Nullable="false" />
     <Property Name="Password" Type="varchar" MaxLength="8" Nullable="false" />
-    <Property Name="SecretQuestion" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="SecretAnswer" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="SecretQuestion" Type="varchar" MaxLength="50" />
+    <Property Name="SecretAnswer" Type="varchar" MaxLength="50" />
     <Property Name="Fee" Type="decimal" Precision="18" Scale="0" Nullable="false" />
   </EntityType>
   <EntityType Name="StudentAttendance">
@@ -210,16 +218,26 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
     <Property Name="Description" Type="varchar" MaxLength="200" Nullable="false" />
     <Property Name="Status" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
   <EntityType Name="Teacher">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Salary" Type="decimal" Precision="18" Scale="0" Nullable="false" />
     <Property Name="InchSec" Type="int" />
     <Property Name="ResetPassword" Type="varchar" MaxLength="8" />
-    <Property Name="Password" Type="varchar" MaxLength="8" Nullable="false" />
-    <Property Name="Salary" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Password" Type="varchar" MaxLength="20" />
   </EntityType>
   <EntityType Name="Timetable">
     <Key>
@@ -360,6 +378,78 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Lectures_Courses">
+    <End Role="Courses" Type="Self.Courses" Multiplicity="0..1" />
+    <End Role="Lectures" Type="Self.Lectures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="CourseId" />
+      </Principal>
+      <Dependent Role="Lectures">
+        <PropertyRef Name="Lecture1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lectures_Courses1">
+    <End Role="Courses" Type="Self.Courses" Multiplicity="0..1" />
+    <End Role="Lectures" Type="Self.Lectures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="CourseId" />
+      </Principal>
+      <Dependent Role="Lectures">
+        <PropertyRef Name="Lecture2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lectures_Courses2">
+    <End Role="Courses" Type="Self.Courses" Multiplicity="0..1" />
+    <End Role="Lectures" Type="Self.Lectures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="CourseId" />
+      </Principal>
+      <Dependent Role="Lectures">
+        <PropertyRef Name="Lecture3" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lectures_Courses3">
+    <End Role="Courses" Type="Self.Courses" Multiplicity="0..1" />
+    <End Role="Lectures" Type="Self.Lectures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="CourseId" />
+      </Principal>
+      <Dependent Role="Lectures">
+        <PropertyRef Name="Lecture4" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lectures_Courses4">
+    <End Role="Courses" Type="Self.Courses" Multiplicity="0..1" />
+    <End Role="Lectures" Type="Self.Lectures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="CourseId" />
+      </Principal>
+      <Dependent Role="Lectures">
+        <PropertyRef Name="Lecture5" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lectures_SectionTimetable">
+    <End Role="SectionTimetable" Type="Self.SectionTimetable" Multiplicity="1" />
+    <End Role="Lectures" Type="Self.Lectures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SectionTimetable">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Lectures">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Payroll_LookUp">
     <End Role="LookUp" Type="Self.LookUp" Multiplicity="1" />
     <End Role="Payroll" Type="Self.Payroll" Multiplicity="*" />
@@ -453,6 +543,18 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
       </Principal>
       <Dependent Role="SectionStudents">
         <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SectionTimetable_Timetable">
+    <End Role="Timetable" Type="Self.Timetable" Multiplicity="1" />
+    <End Role="SectionTimetable" Type="Self.SectionTimetable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Timetable">
+        <PropertyRef Name="TimetableId" />
+      </Principal>
+      <Dependent Role="SectionTimetable">
+        <PropertyRef Name="TimetableId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -621,6 +723,7 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
     <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DateSheet" EntityType="Self.DateSheet" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FeeChallans" EntityType="Self.FeeChallans" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Lectures" EntityType="Self.Lectures" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LookUp" EntityType="Self.LookUp" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Payroll" EntityType="Self.Payroll" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
@@ -632,6 +735,7 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
     <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="StudentAttendance" EntityType="Self.StudentAttendance" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Suggestions" EntityType="Self.Suggestions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Timetable" EntityType="Self.Timetable" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Admin" EntityType="Self.Admin" store:Type="Tables" store:Schema="dbo">
@@ -691,6 +795,30 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
       <End Role="Student" EntitySet="Student" />
       <End Role="FeeChallans" EntitySet="FeeChallans" />
     </AssociationSet>
+    <AssociationSet Name="FK_Lectures_Courses" Association="Self.FK_Lectures_Courses">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="Lectures" EntitySet="Lectures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lectures_Courses1" Association="Self.FK_Lectures_Courses1">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="Lectures" EntitySet="Lectures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lectures_Courses2" Association="Self.FK_Lectures_Courses2">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="Lectures" EntitySet="Lectures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lectures_Courses3" Association="Self.FK_Lectures_Courses3">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="Lectures" EntitySet="Lectures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lectures_Courses4" Association="Self.FK_Lectures_Courses4">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="Lectures" EntitySet="Lectures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lectures_SectionTimetable" Association="Self.FK_Lectures_SectionTimetable">
+      <End Role="SectionTimetable" EntitySet="SectionTimetable" />
+      <End Role="Lectures" EntitySet="Lectures" />
+    </AssociationSet>
     <AssociationSet Name="FK_Payroll_LookUp" Association="Self.FK_Payroll_LookUp">
       <End Role="LookUp" EntitySet="LookUp" />
       <End Role="Payroll" EntitySet="Payroll" />
@@ -722,6 +850,10 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
     <AssociationSet Name="FK_SectionStudents_Student" Association="Self.FK_SectionStudents_Student">
       <End Role="Student" EntitySet="Student" />
       <End Role="SectionStudents" EntitySet="SectionStudents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SectionTimetable_Timetable" Association="Self.FK_SectionTimetable_Timetable">
+      <End Role="Timetable" EntitySet="Timetable" />
+      <End Role="SectionTimetable" EntitySet="SectionTimetable" />
     </AssociationSet>
     <AssociationSet Name="FK_StuAssignmentMarks_Assignments" Association="Self.FK_StuAssignmentMarks_Assignments">
       <End Role="Assignments" EntitySet="Assignments" />

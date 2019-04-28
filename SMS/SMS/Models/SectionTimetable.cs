@@ -14,10 +14,18 @@ namespace SMS.Models
     
     public partial class SectionTimetable
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SectionTimetable()
+        {
+            this.Lectures = new HashSet<Lecture>();
+        }
+    
         public int TimetableId { get; set; }
-        public int CourseId { get; set; }
-        public System.TimeSpan TimeStart { get; set; }
-        public System.TimeSpan TimeEnd { get; set; }
         public string Day { get; set; }
+        public int Id { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Lecture> Lectures { get; set; }
+        public virtual Timetable Timetable { get; set; }
     }
 }

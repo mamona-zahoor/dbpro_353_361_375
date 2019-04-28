@@ -84,6 +84,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Lectures">
+      <EntityTypeMapping TypeName="DB35Model.Lecture">
+        <MappingFragment StoreEntitySet="Lectures">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Lecture1" ColumnName="Lecture1" />
+          <ScalarProperty Name="Lecture2" ColumnName="Lecture2" />
+          <ScalarProperty Name="Lecture3" ColumnName="Lecture3" />
+          <ScalarProperty Name="Lecture4" ColumnName="Lecture4" />
+          <ScalarProperty Name="Lecture5" ColumnName="Lecture5" />
+          <ScalarProperty Name="L" ColumnName="L" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="LookUps">
       <EntityTypeMapping TypeName="DB35Model.LookUp">
         <MappingFragment StoreEntitySet="LookUp">
@@ -116,7 +129,6 @@
           <ScalarProperty Name="Gender" ColumnName="Gender" />
           <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-          <ScalarProperty Name="Salary" ColumnName="Salary" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -143,10 +155,8 @@
       <EntityTypeMapping TypeName="DB35Model.SectionTimetable">
         <MappingFragment StoreEntitySet="SectionTimetable">
           <ScalarProperty Name="TimetableId" ColumnName="TimetableId" />
-          <ScalarProperty Name="CourseId" ColumnName="CourseId" />
-          <ScalarProperty Name="TimeStart" ColumnName="TimeStart" />
-          <ScalarProperty Name="TimeEnd" ColumnName="TimeEnd" />
           <ScalarProperty Name="Day" ColumnName="Day" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -194,15 +204,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="DB35Model.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Teachers">
       <EntityTypeMapping TypeName="DB35Model.Teacher">
         <MappingFragment StoreEntitySet="Teacher">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Salary" ColumnName="Salary" />
           <ScalarProperty Name="InchSec" ColumnName="InchSec" />
           <ScalarProperty Name="ResetPassword" ColumnName="ResetPassword" />
           <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="Salary" ColumnName="Salary" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

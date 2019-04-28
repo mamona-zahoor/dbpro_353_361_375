@@ -33,6 +33,7 @@ namespace SMS.Models
         public virtual DbSet<Cours> Courses { get; set; }
         public virtual DbSet<DateSheet> DateSheets { get; set; }
         public virtual DbSet<FeeChallan> FeeChallans { get; set; }
+        public virtual DbSet<Lecture> Lectures { get; set; }
         public virtual DbSet<LookUp> LookUps { get; set; }
         public virtual DbSet<Payroll> Payrolls { get; set; }
         public virtual DbSet<Person> People { get; set; }
@@ -43,6 +44,7 @@ namespace SMS.Models
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<StudentAttendance> StudentAttendances { get; set; }
         public virtual DbSet<Suggestion> Suggestions { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Teacher> Teachers { get; set; }
         public virtual DbSet<Timetable> Timetables { get; set; }
         public virtual DbSet<Admin> Admins { get; set; }
