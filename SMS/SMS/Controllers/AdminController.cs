@@ -1,5 +1,6 @@
 ﻿using SMS.Models;
 using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -162,6 +163,8 @@ namespace SMS.Controllers
             string p = "";
             string su = "";
             string sp = "";
+            string tu = "";
+            string tp = "";
             DB35Entities db = new DB35Entities();
             using (db)
             {
@@ -172,6 +175,18 @@ namespace SMS.Controllers
                     break;
 
                 }
+                foreach (Student s in db.Students)
+                {
+                    su = s.RegNo;
+                    sp = s.Password;
+                    break;
+
+                }
+                foreach (Teacher t in db.Teachers)
+                {
+                    tu = t.Email;
+                    tp = t.Password;
+                }
             }
             if (obj.UserName == u && obj.Password == p)
             {
@@ -181,6 +196,12 @@ namespace SMS.Controllers
             if (obj.UserName == su && obj.Password == sp)
             {
                 return RedirectToAction("SecretQuestionAnswer", "Admin");
+
+            }
+
+            if (obj.UserName == tu && obj.Password == tp)
+            {
+                return RedirectToAction("Teacher", "Admin");
 
             }
             return View();
@@ -923,6 +944,22 @@ namespace SMS.Controllers
         }
 
 
+        public string RandomPasswordString(int size, bool lowerCase)
+        {
+            StringBuilder builder = new StringBuilder();
+            Random random = new Random();
+            char ch;
+            for (int i = 0; i < size; i++)
+            {
+                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
+                builder.Append(ch);
+            }
+            if (lowerCase)
+                return builder.ToString().ToLower();
+            return builder.ToString();
+        }
+
+
         public ActionResult AddStudent()
         {
             return View();
@@ -947,7 +984,6 @@ namespace SMS.Controllers
             pe.Address = p.Address;
             db.People.Add(pe);
 
-
             p.RegNo = regNum;
             st.Id = p.Id;
             st.RegNo = p.RegNo;
@@ -959,9 +995,11 @@ namespace SMS.Controllers
             st.ClassId = db.Classes.First(l => l.Name == ce).ClassId;
             st.SectionId = db.Sections.First(l => l.Name == sectn).SectionId;
 
-            st.Password = "any";
-            st.SecretQuestion = "";
-            st.SecretAnswer = "";
+            var res = RandomPasswordString(8, false);
+            st.Password = res;
+            //List<string> SecretQuestions = new List<string>();
+            st.SecretQuestion = "any";
+            st.SecretAnswer = "any";
             st.Fee = Fee;
             db.Students.Add(st);
          
@@ -1120,7 +1158,10 @@ namespace SMS.Controllers
             st.Salary = s.Salary;
             st.InchSec = s.InchSec;
             st.ResetPassword = null;
-            st.Password = "any";
+
+            var ps = RandomPasswordString(8, true);
+
+            st.Password = ps;
             db.Teachers.Add(st);
             db.SaveChanges();
 
