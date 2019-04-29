@@ -135,5 +135,9 @@
             </div>
         </div>
 }
+@{ 
+    var Tid = ViewBag.Tid;
+}
+@Html.ActionLink("Back To Sections", "TeacherSections", new { id = Tid })
 
 

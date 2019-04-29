@@ -1,0 +1,34 @@
+﻿@model SMS.Models.StudentResultVM
+<p> &emsp;&emsp;Result for : @ViewBag.Title<br /></p>
+<p>
+    &emsp;&emsp; Total Marks : @ViewBag.Total
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4> Edit Student Result</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ObtainedMarks, "Obtained Marks", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="Number" min="0" max=@ViewBag.Total step="0.5" name="OMarks" style="width:200px" value=@ViewBag.Obt />
+                    @Html.ValidationMessageFor(model => model.ObtainedMarks, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>

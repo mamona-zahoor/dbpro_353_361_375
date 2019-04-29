@@ -41,17 +41,8 @@
             <td>
 
                 @{
-                    bool found2 = true;
                     name = ViewBag.CNames[i];
                     <p>@name</p>
-                    foreach (var pre in ViewBag.Cid)
-                    {
-                        if (pre == ViewBag.Coid[i])
-                        {
-                            found2 = false;
-                            break;
-                        }
-                    }
                     i++;
                 }
 
@@ -62,10 +53,9 @@
 
                 }
 
-                @if (found2)
-                {
+                
                     @Html.ActionLink("Upload Result", "Result", new { id = item.SectionId, Tid = Tid })
-                }
+                
             </td>
         </tr>
                     }

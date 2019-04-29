@@ -177,13 +177,13 @@ namespace SMS.Controllers
             List<Student> S = new List<Student>();
             List<string> RegNo = new List<string>();
             List<int> Ids = new List<int>();
-
+            ViewBag.Tid = db.Courses.First(f => f.CourseId == co && f.SectionId == sec).TeacherId;
             foreach (Student s in db.Students)
             {
                 bool pre = true;
                 foreach (StudentResult sr in db.StudentResults)
                 {
-                    if (s.Id == sr.StudentId)
+                    if (s.Id == sr.StudentId && sr.ResultId == id)
                     {
                         pre = false;
                     }
@@ -216,5 +216,100 @@ namespace SMS.Controllers
             return RedirectToAction("UploadResult", new { id = Id });
         }
 
+        public ActionResult UploadedRes(int id)
+        {
+            List<Result> res = new List<Result>();
+            DB35Entities db = new DB35Entities();
+            List<int> ClassNames = new List<int>();
+            List<string> Sections = new List<string>();
+            List<string> CoNames = new List<string>();
+            int cid = 0;
+            foreach (Result r in db.Results)
+            {
+                int Cid = r.CourseId;
+                foreach (Cours c in db.Courses)
+                {
+                    if (c.CourseId == Cid && c.TeacherId == id)
+                    {
+                        res.Add(db.Results.First(f => f.CourseId == Cid));
+                        Sections.Add(db.Sections.First(f => f.SectionId == c.SectionId).Name);
+                        cid = db.ClassSections.First(f => f.SectionId == c.SectionId).ClassId;
+                        ClassNames.Add(db.Classes.First(f => f.ClassId == cid).Name);
+                        CoNames.Add(c.Title);
+                    }
+                }
+            }
+            ViewBag.CNames = ClassNames;
+            ViewBag.Sec = Sections;
+            ViewBag.CoNames = CoNames;
+            return View(res);
+        }
+
+        public ActionResult ResultSection(int id)
+        {
+            List<StudentResult> S = new List<StudentResult>();
+            DB35Entities db = new DB35Entities();
+            List<string> RegNo = new List<string>();
+            foreach (StudentResult sr in db.StudentResults)
+            {
+                if (sr.ResultId == id)
+                {
+                    S.Add(sr);
+                    RegNo.Add(db.Students.First(f => f.Id == sr.StudentId).RegNo);
+                }
+            }
+            int sec = db.Results.Find(id).SectionId;
+            ViewBag.Section = db.Sections.Find(sec).Name;
+            int c = db.ClassSections.First(f => f.SectionId == sec).ClassId;
+            ViewBag.Class = db.Classes.Find(c).Name;
+            ViewBag.Total = db.Results.First(f => f.ResultId == id).TotalMarks;
+            ViewBag.RegNo = RegNo;
+            return View(S);
+        }
+        public ActionResult EditResult(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            StudentResultVM sr = new StudentResultVM();
+            foreach (StudentResult s in db.StudentResults)
+            {
+                if (s.Id == id)
+                {
+                    sr.ResultId = s.ResultId;
+                    sr.StudentId = s.StudentId;
+                    ViewBag.Obt = s.ObtainedMarks;
+                    ViewBag.Title = db.Results.Find(s.ResultId).Title;
+                    ViewBag.Total = db.Results.Find(s.ResultId).TotalMarks;
+                    break;
+                }
+            }
+            return View(sr);
+        }
+
+        [HttpPost]
+        public ActionResult EditResult(int id, StudentResultVM obj, decimal OMarks)
+        {
+            DB35Entities db = new DB35Entities();
+            db.StudentResults.Find(id).ObtainedMarks = OMarks;
+            db.SaveChanges();
+            return RedirectToAction("ResultSection", new { id = db.StudentResults.Find(id).ResultId });
+        }
+
+        public ActionResult DeleteResult(int id, int Tid)
+        {
+            DB35Entities db = new DB35Entities();
+            foreach (StudentResult sr in db.StudentResults)
+            {
+                if (sr.ResultId == id)
+                {
+                    db.StudentResults.Remove(sr);
+                   
+                }
+            }
+            db.SaveChanges();
+
+            db.Results.Remove(db.Results.Find(id));
+            db.SaveChanges();
+            return RedirectToAction("UploadedRes", new { id = Tid });
+        }
     }
 }

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<SMS.Models.Result>
+@{ 
+    int i = 0;
+    int j = 0;
+    int k = 0;
+}
+<table class="table">
+    <tr>
+        <th>
+          Class
+        </th>
+        <th>
+            Sections
+        </th>
+        <th>
+            Course
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalMarks)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+         @ViewBag.CNames[i]
+            @{ 
+                i++;
+            }
+        </td>
+        <td>
+            @ViewBag.Sec[j]
+            @{ 
+                j++;
+            }
+        </td>
+        <td>
+
+            @ViewBag.CoNames[k]
+            @{
+                k++;
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalMarks)
+        </td>
+        <td>
+            @{ var Tid = Request.Url.Segments[3];
+                    }
+            @Html.ActionLink("Section Result", "ResultSection", new { id=item.ResultId }) |
+            @Html.ActionLink("Delete", "DeleteResult", new { id = item.ResultId, Tid = Tid })
+
+
+        </td>
+    </tr>
+}
+
+</table>

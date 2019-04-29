@@ -1,0 +1,41 @@
+﻿@model IEnumerable<SMS.Models.StudentResult>
+    @{ 
+        int i = 0;
+    }
+<br/>
+<font size="4">
+    <p> &emsp;&emsp;&nbsp;Class : @ViewBag.Class<br /></p>
+    <p> &emsp;&emsp; Section : @ViewBag.Section</p>
+    <p>
+        &emsp;&emsp; Total Marks : @ViewBag.Total
+</font>
+
+<table class="table">
+    <tr>
+         <th>
+           Registration Number
+        </th>
+        <th>
+            Obtained Marks
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+       <td>
+           @ViewBag.RegNo[i]
+           @{
+               i++;
+           }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ObtainedMarks)
+        </td>
+        <td>
+            @Html.ActionLink("Edit Result", "EditResult", new { id=item.Id }) 
+        </td>
+    </tr>
+}
+
+</table>
