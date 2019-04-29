@@ -272,6 +272,7 @@
     <Compile Include="Models\Result.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ResultVM.cs" />
     <Compile Include="Models\School_Class.cs" />
     <Compile Include="Models\Section.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
@@ -294,6 +295,9 @@
     </Compile>
     <Compile Include="Models\StudentVM.cs" />
     <Compile Include="Models\Suggestion.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Teacher.cs">
@@ -516,6 +520,7 @@
     <Content Include="Views\Teacher\LoggedInView.cshtml" />
     <Content Include="Views\Teacher\TeacherSections.cshtml" />
     <Content Include="Views\Teacher\Result.cshtml" />
+    <Content Include="Views\Teacher\UploadResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

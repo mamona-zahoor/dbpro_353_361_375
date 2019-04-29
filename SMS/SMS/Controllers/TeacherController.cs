@@ -102,18 +102,30 @@ namespace SMS.Controllers
             DB35Entities db = new DB35Entities();
             List<string> CNames = new List<string>();
             List<int> ClassNames = new List<int>();
+            List<int> Ids = new List<int>();
+            List<int> CIds = new List<int>();
+            List<int> CoIds = new List<int>();
+            foreach (Result r in db.Results)
+            {
+                Ids.Add(r.SectionId);
+                CIds.Add(r.CourseId);
+            }
             foreach (Cours t in db.Courses)
             {
                 if (t.TeacherId == id)
                 {
                     CNames.Add(t.Title);
                     sec.Add(db.Sections.First(s => s.SectionId == t.SectionId));
-                   cid =(db.ClassSections.First(c => c.SectionId == t.SectionId).ClassId);
+                    cid = (db.ClassSections.First(c => c.SectionId == t.SectionId).ClassId);
                     ClassNames.Add(db.Classes.First(c => c.ClassId == cid).Name);
+                    CoIds.Add(t.CourseId);
                 }
             }
             ViewBag.ClassNames = ClassNames;
             ViewBag.CNames = CNames;
+            ViewBag.Marked = Ids;
+            ViewBag.Cid = CIds;
+            ViewBag.Coid = CoIds;
             return View(sec);
         }
 
@@ -132,7 +144,77 @@ namespace SMS.Controllers
             cid = db.ClassSections.First(cs => cs.SectionId == id).ClassId;
             ViewBag.ClassName = db.Classes.First(c => c.ClassId == cid).Name;
             ViewBag.Sec = db.Sections.First(s => s.SectionId == id).Name;
+            ViewBag.Cid = db.Courses.First(c => c.TeacherId == Tid && c.SectionId == id).CourseId;
             return View();
         }
+        [HttpPost]
+        public ActionResult Result(ResultVM r, int Course, int Section)
+        {
+            DB35Entities db = new DB35Entities();
+            Result re = new Models.Result();
+            re.CourseId = Course;
+            re.SectionId = Section;
+            re.Title = r.Title;
+            re.TotalMarks = r.TotalMarks;
+            db.Results.Add(re);
+            db.SaveChanges();
+            int t = db.Courses.First(c => c.CourseId == Course && c.SectionId == Section).TeacherId;
+            int Rid = db.Results.Max(e => e.ResultId);
+            return RedirectToAction("UploadResult", new { id = Rid });
+        }
+
+        public ActionResult UploadResult(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            ViewBag.Title = db.Results.First(r => r.ResultId == id).Title;
+            int sec = db.Results.First(r => r.ResultId == id).SectionId;
+            int c = db.ClassSections.First(r => r.SectionId == sec).ClassId;
+            ViewBag.Class = db.Classes.First(cl => cl.ClassId == c).Name;
+            ViewBag.Sec = db.Sections.First(s => s.SectionId == sec).Name;
+            ViewBag.Total = db.Results.First(t => t.ResultId == id).TotalMarks;
+            int co = db.Results.First(f => f.ResultId == id).CourseId;
+            ViewBag.co = db.Courses.Find(co).Title;
+            List<Student> S = new List<Student>();
+            List<string> RegNo = new List<string>();
+            List<int> Ids = new List<int>();
+
+            foreach (Student s in db.Students)
+            {
+                bool pre = true;
+                foreach (StudentResult sr in db.StudentResults)
+                {
+                    if (s.Id == sr.StudentId)
+                    {
+                        pre = false;
+                    }
+                }
+                if (pre)
+                {
+                    if (s.SectionId == sec)
+                    {
+                        S.Add(s);
+                        RegNo.Add(s.RegNo);
+                        Ids.Add(s.Id);
+                    }
+                }
+            }
+
+            ViewBag.RegNo = RegNo;
+            ViewBag.Ids = Ids;
+            return View(S);
+        }
+        [HttpPost]
+        public ActionResult UploadResult(int StuRegNo, decimal OMarks, int Id)
+        {
+            DB35Entities db = new DB35Entities();
+            StudentResult sr = new StudentResult();
+            sr.StudentId = StuRegNo;
+            sr.ResultId = Id;
+            sr.ObtainedMarks = OMarks;
+            db.StudentResults.Add(sr);
+            db.SaveChanges();
+            return RedirectToAction("UploadResult", new { id = Id });
+        }
+
     }
 }

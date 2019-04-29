@@ -7,53 +7,67 @@
         </th>
         <th>
             Section
-          </th>
-       <th>
+        </th>
+        <th>
             Course Name
-       </th>
+        </th>
         <th>
 
         </th>
 
     </tr>
 
-    @{ 
+    @{
         int i = 0;
         var name = "";
         int j = 0;
         var CN = 0;
     }
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
 
-            @{
-                CN = ViewBag.ClassNames[j];
-                <p>@CN</p>
-                j++;
-            }
+                @{
+                    CN = ViewBag.ClassNames[j];
+                    <p>@CN</p>
+                    j++;
+                }
 
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            
-            @{ 
-                name = ViewBag.CNames[i];
-                <p>@name</p>
-                i++;
-            }
-               
-              </td>
-        <td>
-            @{ 
-                var Tid = Request.Url.Segments[3];
-            }
-            @Html.ActionLink("Upload Result", "Result", new { id=item.SectionId, Tid = Tid }) 
-        </td>
-    </tr>
-}
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+
+                @{
+                    bool found2 = true;
+                    name = ViewBag.CNames[i];
+                    <p>@name</p>
+                    foreach (var pre in ViewBag.Cid)
+                    {
+                        if (pre == ViewBag.Coid[i])
+                        {
+                            found2 = false;
+                            break;
+                        }
+                    }
+                    i++;
+                }
+
+            </td>
+            <td>
+                @{
+                    var Tid = Request.Url.Segments[3];
+
+                }
+
+                @if (found2)
+                {
+                    @Html.ActionLink("Upload Result", "Result", new { id = item.SectionId, Tid = Tid })
+                }
+            </td>
+        </tr>
+                    }
 
 </table>

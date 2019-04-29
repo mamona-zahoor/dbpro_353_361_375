@@ -1,0 +1,139 @@
+﻿@model IEnumerable<SMS.Models.Student>
+<title>Upload Result</title>
+<style>
+    body {
+        font-family: Calisto MT;
+        margin: 0;
+    }
+
+    table {
+        font-family: Calisto MT, sans-serif;
+        border-collapse: collapse;
+        width: 70%;
+    }
+
+    td, th {
+        border: 1px solid #F0E68C;
+        text-align: center;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #FAFAD2;
+    }
+
+
+    /* Style the top navigation bar */
+    .navbar {
+        overflow: hidden;
+        background-color: #333;
+        font-family: Calisto MT;
+    }
+
+    #cmb {
+        text-align: center;
+        height: 40px;
+        width: 240px;
+        border: 1px solid transparent;
+        border-color: black;
+    }
+
+    .navbar a {
+        float: right;
+        font-size: 16px;
+        color: white;
+        text-align: center;
+        padding: 14px 17px;
+        text-decoration: none;
+    }
+
+
+    input {
+        border: none;
+        box-sizing: border-box;
+        border-bottom: 1px solid black;
+        background: transparent;
+        color: #b18757;
+        font-weight: bold;
+        font-family: 'Poppins';
+        font-size: 20px;
+    }
+
+    .submit {
+        width: 130px;
+        border-radius: 25px;
+        -moz-border-radius: 25px;
+        -webkit-border-radius: 25px;
+        text-transform: uppercase;
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+    .submit-link {
+        border: 2px solid #b18757;
+        text-decoration: none;
+        display: inline-block;
+        vertical-align: middle;
+        padding: 12px 0;
+        text-align: center;
+        color: 153;
+    }
+
+        .submit-link:hover {
+            background: #FAFAD2;
+            color: #b18757;
+        }
+
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+</style>
+
+@{ int i = 0;
+    var id = Request.Url.Segments[3];
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <b name="Id" style="display:none">@id</b>
+
+    <font size="4">
+        <p> &emsp;&emsp;Course : @ViewBag.co<br /></p>
+        <p> &emsp;&emsp;Result for : @ViewBag.Title<br /></p>
+        <p> &emsp;&emsp;Class : @ViewBag.Class<br /></p>
+        <p> &emsp;&emsp;Section : @ViewBag.Sec</p>
+        <p>
+            &emsp;&emsp; Total Marks : @ViewBag.Total
+    </font>
+        <font size="3">
+            <br />    &emsp;&emsp;  <b>Student Registration Number</b>
+            &emsp;&emsp;
+            <select name="StuRegNo" id="cmb">
+
+                @foreach (var stu in ViewBag.RegNo)
+                {
+                    <option value="@ViewBag.Ids[i]">@stu</option>
+                    i++;
+                }
+            </select>
+            <br /><br />
+            &emsp;&emsp;  <b>Obtained Marks</b>
+            &emsp;&emsp;
+            <input type="Number" min="0" max=@ViewBag.Total step="0.5" name="OMarks" style="width:200px">
+        </font>
+
+        <div class="form-group">
+
+            <div class="col-md-offset-2 col-md-10">
+                <input value="Add" class="btn btn-default" type="submit" />
+            </div>
+        </div>
+}
+
+
