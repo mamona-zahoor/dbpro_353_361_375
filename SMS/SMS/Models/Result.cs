@@ -23,6 +23,8 @@ namespace SMS.Models
         public int ResultId { get; set; }
         public int SectionId { get; set; }
         public int CourseId { get; set; }
+        public string Title { get; set; }
+        public decimal TotalMarks { get; set; }
     
         public virtual Cours Cours { get; set; }
         public virtual Section Section { get; set; }

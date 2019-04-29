@@ -167,6 +167,8 @@
     <Property Name="ResultId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="SectionId" Type="Int32" Nullable="false" />
     <Property Name="CourseId" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TotalMarks" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
     <NavigationProperty Name="Cours" Relationship="Self.FK_Results_Courses" FromRole="Results" ToRole="Courses" />
     <NavigationProperty Name="Section" Relationship="Self.FK_Results_Section" FromRole="Results" ToRole="Section" />
     <NavigationProperty Name="StudentResults" Relationship="Self.FK_StudentResult_Results" FromRole="Results" ToRole="StudentResult" />
@@ -253,16 +255,6 @@
     <Property Name="Status" Type="Int32" Nullable="false" />
     <NavigationProperty Name="LookUp" Relationship="Self.FK_Suggestions_LookUp" FromRole="Suggestions" ToRole="LookUp" />
     <NavigationProperty Name="Person" Relationship="Self.FK_Suggestions_Person" FromRole="Suggestions" ToRole="Person" />
-  </EntityType>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="Teacher">
     <Key>
@@ -778,7 +770,6 @@
     <EntitySet Name="Students" EntityType="Self.Student" />
     <EntitySet Name="StudentAttendances" EntityType="Self.StudentAttendance" />
     <EntitySet Name="Suggestions" EntityType="Self.Suggestion" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="Teachers" EntityType="Self.Teacher" />
     <EntitySet Name="Timetables" EntityType="Self.Timetable" />
     <EntitySet Name="Admins" EntityType="Self.Admin" />

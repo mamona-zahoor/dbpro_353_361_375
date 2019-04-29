@@ -164,13 +164,8 @@ namespace SMS.Controllers
         [HttpPost]
         public ActionResult Login(LoginUsers obj)
         {
-            int Id = 0;
             string u = "";
             string p = "";
-            string su = "";
-            string sp = "";
-            string tu = "";
-            string tp = "";
             DB35Entities db = new DB35Entities();
             using (db)
             {
@@ -181,67 +176,84 @@ namespace SMS.Controllers
                     break;
 
                 }
-                foreach (Student s in db.Students)
-                {
-                    su = s.RegNo;
-                    sp = s.Password;
-                    break;
-
-                }
-                foreach (Teacher t in db.Teachers)
-                {
-                    tu = t.Email;
-                    tp = t.Password;
-                    Id = t.Id;
-                }
             }
             if (obj.UserName == u && obj.Password == p)
             {
                 return RedirectToAction("Class", "Admin");
             }
 
-            if (obj.UserName == su && obj.Password == sp)
-            {
-                return RedirectToAction("SecretQuestionAnswer", "Admin");
 
+            bool check = true;
+            DB35Entities dbo = new DB35Entities();
+            if (obj.UserName.Contains("-"))
+            {
+
+                foreach (Student s in dbo.Students)
+                {
+                    if (s.RegNo == obj.UserName && s.Password == obj.Password)
+                    {
+                        check = true;
+                    }
+                }
+                if (check == true)
+                {
+                    return View("AddCourse");
+                }
+                else
+                {
+                    return View();
+                }
             }
 
-            if (obj.UserName == tu && obj.Password == tp)
-            {
-                return RedirectToAction("LoggedInView", "Teacher", new { id = Id });
 
+            else if (obj.UserName.Contains("@"))
+            {
+                foreach (Teacher t in dbo.Teachers)
+                {
+                    if (t.Password == obj.Password && t.Email == obj.UserName)
+                    {
+                        check = true;
+                    }
+                }
+                if (check == true)
+                {
+                    return View("AddCourse");
+                }
+                else
+                {
+                    return View();
+                }
             }
-            return View();
+            else
+            {
+                return View();
+            }
         }
 
        
-        public ActionResult SecretQuestionAnswer()
+        public ActionResult SecretQuestionAnswer(int id)
         {
-            return View();
+            DB35Entities db = new DB35Entities();
+            StudentVM s = new StudentVM();
+            foreach (Student st in db.Students)
+            {
+                if (st.Id == s.Id)
+                {
+                    st.SecretAnswer = s.SecretAnswer;
+                    break;
+                }
+
+            }
+            return View(s);
         }
 
         [HttpPost]
-        public ActionResult SecretQuestionAnswer(Student obj)
+        public ActionResult SecretQuestionAnswer(int id, Student obj)
         {
             DB35Entities db = new DB35Entities();
-            LoginUsers lo = new LoginUsers();
-            //Student s = new Student();
-            using (db)
-            {
-                foreach (Student s in db.Students)
-                {
-                    if (lo.UserName == s.RegNo)
-                    {
-                        if (s.SecretQuestion == "" && s.SecretAnswer == "")
-                        {
-                            s.SecretQuestion = obj.SecretQuestion;
-                            s.SecretAnswer = obj.SecretAnswer;
-                        }
-                    }
-                }
-                db.SaveChanges();
-                return View();
-            }
+            db.Students.Find(id).SecretAnswer = obj.SecretAnswer;
+            db.SaveChanges();
+            return RedirectToAction("Student");
         }
 
 
