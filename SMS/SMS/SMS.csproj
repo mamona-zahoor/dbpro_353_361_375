@@ -215,6 +215,7 @@
     <Compile Include="Models\Attendance.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AttendanceVM.cs" />
     <Compile Include="Models\Class.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -296,9 +297,6 @@
     <Compile Include="Models\StudentResultVM.cs" />
     <Compile Include="Models\StudentVM.cs" />
     <Compile Include="Models\Suggestion.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Teacher.cs">
@@ -525,6 +523,7 @@
     <Content Include="Views\Teacher\UploadedRes.cshtml" />
     <Content Include="Views\Teacher\ResultSection.cshtml" />
     <Content Include="Views\Teacher\EditResult.cshtml" />
+    <Content Include="Views\Teacher\MarkAttendance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

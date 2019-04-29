@@ -14,7 +14,6 @@ namespace SMS.Models
     
     public partial class StudentResult
     {
-        public int Id { get; set; }
         public int ResultId { get; set; }
         public int StudentId { get; set; }
         public decimal ObtainedMarks { get; set; }

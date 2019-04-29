@@ -1,0 +1,136 @@
+﻿@model SMS.Models.AttendanceVM
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>AttendanceVM</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ClassName, htmlAttributes: new { @class = "control-label col-md-2" })
+
+            <div class="col-md-10">
+                <select id="Class" name="ClassId" class="form-control">
+                    <option></option>
+                </select>
+            </div>
+        </div>
+
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SectionName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="Section" name="SectionId" class="form-control">
+                    <option></option>
+                </select>
+            </div>
+        </div>
+
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.StudentId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div id="StudentTable"></div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function (e){
+            var d = {};
+            d.url = '@Url.Action("LoadClasses", "Admin")';
+            d.type = "POST";
+            d.dataType = "json";
+            d.contentType = "application/json";
+            d.success = function (r) {
+                $("#Class").empty();
+                $("#Class").prepend("option value='' selected='selected'></option>");
+                for (var i = 0; i < r.length; i++) {
+                    $("#Class").append('<option value="' + r[i].Id + '">' + r[i].Name + '</option>');
+                }
+            };
+            $.ajax(d);
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Class").change(function () {
+                debugger;
+                event.preventDefault();
+                var selectedValue = $("#Class").select();
+               // var $url = '/Admin/LoadSections';
+               // alert($url);
+
+                $.ajax({
+                    url: '@Url.Action("LoadSections", "Admin")',
+                    type: 'POST',
+                    datatype: "json",
+                    data: "Item=" + $("#Class option:selected").val(),
+                    success: function (r) {
+                        $("#Section").empty();
+                        $("#Section").prepend("option value='' selected='selected'></option>");
+                        for (var i = 0; i < r.length; i++) {
+                            $("#Section").append('<option value="' + r[i].ID + '">' + r[i].Name + '</option>');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+    $(document).ready(function () {
+        $("#Section").change(function () {
+            debugger;
+            event.preventDefault();
+            var $url = '/Teacher/Students';
+
+            $.ajax({
+                url: $url,
+                type: 'POST',
+                datatype: "json",
+                data: "Item=" + $("#Section option:selected").val(),
+
+                success: function (r) {
+                    $("#StudentTable #dataRow").remove();
+                    for (var i = 0; i < r.length; i++) {
+                        $("#StudentTable").append("<div class='checkbox'>"
+                         + "<input name='Check_" + r[i].Id + "'  type='checkbox' class='ace input-lg remove_widget checkboxClass' id='" + r[i].Id + "'/>"
+                         + r[i].RegNo + "</div>");
+                    }
+                }
+                })
+        })
+    });
+
+    </script>
+}

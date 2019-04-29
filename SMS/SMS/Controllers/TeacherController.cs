@@ -90,6 +90,21 @@ namespace SMS.Controllers
                 return View();
             }
         }
+        public JsonResult Students(int Item)
+        {
+            DB35Entities db = new DB35Entities();
+            List<Student> S = db.Students.Where(x => x.SectionId == Item).ToList();
+            return Json(S.Select(x => new { Id = x.Id, RegNo = x.RegNo }));
+        }
+        public ActionResult MarkAttendance()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult MarkAttendance(FormCollection C)
+        {
+            return View();
+        }
         public ActionResult LoggedInView(int id)
         {
             return View();
