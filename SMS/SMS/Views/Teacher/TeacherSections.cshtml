@@ -53,9 +53,9 @@
 
                 }
 
-                
-                    @Html.ActionLink("Upload Result", "Result", new { id = item.SectionId, Tid = Tid })
-                
+
+                @Html.ActionLink("Upload Result", "Result", new { id = item.SectionId, Tid = Tid, check = 0, text = "" })
+
             </td>
         </tr>
                     }

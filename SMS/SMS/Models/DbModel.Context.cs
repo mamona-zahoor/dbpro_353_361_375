@@ -45,6 +45,7 @@ namespace SMS.Models
         public virtual DbSet<StudentAttendance> StudentAttendances { get; set; }
         public virtual DbSet<StudentResult> StudentResults { get; set; }
         public virtual DbSet<Suggestion> Suggestions { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Teacher> Teachers { get; set; }
         public virtual DbSet<Timetable> Timetables { get; set; }
         public virtual DbSet<Admin> Admins { get; set; }

@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Data;
 using System.Data.SqlClient;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace SMS.Controllers
 {
@@ -223,8 +224,7 @@ namespace SMS.Controllers
             ViewBag.Coid = CoIds;
             return View(sec);
         }
-
-        public ActionResult Result(int id, int Tid)
+        public ActionResult Result(int id, int Tid, int check, string text)
         {
             int cid = 0;
             DB35Entities db = new DB35Entities();
@@ -240,24 +240,61 @@ namespace SMS.Controllers
             ViewBag.ClassName = db.Classes.First(c => c.ClassId == cid).Name;
             ViewBag.Sec = db.Sections.First(s => s.SectionId == id).Name;
             ViewBag.Cid = db.Courses.First(c => c.TeacherId == Tid && c.SectionId == id).CourseId;
+            if (check == 1)
+            {
+                ViewBag.T = text;
+
+                ViewBag.Err = "Title already exits. Edit that from uploaded or change Title!";
+            }
+            if (check == 2)
+            {
+                ViewBag.T = text;
+
+                ViewBag.Err = "Title not in Corrrect Format. Should be like 'Final Term | 2016-17'";
+
+            }
             return View();
         }
         [HttpPost]
         public ActionResult Result(ResultVM r, int Course, int Section)
         {
+            bool find = true;
             DB35Entities db = new DB35Entities();
-            Result re = new Models.Result();
-            re.CourseId = Course;
-            re.SectionId = Section;
-            re.Title = r.Title;
-            re.TotalMarks = r.TotalMarks;
-            db.Results.Add(re);
-            db.SaveChanges();
+            int check = 0;
             int t = db.Courses.First(c => c.CourseId == Course && c.SectionId == Section).TeacherId;
-            int Rid = db.Results.Max(e => e.ResultId);
-            return RedirectToAction("UploadResult", new { id = Rid });
-        }
+            Regex T = new Regex("[0-9a-zA-Z_]{1,20} | [0-9]{2,4}-[0-9]{2}");
+            foreach (Result R in db.Results)
+            {
+                if (R.Title == r.Title && R.SectionId == Section)
+                {
+                    check = 1;
+                    find = false;
+                    break;
+                }
+            }
+            if (!T.IsMatch(r.Title))
+            {
+                find = false;
+                check = 2;
+            }
+            if (find)
+            {
+                Result re = new Models.Result();
+                re.CourseId = Course;
+                re.SectionId = Section;
+                re.Title = r.Title;
+                re.TotalMarks = r.TotalMarks;
+                db.Results.Add(re);
+                db.SaveChanges();
+                int Rid = db.Results.Max(e => e.ResultId);
+                return RedirectToAction("UploadResult", new { id = Rid });
+            }
+            else
+            {
 
+                return RedirectToAction("Result", new { id = Section, Tid = t, check = check, text = r.Title });
+            }
+        }
         public ActionResult UploadResult(int id)
         {
             DB35Entities db = new DB35Entities();
@@ -326,7 +363,7 @@ namespace SMS.Controllers
                 {
                     if (c.CourseId == Cid && c.TeacherId == id)
                     {
-                        res.Add(db.Results.First(f => f.CourseId == Cid));
+                        res.Add(r);
                         Sections.Add(db.Sections.First(f => f.SectionId == c.SectionId).Name);
                         cid = db.ClassSections.First(f => f.SectionId == c.SectionId).ClassId;
                         ClassNames.Add(db.Classes.First(f => f.ClassId == cid).Name);
@@ -345,12 +382,15 @@ namespace SMS.Controllers
             List<StudentResult> S = new List<StudentResult>();
             DB35Entities db = new DB35Entities();
             List<string> RegNo = new List<string>();
+            int secid = db.Results.First(f => f.ResultId == id).SectionId;
+            int count = db.Students.Where(s => s.SectionId == secid).Count() - db.StudentResults.Where(r => r.ResultId == id).Count();
             foreach (StudentResult sr in db.StudentResults)
             {
                 if (sr.ResultId == id)
                 {
                     S.Add(sr);
                     RegNo.Add(db.Students.First(f => f.Id == sr.StudentId).RegNo);
+
                 }
             }
             int sec = db.Results.Find(id).SectionId;
@@ -359,6 +399,7 @@ namespace SMS.Controllers
             ViewBag.Class = db.Classes.Find(c).Name;
             ViewBag.Total = db.Results.First(f => f.ResultId == id).TotalMarks;
             ViewBag.RegNo = RegNo;
+            ViewBag.count = count;
             return View(S);
         }
         public ActionResult EditResult(int id)
@@ -367,7 +408,7 @@ namespace SMS.Controllers
             StudentResultVM sr = new StudentResultVM();
             foreach (StudentResult s in db.StudentResults)
             {
-               // if (s.Id == id)
+                // if (s.Id == id)
                 {
                     sr.ResultId = s.ResultId;
                     sr.StudentId = s.StudentId;
@@ -397,7 +438,7 @@ namespace SMS.Controllers
                 if (sr.ResultId == id)
                 {
                     db.StudentResults.Remove(sr);
-                   
+
                 }
             }
             db.SaveChanges();
@@ -420,5 +461,6 @@ namespace SMS.Controllers
             }
             return View(pr);
         }
-    }
+    
+}
 }

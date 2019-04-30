@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<SMS.Models.Result>
-@{ 
+<br>
+@{
     int i = 0;
     int j = 0;
     int k = 0;
@@ -7,7 +8,7 @@
 <table class="table">
     <tr>
         <th>
-          Class
+            Class
         </th>
         <th>
             Sections
@@ -24,43 +25,43 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-         @ViewBag.CNames[i]
-            @{ 
-                i++;
-            }
-        </td>
-        <td>
-            @ViewBag.Sec[j]
-            @{ 
-                j++;
-            }
-        </td>
-        <td>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @ViewBag.CNames[i]
+                @{
+                    i++;
+                }
+            </td>
+            <td>
+                @ViewBag.Sec[j]
+                @{
+                    j++;
+                }
+            </td>
+            <td>
 
-            @ViewBag.CoNames[k]
-            @{
-                k++;
-            }
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TotalMarks)
-        </td>
-        <td>
-            @{ var Tid = Request.Url.Segments[3];
+                @ViewBag.CoNames[k]
+                @{
+                    k++;
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalMarks)
+            </td>
+            <td>
+                @{ var Tid = Request.Url.Segments[3];
+                }
+                @Html.ActionLink("Section Result", "ResultSection", new { id = item.ResultId }) |
+                @Html.ActionLink("Delete", "DeleteResult", new { id = item.ResultId, Tid = Tid })
+
+
+            </td>
+        </tr>
                     }
-            @Html.ActionLink("Section Result", "ResultSection", new { id=item.ResultId }) |
-            @Html.ActionLink("Delete", "DeleteResult", new { id = item.ResultId, Tid = Tid })
-
-
-        </td>
-    </tr>
-}
 
 </table>

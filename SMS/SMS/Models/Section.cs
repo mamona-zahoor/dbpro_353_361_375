@@ -23,6 +23,7 @@ namespace SMS.Models
             this.Courses = new HashSet<Cours>();
             this.Results = new HashSet<Result>();
             this.Timetables = new HashSet<Timetable>();
+            this.Students = new HashSet<Student>();
         }
     
         public int SectionId { get; set; }
@@ -43,5 +44,7 @@ namespace SMS.Models
         public virtual Teacher Teacher { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Timetable> Timetables { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Student> Students { get; set; }
     }
 }

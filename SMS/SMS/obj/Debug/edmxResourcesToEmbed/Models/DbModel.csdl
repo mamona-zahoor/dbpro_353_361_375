@@ -191,6 +191,7 @@
     <NavigationProperty Name="Results" Relationship="Self.FK_Results_Section" FromRole="Section" ToRole="Results" />
     <NavigationProperty Name="Teacher" Relationship="Self.FK_Section_Teacher" FromRole="Section" ToRole="Teacher" />
     <NavigationProperty Name="Timetables" Relationship="Self.FK_Timetable_Section" FromRole="Section" ToRole="Timetable" />
+    <NavigationProperty Name="Students" Relationship="Self.SectionStudents" FromRole="Section" ToRole="Student" />
   </EntityType>
   <EntityType Name="SectionTimetable">
     <Key>
@@ -233,6 +234,7 @@
     <NavigationProperty Name="StuAssignmentMarks" Relationship="Self.FK_StuAssignmentMarks_Student" FromRole="Student" ToRole="StuAssignmentMarks" />
     <NavigationProperty Name="StudentAttendances" Relationship="Self.FK_StudentAttendance_Student2" FromRole="Student" ToRole="StudentAttendance" />
     <NavigationProperty Name="StudentResults" Relationship="Self.FK_StudentResult_Student" FromRole="Student" ToRole="StudentResult" />
+    <NavigationProperty Name="Sections" Relationship="Self.SectionStudents" FromRole="Student" ToRole="Section" />
   </EntityType>
   <EntityType Name="StudentAttendance">
     <Key>
@@ -268,6 +270,16 @@
     <Property Name="Status" Type="Int32" Nullable="false" />
     <NavigationProperty Name="LookUp" Relationship="Self.FK_Suggestions_LookUp" FromRole="Suggestions" ToRole="LookUp" />
     <NavigationProperty Name="Person" Relationship="Self.FK_Suggestions_Person" FromRole="Suggestions" ToRole="Person" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="Teacher">
     <Key>
@@ -759,6 +771,10 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="SectionStudents">
+    <End Role="Section" Type="Self.Section" Multiplicity="*" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+  </Association>
   <EntityContainer Name="DB35Entities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Assignments" EntityType="Self.Assignment" />
     <EntitySet Name="Attendances" EntityType="Self.Attendance" />
@@ -780,6 +796,7 @@
     <EntitySet Name="StudentAttendances" EntityType="Self.StudentAttendance" />
     <EntitySet Name="StudentResults" EntityType="Self.StudentResult" />
     <EntitySet Name="Suggestions" EntityType="Self.Suggestion" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="Teachers" EntityType="Self.Teacher" />
     <EntitySet Name="Timetables" EntityType="Self.Timetable" />
     <EntitySet Name="Admins" EntityType="Self.Admin" />
@@ -934,6 +951,10 @@
     <AssociationSet Name="FK_StudentResult_Student" Association="Self.FK_StudentResult_Student">
       <End Role="Student" EntitySet="Students" />
       <End Role="StudentResult" EntitySet="StudentResults" />
+    </AssociationSet>
+    <AssociationSet Name="SectionStudents" Association="Self.SectionStudents">
+      <End Role="Section" EntitySet="Sections" />
+      <End Role="Student" EntitySet="Students" />
     </AssociationSet>
   </EntityContainer>
 </Schema>
