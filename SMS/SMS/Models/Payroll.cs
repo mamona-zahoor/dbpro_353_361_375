@@ -21,6 +21,7 @@ namespace SMS.Models
         public Nullable<decimal> Deductions { get; set; }
         public decimal Payable { get; set; }
         public int Status { get; set; }
+        public System.DateTime Date { get; set; }
     
         public virtual LookUp LookUp { get; set; }
         public virtual Teacher Teacher { get; set; }

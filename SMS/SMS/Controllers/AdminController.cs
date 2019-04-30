@@ -1230,9 +1230,8 @@ namespace SMS.Controllers
         [HttpPost]
         public ActionResult AddTeacher(PersonVM p, TeacherVM s, string Email)
         {
-
             DB35Entities db = new DB35Entities();
-          
+
             Person pe = new Models.Person();
 
             pe.FirstName = p.FirstName;
@@ -1241,11 +1240,10 @@ namespace SMS.Controllers
             pe.Gender = db.LookUps.First(l => l.Value == "Male").Id;
             pe.DateOfBirth = p.DateOfBirth;
             pe.Address = p.Address;
-            
+
             db.People.Add(pe);
 
             p.Email = Email;
-
             Teacher st = new Models.Teacher();
             st.Id = p.Id;
             st.Email = p.Email;
@@ -1259,11 +1257,12 @@ namespace SMS.Controllers
             db.Teachers.Add(st);
             db.SaveChanges();
 
-            Payroll pr = new Payroll();  
+            Payroll pr = new Payroll();
             pr.TeacherId = db.Teachers.Max(t => t.Id);
             pr.Salary = s.Salary;
             pr.Status = db.LookUps.First(l => l.Value == "Unpaid").Id;
             pr.Payable = s.Salary;
+            pr.Date = DateTime.Now;
             db.Payrolls.Add(pr);
             db.SaveChanges();
 
@@ -1291,11 +1290,55 @@ namespace SMS.Controllers
         {
             DB35Entities db = new DB35Entities();
             ViewBag.TName = db.People.First(d => d.Id == id).FirstName + ' ' + db.People.First(d => d.Id == id).LastName;
-            return View(db.Payrolls.Where(p => p.TeacherId == id));
+            List<Payroll> pr = new List<Payroll>();
+            foreach (Payroll p in db.Payrolls)
+            {
+                if (p.TeacherId == id)
+                {
+                    pr.Add(p);
+                }
+            }
+            return View(pr);
 
         }
 
-        public ActionResult EditPay(int id , int TeacherId)
+        public ActionResult AddPayroll(int id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddPayroll(int Id, PayrollVM obj)
+        {
+            if (ModelState.IsValid)
+            {
+                DB35Entities db = new DB35Entities();
+                Payroll p = new Payroll();
+                p.Salary = obj.Salary;
+                p.Bonus = obj.Bonus;
+                p.Deductions = obj.Deductions;
+                p.TeacherId = Id;
+                p.Payable = obj.Salary + obj.Bonus - obj.Deductions;
+                p.Date = obj.Date;
+                string s = "Unpaid";
+                if (obj.Status == 0)
+                {
+                    s = "Paid";
+                }
+                p.Status = db.LookUps.First(l => l.Value == s).Id;
+                db.Payrolls.Add(p);
+                db.SaveChanges();
+
+                return RedirectToAction("AddPayroll", new { id = Id });
+
+            }
+            else
+            {
+                return View(obj);
+            }
+        }
+
+        public ActionResult EditPay(int id, int TeacherId)
         {
             DB35Entities db = new DB35Entities();
             ViewBag.TName = db.People.First(d => d.Id == TeacherId).FirstName + ' ' + db.People.First(d => d.Id == TeacherId).LastName;
@@ -1309,6 +1352,7 @@ namespace SMS.Controllers
                     pvm.Bonus = Convert.ToDecimal(p.Bonus);
                     pvm.Deductions = Convert.ToDecimal(p.Deductions);
                     pvm.Status = p.Status;
+                    pvm.Date = p.Date;
                     break;
                 }
             }
@@ -1320,14 +1364,14 @@ namespace SMS.Controllers
         public ActionResult EditPay(int id, PayrollVM p)
         {
             DB35Entities db = new DB35Entities();
-           // db.Payrolls.Find(id).Salary = p.Salary;
+            db.Payrolls.Find(id).Salary = p.Salary;
             db.Payrolls.Find(id).Bonus = p.Bonus;
             db.Payrolls.Find(id).Deductions = p.Deductions;
             db.Payrolls.Find(id).Payable = p.Salary + p.Bonus - p.Deductions;
+            db.Payrolls.Find(id).Date = p.Date;
             int TId = db.Payrolls.Find(id).TeacherId;
             db.Teachers.Find(TId).Salary = p.Salary;
-            ViewBag.TName = db.People.First(d => d.Id == id).FirstName + ' ' + db.People.First(d =>d.Id == id).LastName;
-
+            ViewBag.TName = db.People.First(d => d.Id == id).FirstName + ' ' + db.People.First(d => d.Id == id).LastName;
             string s = "Unpaid";
             if (p.Status == 0)
             {

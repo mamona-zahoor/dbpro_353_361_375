@@ -406,5 +406,19 @@ namespace SMS.Controllers
             db.SaveChanges();
             return RedirectToAction("UploadedRes", new { id = Tid });
         }
+        public ActionResult TeacherPayroll(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            ViewBag.TName = db.People.First(d => d.Id == id).FirstName + ' ' + db.People.First(d => d.Id == id).LastName;
+            List<Payroll> pr = new List<Payroll>();
+            foreach (Payroll p in db.Payrolls)
+            {
+                if (p.TeacherId == id)
+                {
+                    pr.Add(p);
+                }
+            }
+            return View(pr);
+        }
     }
 }

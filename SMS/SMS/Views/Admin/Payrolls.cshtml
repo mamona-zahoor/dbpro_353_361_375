@@ -1,38 +1,38 @@
 ﻿@model IEnumerable<SMS.Models.Payroll>
-   <title>Payroll Details</title>
+<title>Payroll Details</title>
 @{ Layout = null;}
+@{
+            var id = Request.Url.Segments[3];
+}
+<style>
+    body {
+        font-family: Calisto MT;
+        margin: 0;
+    }
 
-   
-    <style>
-        body {
-            font-family: Calisto MT;
-            margin: 0;
-        }
+    table {
+        font-family: Calisto MT, sans-serif;
+        border-collapse: collapse;
+        width: 70%;
+    }
 
-        table {
-            font-family: Calisto MT, sans-serif;
-            border-collapse: collapse;
-            width: 70%;
-            
-        }
+    td, th {
+        border: 1px solid #F0E68C;
+        text-align: center;
+        padding: 8px;
+    }
 
-        td, th {
-            border: 1px solid #F0E68C;
-            text-align: center;
-            padding: 8px;
-        }
-
-        tr:nth-child(even) {
-            background-color: #FAFAD2;
-        }
+    tr:nth-child(even) {
+        background-color: #FAFAD2;
+    }
 
 
-        /* Style the top navigation bar */
-        .navbar {
-            overflow: hidden;
-            background-color: #333;
-            font-family: Calisto MT;
-        }
+    /* Style the top navigation bar */
+    .navbar {
+        overflow: hidden;
+        background-color: #333;
+        font-family: Calisto MT;
+    }
 
         .navbar a {
             float: right;
@@ -44,68 +44,73 @@
         }
 
 
-        input {
-            border: none;
-            box-sizing: border-box;
-            border-bottom: 1px solid black;
-            background: transparent;
+    input {
+        border: none;
+        box-sizing: border-box;
+        border-bottom: 1px solid black;
+        background: transparent;
+        color: #b18757;
+        font-weight: bold;
+        font-family: 'Poppins';
+        font-size: 20px;
+    }
+
+    .submit {
+        width: 130px;
+        border-radius: 25px;
+        -moz-border-radius: 25px;
+        -webkit-border-radius: 25px;
+        text-transform: uppercase;
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+    .submit-link {
+        border: 2px solid #b18757;
+        text-decoration: none;
+        display: inline-block;
+        vertical-align: middle;
+        padding: 12px 0;
+        text-align: center;
+    }
+
+        .submit-link:hover {
+            background: #FAFAD2;
             color: #b18757;
-            font-weight: bold;
-            font-family: 'Poppins';
-            font-size: 20px;
         }
 
-        .submit {
-            width: 130px;
-            border-radius: 25px;
-            -moz-border-radius: 25px;
-            -webkit-border-radius: 25px;
-            text-transform: uppercase;
-            font-size: 13px;
-            cursor: pointer;
-        }
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
 
-        .submit-link {
-            border: 2px solid #b18757;
-            text-decoration: none;
-            display: inline-block;
-            vertical-align: middle;
-            padding: 12px 0;
-            text-align: center;
-        }
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
 
-            .submit-link:hover {
-                background: #FAFAD2;
-                color: #b18757;
-            }
+    b {
+        color: #ECCF3E;
+        font-size: 19px;
+    }
+</style>
+<body>
+    <br />
 
-        .dropdown-content a:hover {
-            background-color: #ddd;
-        }
+    <h2 style="color  :#b18757; font-family : Calisto MT">&emsp; &emsp; Payroll Details </h2>
+    <br>
+    <br />
+    &emsp; &emsp; &emsp; &emsp; &emsp;@Html.ActionLink("Add New Record", "AddPayroll", new { id = id })
 
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
+    <br />
+    <br />
+    &emsp; &emsp; &emsp;
+    <b>Teacher Name :   &emsp;&emsp;   &emsp; &emsp;  @ViewBag.TName</b>
 
-        b {
-            color: #ECCF3E;
-            font-size: 19px;
-        }
-    </style>
-    <body>
-        <br/>
-      
-        <h2 style="color  :#b18757; font-family : Calisto MT">&emsp; &emsp; Payroll Details </h2>
-        <br>
 
-        <br/>
-        &emsp; &emsp; &emsp;
-        <b>Teacher Name :   &emsp;&emsp;   &emsp; &emsp;  @ViewBag.TName</b>
 
-        <br />
-        <br />
+    <br />
     <table align="center">
-        <tr><th>
+        <tr>
+            <th>
                 @Html.DisplayNameFor(model => model.Salary)
             </th>
             <th>
@@ -118,15 +123,17 @@
                 @Html.DisplayNameFor(model => model.Payable)
             </th>
             <th>
-               @Html.DisplayNameFor(model => model.Status)
-               
+                Paid
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+
+            </th>
+
             <th></th>
         </tr>
 
-        @{
-            var id = Request.Url.Segments[3];
-        }
+
 
 
 
@@ -145,20 +152,23 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Payable)
                 </td>
-               
-                    @if (item.Status == 4)
-                    {
-                        <td>
-                            UnPaid       
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            Paid
-                        </td>
-                   }
-                                <td>
+
+                @if (item.Status == 4)
+                {
+                    <td>
+                        <input type="checkbox" onclick="return false;" />
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <input type="checkbox" checked onclick="return false;" />
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
                     @Html.ActionLink("Update", "EditPay", new { id = item.PayrollId, TeacherId = id })
                 </td>
             </tr>
@@ -166,9 +176,9 @@
 
     </table>
 </body>
-<br/>
+<br />
 <br />
 <br />
 <div>
-    &emsp; &emsp; &emsp;    @Html.ActionLink("Back to Students", "Teacher")
+    &emsp; &emsp; &emsp;    @Html.ActionLink("Back to Teachers", "Teacher")
 </div>
