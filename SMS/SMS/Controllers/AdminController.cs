@@ -197,11 +197,13 @@ namespace SMS.Controllers
                     if (s.RegNo == obj.UserName && s.Password == obj.Password)
                     {
                         check = true;
+                        o = s.Id;
+                        break;
                     }
                 }
                 if (check == true)
                 {
-                    return View("AddCourse");
+                    return RedirectToAction("LoggedInView", "Student", new { id = o });
                 }
                 else
                 {

@@ -13,9 +13,12 @@ namespace SMS.Models
         public int CourseId { get; set; }
         [Display(Name  = "Subject")]
         public string Title { get; set; }
+
         public DateTime Date { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
+        [Display(Name ="Day")]
+        public DayOfWeek day { get; set; }
 
 
     }
