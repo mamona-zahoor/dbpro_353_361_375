@@ -123,6 +123,7 @@ namespace SMS.Controllers
             {
                 if(Convert.ToDateTime(date) == a.AttendanceDate)
                 {
+                    ViewBag.color = "red";
                     ViewBag.Message = "Attandance has already been marked for " + date + " ";
                     ViewBag.Check = false;
                     check = false;
@@ -130,7 +131,8 @@ namespace SMS.Controllers
                 }
                 else
                 {
-                    
+                    ViewBag.color = "green";
+                    ViewBag.Message = "Marked Successfully";
                     ViewBag.Check = true;
                     
                 }
@@ -142,41 +144,41 @@ namespace SMS.Controllers
                 at.AttendanceDate = Convert.ToDateTime(date);
                 at.TeacherId = id;
                 at.ClassId = Convert.ToInt32(cid);
-                at.SectionId =Convert.ToInt32( sid);
-               
+                at.SectionId = Convert.ToInt32(sid);
+
                 db.Attendances.Add(at);
                 d = at.AttendanceId;
                 db.SaveChanges();
-                
-            }
-            int u = Convert.ToInt32(sid);
 
-            foreach(Student s in db.Students.Where(x => x.SectionId == u).ToList())
 
-            {
-                for(int i =0; i <  Indexes.Count; i++)
+                int u = Convert.ToInt32(sid);
+
+                foreach (Student s in db.Students.Where(x => x.SectionId == u).ToList())
+
                 {
-                    StudentAttendance st = new StudentAttendance();
-                    if(Indexes[i] == s.Id)
+                    for (int i = 0; i < Indexes.Count; i++)
                     {
-                        st.Status = db.LookUps.Where(x => x.Value == "Present").Single().Id;
-                        st.AttendanceId = db.Attendances.Max(x => x.AttendanceId);
-                        st.StudentId = s.Id;
-                        db.StudentAttendances.Add(st);
-                        db.SaveChanges();
-                    }
-                    else
-                    {
-                        st.Status = db.LookUps.Where(x => x.Value == "Absent").Single().Id;
-                        st.AttendanceId = d;
-                        st.StudentId = s.Id;
-                        db.StudentAttendances.Add(st);
-                        db.SaveChanges();
+                        StudentAttendance st = new StudentAttendance();
+                        if (Indexes[i] == s.Id)
+                        {
+                            st.Status = db.LookUps.Where(x => x.Value == "Present").Single().Id;
+                            st.AttendanceId = db.Attendances.Max(x => x.AttendanceId);
+                            st.StudentId = s.Id;
+                            db.StudentAttendances.Add(st);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            st.Status = db.LookUps.Where(x => x.Value == "Absent").Single().Id;
+                            st.AttendanceId = db.Attendances.Max(x => x.AttendanceId);
+                            st.StudentId = s.Id;
+                            db.StudentAttendances.Add(st);
+                            db.SaveChanges();
+                        }
                     }
                 }
+
             }
-
-
             return View();
         }
         public ActionResult LoggedInView(int id)
@@ -365,7 +367,7 @@ namespace SMS.Controllers
             StudentResultVM sr = new StudentResultVM();
             foreach (StudentResult s in db.StudentResults)
             {
-                if (s.Id == id)
+               // if (s.Id == id)
                 {
                     sr.ResultId = s.ResultId;
                     sr.StudentId = s.StudentId;

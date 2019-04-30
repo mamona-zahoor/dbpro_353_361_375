@@ -26,12 +26,16 @@ namespace SMS.Controllers
                 int s = db.Timetables.OrderBy(a => a.TimetableId).Skip(i).First().SectionId;
                 ViewTimeTable y = new Models.ViewTimeTable();
                 y.SectionName = db.Sections.Where(x => x.SectionId == s).SingleOrDefault().Name;
+                y.SectionId = s;
+
                 int c = db.ClassSections.Where(x => x.SectionId == s).SingleOrDefault().ClassId;
+                y.ClassId = c;
                 y.ClassName = db.Classes.Where(x => x.ClassId == c).SingleOrDefault().Name;
                 Time.Add(y);
                 i++;
             }
             return View(Time);
+           
         }
        
         public ActionResult Index()

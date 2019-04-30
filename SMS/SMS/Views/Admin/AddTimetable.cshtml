@@ -1,35 +1,37 @@
-﻿@model SMS.Models.TimeTableVM
-
+﻿@model SMS.Models.ViewTimeTable
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>TimeTable</h4>
+        <h4>ViewTimeTable</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+       
+
         <div class="form-group">
             @Html.LabelFor(model => model.ClassName, htmlAttributes: new { @class = "control-label col-md-2" })
-      
+
             <div class="col-md-10">
                 <select id="Class" name="ClassId" class="form-control">
                     <option></option>
                 </select>
             </div>
-            </div>
+        </div>
 
-      
+     
 
         <div class="form-group">
-        @Html.LabelFor(model => model.SectionName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.SectionName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <select id="Section" name="SectionId" class="form-control">
                     <option></option>
                 </select>
             </div>
-    </div>
-        
+        </div>
+
+    
 
         <div class="form-group">
             @Html.LabelFor(model => model.CourseName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -41,10 +43,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Starttime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Starttime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Starttime, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -56,11 +58,10 @@
             </div>
         </div>
 
-
         <div class="form-group">
-            @Html.LabelFor(model => model.Day, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.day, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <select id="Day" name="Day" class="form-control">
+                <select id="Day" name="day" class="form-control">
                     <option>Monday</option>
                     <option>Tuesday</option>
                     <option>Wednesday</option>
@@ -71,6 +72,9 @@
             </div>
         </div>
 
+      
+    
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -80,12 +84,13 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
+    @Html.ActionLink("Back to List", "ViewTimetable")
+    
+    </div>
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-<script type="text/javascript">
+@Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
         $(document).ready(function (e){
             var d = {};
             d.url = '@Url.Action("LoadClasses", "Admin")';
@@ -101,10 +106,10 @@
             };
             $.ajax(d);
         });
-</script>
+    </script>
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
         $(document).ready(function () {
             $("#Class").change(function () {
                 debugger;
@@ -128,9 +133,9 @@
                 });
             });
         });
-</script>
+    </script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
         $(document).ready(function () {
             $("#Section").change(function () {
                 debugger;
@@ -154,6 +159,5 @@
                 });
             });
         });
-</script>
-
-}
+    </script>
+    }

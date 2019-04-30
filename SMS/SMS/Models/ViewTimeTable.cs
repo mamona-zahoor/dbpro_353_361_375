@@ -14,7 +14,9 @@ namespace SMS.Models
         public string SectionName { get; set; }
         public int CourseId { get; set; }
         public string CourseName { get; set; }
+        [DataType(DataType.Time)]
         public TimeSpan Starttime { get; set; }
+        [DataType(DataType.Time)]
         public TimeSpan EndTime { get; set; }
         [Display (Name = "DAY")]
         public string day { get; set; }
