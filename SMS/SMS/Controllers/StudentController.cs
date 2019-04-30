@@ -11,7 +11,11 @@ namespace SMS.Controllers
     {
         public ActionResult LoggedInView(int id)
         {
-            return View();
+            DB35Entities db = new DB35Entities();
+            using (db)
+            {
+                return View(db.People.First(f => f.Id == id));
+            }
         }
         public ActionResult ViewDateSheet(int id)
         {

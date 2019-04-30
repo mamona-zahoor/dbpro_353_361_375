@@ -1,7 +1,4 @@
-﻿
-@{
-    var Sid = Request.Url.Segments[3];
-}
+﻿@model SMS.Models.Person
 <title>School Management System</title>
 @{ Layout = null;}
 <head>
@@ -292,28 +289,7 @@
 </head>
 
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("DateSheet", "ViewDatesheet", "Student",new { id =  Sid})</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-    </div>
     <div class="navbar">
-        
         <div class="dropdown">
 
             <div class="dropdown-content">
@@ -322,20 +298,97 @@
             </div>
         </div>
     </div>
-
-  
+    @{
+        var Tid = Request.Url.Segments[3];
+    }
     <h2 style="color  :#b18757; font-family : Calisto MT">&emsp; &emsp; Welcome to ABC School System </h2>
     <br>
+
+
+    @{
+        var Sid = Request.Url.Segments[3];
+    }
+
+    @Html.ActionLink("DateSheet", "ViewDatesheet", new { id = Sid })
+
+
     <h3 style="color  :#ECCF3E; font-family : Calisto MT">
         &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; My Profile
     </h3>
-   
-    @Html.ActionLink("DateSheet", "ViewDatesheet", new { id =  Sid})
-   
+
+    <div>
+        <h4>Profile Details</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </dt>
+
+            <dd>
+                &emsp; &emsp;&emsp; &emsp; &emsp; &emsp;
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.LastName)
+            </dt>
+
+            <dd>
+                &emsp; &emsp;&emsp; &emsp; &emsp; &emsp;
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Contact)
+            </dt>
+
+            <dd>
+                &emsp; &emsp;&emsp; &emsp; &emsp; &emsp;
+                @Html.DisplayFor(model => model.Contact)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Gender)
+            </dt>
+
+            <dd>
+                &emsp; &emsp;&emsp; &emsp; &emsp; &emsp;
+
+                @Html.DisplayFor(model => model.Gender)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+
+            <dd>
+                &emsp; &emsp;&emsp; &emsp; &emsp; &emsp;
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+            </dt>
+
+            <dd>
+                &emsp; &emsp;&emsp; &emsp; &emsp; &emsp;
+                @Html.DisplayFor(model => model.DateOfBirth)
+            </dd>
+
+        </dl>
+    </div>
+    @*<p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>*@
+
 
 
     <br><br><br><br>
 
 </body>
+   
+
+
 
 
