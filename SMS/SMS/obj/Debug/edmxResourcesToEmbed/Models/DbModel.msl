@@ -18,7 +18,8 @@
           <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
           <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
           <ScalarProperty Name="AttendanceDate" ColumnName="AttendanceDate" />
-          <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+          <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+          <ScalarProperty Name="ClassId" ColumnName="ClassId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -195,16 +196,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="StudentResults">
-      <EntityTypeMapping TypeName="DB35Model.StudentResult">
-        <MappingFragment StoreEntitySet="StudentResult">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="ResultId" ColumnName="ResultId" />
-          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-          <ScalarProperty Name="ObtainedMarks" ColumnName="ObtainedMarks" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Suggestions">
       <EntityTypeMapping TypeName="DB35Model.Suggestion">
         <MappingFragment StoreEntitySet="Suggestions">
@@ -213,17 +204,6 @@
           <ScalarProperty Name="Subject" ColumnName="Subject" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Status" ColumnName="Status" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="sysdiagrams">
-      <EntityTypeMapping TypeName="DB35Model.sysdiagram">
-        <MappingFragment StoreEntitySet="sysdiagrams">
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="definition" ColumnName="definition" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -252,6 +232,15 @@
         <MappingFragment StoreEntitySet="Admin">
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudentResults">
+      <EntityTypeMapping TypeName="DB35Model.StudentResult">
+        <MappingFragment StoreEntitySet="StudentResult">
+          <ScalarProperty Name="ResultId" ColumnName="ResultId" />
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+          <ScalarProperty Name="ObtainedMarks" ColumnName="ObtainedMarks" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

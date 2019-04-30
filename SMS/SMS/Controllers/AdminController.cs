@@ -182,7 +182,7 @@ namespace SMS.Controllers
                 return RedirectToAction("Class", "Admin");
             }
 
-
+            int o = 0;
             bool check = true;
             DB35Entities dbo = new DB35Entities();
             if (obj.UserName.Contains("-"))
@@ -213,11 +213,13 @@ namespace SMS.Controllers
                     if (t.Password == obj.Password && t.Email == obj.UserName)
                     {
                         check = true;
+                        o = t.Id;
+                        
                     }
                 }
                 if (check == true)
                 {
-                    return View("AddCourse");
+                   return RedirectToAction("LoggedInView", "Teacher",new { id = o});
                 }
                 else
                 {

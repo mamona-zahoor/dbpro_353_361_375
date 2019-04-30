@@ -32,7 +32,8 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
           <Property Name="AttendanceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TeacherId" Type="int" Nullable="false" />
           <Property Name="AttendanceDate" Type="datetime" Nullable="false" />
-          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="SectionId" Type="int" Nullable="false" />
+          <Property Name="ClassId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Class">
           <Key>
@@ -267,15 +268,27 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Attendance_Courses">
-          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+        <Association Name="FK_Attendance_Class">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
           <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Courses">
-              <PropertyRef Name="CourseId" />
+            <Principal Role="Class">
+              <PropertyRef Name="ClassId" />
             </Principal>
             <Dependent Role="Attendance">
-              <PropertyRef Name="CourseId" />
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendance_Section">
+          <End Role="Section" Type="Self.Section" Multiplicity="1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="SectionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -755,8 +768,12 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
             <End Role="Section" EntitySet="Section" />
             <End Role="Assignments" EntitySet="Assignments" />
           </AssociationSet>
-          <AssociationSet Name="FK_Attendance_Courses" Association="Self.FK_Attendance_Courses">
-            <End Role="Courses" EntitySet="Courses" />
+          <AssociationSet Name="FK_Attendance_Class" Association="Self.FK_Attendance_Class">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="Attendance" EntitySet="Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendance_Section" Association="Self.FK_Attendance_Section">
+            <End Role="Section" EntitySet="Section" />
             <End Role="Attendance" EntitySet="Attendance" />
           </AssociationSet>
           <AssociationSet Name="FK_Attendance_Teacher" Association="Self.FK_Attendance_Teacher">
@@ -929,8 +946,10 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
           <Property Name="AttendanceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TeacherId" Type="Int32" Nullable="false" />
           <Property Name="AttendanceDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CourseId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Cours" Relationship="Self.FK_Attendance_Courses" FromRole="Attendance" ToRole="Courses" />
+          <Property Name="SectionId" Type="Int32" Nullable="false" />
+          <Property Name="ClassId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Class" Relationship="Self.FK_Attendance_Class" FromRole="Attendance" ToRole="Class" />
+          <NavigationProperty Name="Section" Relationship="Self.FK_Attendance_Section" FromRole="Attendance" ToRole="Section" />
           <NavigationProperty Name="Teacher" Relationship="Self.FK_Attendance_Teacher" FromRole="Attendance" ToRole="Teacher" />
           <NavigationProperty Name="StudentAttendances" Relationship="Self.FK_StudentAttendance_Attendance" FromRole="Attendance" ToRole="StudentAttendance" />
         </EntityType>
@@ -942,6 +961,7 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
           <Property Name="Name" Type="Int32" Nullable="false" />
           <Property Name="NumOfStudents" Type="Int32" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Attendances" Relationship="Self.FK_Attendance_Class" FromRole="Class" ToRole="Attendance" />
           <NavigationProperty Name="ClassSections" Relationship="Self.FK_ClassSections_Class" FromRole="Class" ToRole="ClassSections" />
           <NavigationProperty Name="DateSheets" Relationship="Self.FK_DateSheet_Class" FromRole="Class" ToRole="DateSheet" />
         </EntityType>
@@ -976,7 +996,6 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
           <Property Name="Title" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Assignments" Relationship="Self.FK_Assignments_Courses" FromRole="Courses" ToRole="Assignments" />
-          <NavigationProperty Name="Attendances" Relationship="Self.FK_Attendance_Courses" FromRole="Courses" ToRole="Attendance" />
           <NavigationProperty Name="Section" Relationship="Self.FK_Courses_Section" FromRole="Courses" ToRole="Section" />
           <NavigationProperty Name="Teacher" Relationship="Self.FK_Courses_Teacher" FromRole="Courses" ToRole="Teacher" />
           <NavigationProperty Name="Lectures" Relationship="Self.FK_Lectures_Courses" FromRole="Courses" ToRole="Lectures" />
@@ -1091,6 +1110,7 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
           <Property Name="NumOfStudents" Type="Int32" Nullable="false" />
           <Property Name="TeacherId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Assignments" Relationship="Self.FK_Assignments_Section" FromRole="Section" ToRole="Assignments" />
+          <NavigationProperty Name="Attendances" Relationship="Self.FK_Attendance_Section" FromRole="Section" ToRole="Attendance" />
           <NavigationProperty Name="ClassSections" Relationship="Self.FK_ClassSections_Section" FromRole="Section" ToRole="ClassSections" />
           <NavigationProperty Name="Courses" Relationship="Self.FK_Courses_Section" FromRole="Section" ToRole="Courses" />
           <NavigationProperty Name="Results" Relationship="Self.FK_Results_Section" FromRole="Section" ToRole="Results" />
@@ -1247,15 +1267,27 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Attendance_Courses">
-          <End Role="Courses" Type="Self.Cours" Multiplicity="1" />
+        <Association Name="FK_Attendance_Class">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
           <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Courses">
-              <PropertyRef Name="CourseId" />
+            <Principal Role="Class">
+              <PropertyRef Name="ClassId" />
             </Principal>
             <Dependent Role="Attendance">
-              <PropertyRef Name="CourseId" />
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendance_Section">
+          <End Role="Section" Type="Self.Section" Multiplicity="1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="SectionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1695,8 +1727,12 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
             <End Role="Assignments" EntitySet="Assignments" />
             <End Role="StuAssignmentMarks" EntitySet="StuAssignmentMarks" />
           </AssociationSet>
-          <AssociationSet Name="FK_Attendance_Courses" Association="Self.FK_Attendance_Courses">
-            <End Role="Courses" EntitySet="Courses" />
+          <AssociationSet Name="FK_Attendance_Class" Association="Self.FK_Attendance_Class">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="Attendance" EntitySet="Attendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendance_Section" Association="Self.FK_Attendance_Section">
+            <End Role="Section" EntitySet="Sections" />
             <End Role="Attendance" EntitySet="Attendances" />
           </AssociationSet>
           <AssociationSet Name="FK_Attendance_Teacher" Association="Self.FK_Attendance_Teacher">
@@ -1859,7 +1895,8 @@ warning 6002: The table/view 'DB35.dbo.StudentResult' does not have a primary ke
                 <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
                 <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
                 <ScalarProperty Name="AttendanceDate" ColumnName="AttendanceDate" />
-                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

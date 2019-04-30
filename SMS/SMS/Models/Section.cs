@@ -18,6 +18,7 @@ namespace SMS.Models
         public Section()
         {
             this.Assignments = new HashSet<Assignment>();
+            this.Attendances = new HashSet<Attendance>();
             this.ClassSections = new HashSet<ClassSection>();
             this.Courses = new HashSet<Cours>();
             this.Results = new HashSet<Result>();
@@ -32,6 +33,8 @@ namespace SMS.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Assignment> Assignments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Attendance> Attendances { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClassSection> ClassSections { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -101,13 +101,91 @@ namespace SMS.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult MarkAttendance(FormCollection C)
+        public ActionResult MarkAttendance(int id,FormCollection C)
         {
+            DB35Entities db = new DB35Entities();
+
+            List<int> Indexes = new List<int>();
+            for (int i =0; i < C.Count; i++)
+            {
+                if(C.Keys[i].StartsWith("Check_"))
+                {
+                    var s = C.Keys[i].Split('_');
+                    Indexes.Add(Convert.ToInt32(s[1]));
+                }
+            }
+
+            var cid = C["ClassId"];
+            var sid = C["SectionId"];
+            var date = C["date"];
+            bool check = true;
+            foreach(Attendance a in db.Attendances)
+            {
+                if(Convert.ToDateTime(date) == a.AttendanceDate)
+                {
+                    ViewBag.Message = "Attandance has already been marked for " + date + " ";
+                    ViewBag.Check = false;
+                    check = false;
+                    break;
+                }
+                else
+                {
+                    
+                    ViewBag.Check = true;
+                    
+                }
+            }
+            int d = 0;
+            if (check == true)
+            {
+                Attendance at = new Attendance();
+                at.AttendanceDate = Convert.ToDateTime(date);
+                at.TeacherId = id;
+                at.ClassId = Convert.ToInt32(cid);
+                at.SectionId =Convert.ToInt32( sid);
+               
+                db.Attendances.Add(at);
+                d = at.AttendanceId;
+                db.SaveChanges();
+                
+            }
+            int u = Convert.ToInt32(sid);
+
+            foreach(Student s in db.Students.Where(x => x.SectionId == u).ToList())
+
+            {
+                for(int i =0; i <  Indexes.Count; i++)
+                {
+                    StudentAttendance st = new StudentAttendance();
+                    if(Indexes[i] == s.Id)
+                    {
+                        st.Status = db.LookUps.Where(x => x.Value == "Present").Single().Id;
+                        st.AttendanceId = db.Attendances.Max(x => x.AttendanceId);
+                        st.StudentId = s.Id;
+                        db.StudentAttendances.Add(st);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        st.Status = db.LookUps.Where(x => x.Value == "Absent").Single().Id;
+                        st.AttendanceId = d;
+                        st.StudentId = s.Id;
+                        db.StudentAttendances.Add(st);
+                        db.SaveChanges();
+                    }
+                }
+            }
+
+
             return View();
         }
         public ActionResult LoggedInView(int id)
         {
             return View();
+        }
+        public int Tid(int Tid)
+        {
+            return Tid;
         }
 
         public ActionResult TeacherSections(int id)

@@ -18,7 +18,6 @@ namespace SMS.Models
         public Cours()
         {
             this.Assignments = new HashSet<Assignment>();
-            this.Attendances = new HashSet<Attendance>();
             this.Lectures = new HashSet<Lecture>();
             this.Lectures1 = new HashSet<Lecture>();
             this.Lectures2 = new HashSet<Lecture>();
@@ -35,8 +34,6 @@ namespace SMS.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Assignment> Assignments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Attendance> Attendances { get; set; }
         public virtual Section Section { get; set; }
         public virtual Teacher Teacher { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
