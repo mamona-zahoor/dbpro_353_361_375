@@ -764,7 +764,7 @@ namespace SMS.Controllers
                 if (c.ClassId == ClassId && c.SectionId == id)
                 {
                     db.ClassSections.Remove(c);
-                 
+
                     break;
                 }
             }
@@ -773,7 +773,24 @@ namespace SMS.Controllers
                 if (s.SectionId == id)
                 {
                     db.Sections.Remove(s);
-                    break;
+                }
+            }
+
+            foreach (Student s in db.Students)
+            {
+                if (s.SectionId == id)
+                {
+                    int a = s.Id;
+                    db.Students.Remove(s);
+
+                    foreach (FeeChallan fc in db.FeeChallans)
+                    {
+                        if (fc.StudentId == a)
+                        {
+                            db.FeeChallans.Remove(fc);
+                        }
+                    }
+
                 }
             }
 
@@ -979,6 +996,33 @@ namespace SMS.Controllers
                 {
                     db.Classes.Remove(cl);
                     break;
+
+                }
+            }
+
+            foreach (Student s in db.Students)
+            {
+                if (s.ClassId == id)
+                {
+                    int b = s.ClassId;
+                    int a = s.Id;
+                    db.Students.Remove(s);
+
+                    foreach (ClassSection cs in db.ClassSections)
+                    {
+                        if (cs.ClassId == b)
+                        {
+                            db.ClassSections.Remove(cs);
+                        }
+                    }
+
+                    foreach (FeeChallan f in db.FeeChallans)
+                    {
+                        if (f.StudentId == a)
+                        {
+                            db.FeeChallans.Remove(f);
+                        }
+                    }
 
                 }
             }
@@ -1193,16 +1237,36 @@ namespace SMS.Controllers
 
             int a = x;
             int b = 0;
-            int idd = db.ClassSections.First(c => c.ClassId == a).SectionId;
-            foreach (Section s in db.Sections)
+            int idd = db.ClassSections.First(cl => cl.ClassId == a).SectionId;
+            foreach (Section sec in db.Sections)
             {
-                if (s.Name == sectn)
+                if (sec.Name == sectn)
                 {
-                    b = s.SectionId;
+                    b = sec.SectionId;
                 }
             }
             db.Students.Find(id).SectionId = b;
-            //obj.SectionId = b;
+
+
+            int z = b;
+
+            Class c = new Class();
+            Section s = new Section();
+
+            if (c.ClassId == a && s.SectionId == z)
+            {
+                c.NumOfStudents++;
+                s.NumOfStudents++;
+            }
+
+            else if (c.ClassId == a && s.SectionId != b)
+            {
+                c.NumOfStudents++;
+            }
+            else if (c.ClassId != a && s.SectionId == b)
+            {
+                s.NumOfStudents++;
+            }
 
             db.SaveChanges();
             return RedirectToAction("Student");
@@ -1213,29 +1277,49 @@ namespace SMS.Controllers
         {
             DB35Entities db = new DB35Entities();
 
-            foreach(FeeChallan fc in db.FeeChallans)
+            foreach (FeeChallan fc in db.FeeChallans)
             {
-                if(fc.StudentId == id)
+                if (fc.StudentId == id)
                 {
                     db.FeeChallans.Remove(fc);
                     break;
                 }
             }
-            foreach (Student s in db.Students)
+            foreach (Student st in db.Students)
             {
-                if (s.Id == id)
+                if (st.Id == id)
                 {
-                    db.Students.Remove(s);
-                    break;
+                    int a = st.ClassId;
+                    int b = st.SectionId;
+                    db.Students.Remove(st);
+
+                    foreach (Class c in db.Classes)
+                    {
+                        if (c.ClassId == a)
+                        {
+                            c.NumOfStudents--;
+                        }
+                    }
+                    db.SaveChanges();
+
+
+                    foreach (Section c in db.Sections)
+                    {
+                        if (c.SectionId == b)
+                        {
+                            c.NumOfStudents--;
+                        }
+                    }
+
 
                 }
             }
 
-            foreach (Person s in db.People)
+            foreach (Person p in db.People)
             {
-                if (s.Id == id)
+                if (p.Id == id)
                 {
-                    db.People.Remove(s);
+                    db.People.Remove(p);
                     break;
 
                 }
@@ -1527,18 +1611,11 @@ namespace SMS.Controllers
                 }
             }
 
-
-            
-
-            
-           
-            foreach (Teacher s in db.Teachers)
+            foreach (Teacher t in db.Teachers)
             {
-                if (s.Id == id)
+                if (t.Id == id)
                 {
-
-                    db.Teachers.Remove(s);
-                    break;
+                    db.Teachers.Remove(t);
 
                 }
             }

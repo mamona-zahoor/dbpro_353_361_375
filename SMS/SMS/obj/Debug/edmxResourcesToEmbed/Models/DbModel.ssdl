@@ -151,14 +151,6 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     <Property Name="NumOfStudents" Type="int" Nullable="false" />
     <Property Name="TeacherId" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="SectionStudents">
-    <Key>
-      <PropertyRef Name="SectionId" />
-      <PropertyRef Name="StudentId" />
-    </Key>
-    <Property Name="SectionId" Type="int" Nullable="false" />
-    <Property Name="StudentId" Type="int" Nullable="false" />
-  </EntityType>
   <EntityType Name="SectionTimetable">
     <Key>
       <PropertyRef Name="Id" />
@@ -218,16 +210,6 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     <Property Name="Subject" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Description" Type="varchar" MaxLength="200" Nullable="false" />
     <Property Name="Status" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="Teacher">
     <Key>
@@ -535,30 +517,6 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_SectionStudents_Section">
-    <End Role="Section" Type="Self.Section" Multiplicity="1" />
-    <End Role="SectionStudents" Type="Self.SectionStudents" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Section">
-        <PropertyRef Name="SectionId" />
-      </Principal>
-      <Dependent Role="SectionStudents">
-        <PropertyRef Name="SectionId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SectionStudents_Student">
-    <End Role="Student" Type="Self.Student" Multiplicity="1" />
-    <End Role="SectionStudents" Type="Self.SectionStudents" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Student">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="SectionStudents">
-        <PropertyRef Name="StudentId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_SectionTimetable_Timetable">
     <End Role="Timetable" Type="Self.Timetable" Multiplicity="1" />
     <End Role="SectionTimetable" Type="Self.SectionTimetable" Multiplicity="*" />
@@ -742,14 +700,12 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Results" EntityType="Self.Results" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="SectionStudents" EntityType="Self.SectionStudents" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SectionTimetable" EntityType="Self.SectionTimetable" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="StuAssignmentMarks" EntityType="Self.StuAssignmentMarks" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="StudentAttendance" EntityType="Self.StudentAttendance" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="StudentResult" EntityType="Self.StudentResult" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Suggestions" EntityType="Self.Suggestions" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Timetable" EntityType="Self.Timetable" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Admin" EntityType="Self.Admin" store:Type="Tables" store:Schema="dbo">
@@ -853,14 +809,6 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     <AssociationSet Name="FK_Section_Teacher" Association="Self.FK_Section_Teacher">
       <End Role="Teacher" EntitySet="Teacher" />
       <End Role="Section" EntitySet="Section" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SectionStudents_Section" Association="Self.FK_SectionStudents_Section">
-      <End Role="Section" EntitySet="Section" />
-      <End Role="SectionStudents" EntitySet="SectionStudents" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SectionStudents_Student" Association="Self.FK_SectionStudents_Student">
-      <End Role="Student" EntitySet="Student" />
-      <End Role="SectionStudents" EntitySet="SectionStudents" />
     </AssociationSet>
     <AssociationSet Name="FK_SectionTimetable_Timetable" Association="Self.FK_SectionTimetable_Timetable">
       <End Role="Timetable" EntitySet="Timetable" />

@@ -304,6 +304,9 @@
                 SectionId
             </th>
             <th>
+                Password
+            </th>
+            <th>
                 Fee Details
             </th>
             <th>
@@ -322,6 +325,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.SectionId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
                 </td>
                 <td>
                     @Html.ActionLink("Fee Details", "FeeChallans", new { id = item.Id })

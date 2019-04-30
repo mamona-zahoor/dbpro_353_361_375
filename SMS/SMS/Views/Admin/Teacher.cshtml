@@ -308,6 +308,9 @@
                 InchargeOfSection
             </th>
             <th>
+                Password
+            </th>
+            <th>
                 Salary Details
             </th>
             <th>
@@ -329,6 +332,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.InchSec)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
                 </td>
                 <td>
                     @Html.ActionLink("Pay Details", "Payrolls", new { id = item.Id })
