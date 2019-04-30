@@ -797,7 +797,7 @@ namespace SMS.Controllers
             foreach (Teacher t in db.Teachers)
             {
                 if (t.InchSec == id)
-                {
+                { 
                     int i = t.Id;
                     db.Teachers.Find(i).InchSec = null;
                     break;

@@ -1,4 +1,4 @@
-﻿
+﻿@model SMS.Models.Person
 <title>School Management System</title>
 @{ Layout = null;}
 <head>
@@ -308,9 +308,77 @@
     &emsp; &emsp; @Html.ActionLink("My Payroll", "TeacherPayroll", new { id = Tid })
 
 
+
+
     <h3 style="color  :#ECCF3E; font-family : Calisto MT">
         &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; My Profile
     </h3>
+
+    <div>
+        <h4>Profile Details</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </dt>        
+
+            <dd>
+                &emsp; &emsp;&emsp; &emsp; &emsp; &emsp;
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.LastName)
+            </dt>
+           
+            <dd>
+                &emsp; &emsp;&emsp; &emsp; &emsp; &emsp;
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Contact)
+            </dt>
+           
+            <dd>
+                &emsp; &emsp;&emsp; &emsp; &emsp; &emsp;
+                @Html.DisplayFor(model => model.Contact)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Gender)
+            </dt>
+            
+            <dd>
+                &emsp; &emsp;&emsp; &emsp; &emsp; &emsp;
+                
+                @Html.DisplayFor(model => model.Gender)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+            
+            <dd>
+                &emsp; &emsp;&emsp; &emsp; &emsp; &emsp;
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+            </dt>
+            
+            <dd>
+                &emsp; &emsp;&emsp; &emsp; &emsp; &emsp;
+                @Html.DisplayFor(model => model.DateOfBirth)
+            </dd>
+
+        </dl>
+    </div>
+    @*<p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>*@
 
 
 

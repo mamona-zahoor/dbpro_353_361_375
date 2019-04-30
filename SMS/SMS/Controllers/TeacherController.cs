@@ -182,9 +182,17 @@ namespace SMS.Controllers
             }
             return View();
         }
+
+
+
         public ActionResult LoggedInView(int id)
         {
-            return View();
+            DB35Entities db = new DB35Entities();
+            using (db)
+            {
+                return View(db.People.First(f => f.Id == id));
+            }
+           
         }
         public int Tid(int Tid)
         {
@@ -461,6 +469,15 @@ namespace SMS.Controllers
             }
             return View(pr);
         }
+
+        //public ActionResult TeacherProfile(int id)
+        //{
+        //    DB35Entities db = new DB35Entities();
+        //    using (db)
+        //    {
+        //        return View(db.People.First(f => f.Id == id));
+        //    }
+        //}
     
 }
 }
