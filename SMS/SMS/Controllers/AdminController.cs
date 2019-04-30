@@ -1081,6 +1081,43 @@ namespace SMS.Controllers
             }
         }
 
+        public ActionResult EditStudentDetails(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            PersonVM p = new PersonVM();
+            foreach (Person pe in db.People)
+            {
+                if (pe.Id == p.Id)
+                {
+                    p.FirstName = pe.FirstName;
+                    p.LastName = pe.LastName;
+                    p.Contact = pe.Contact;
+                    //p.Gender = db.LookUps.First(l => l.Value == "Female").Id;
+                    //int a = p.Gender;
+                    //pe.Gender = a;
+                    p.Address = pe.Address;
+                    p.DateOfBirth = pe.DateOfBirth;
+                    break;
+                }
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EditStudentDetails(int id, Person obj)
+        {
+            DB35Entities db = new DB35Entities();
+            db.People.Find(id).FirstName = obj.FirstName;
+            db.People.Find(id).LastName = obj.LastName;
+            db.People.Find(id).Contact = obj.Contact;
+            //db.People.Find(id).Gender = obj.Gender;
+            db.People.Find(id).Address = obj.Address;
+            db.People.Find(id).DateOfBirth = obj.DateOfBirth;
+
+            db.SaveChanges();
+            return RedirectToAction("Student");
+        }
+
 
         public string RandomPasswordString(int size, bool lowerCase)
         {
@@ -1223,6 +1260,8 @@ namespace SMS.Controllers
             return View(st);
 
         }
+
+       
         [HttpPost]
         public ActionResult EditStudent(int id, Student obj)
         {
@@ -1345,6 +1384,39 @@ namespace SMS.Controllers
             {
                 return View(db.People.First(f => f.Id == id));
             }
+        }
+
+        public ActionResult EditTeacherDetails(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            PersonVM p = new PersonVM();
+            foreach (Person pe in db.People)
+            {
+                if (pe.Id == p.Id)
+                {
+                    p.FirstName = pe.FirstName;
+                    p.LastName = pe.LastName;
+                    p.Contact = pe.Contact;
+                    p.Address = pe.Address;
+                    p.DateOfBirth = pe.DateOfBirth;
+                    break;
+                }
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EditTeacherDetails(int id, Person obj)
+        {
+            DB35Entities db = new DB35Entities();
+            db.People.Find(id).FirstName = obj.FirstName;
+            db.People.Find(id).LastName = obj.LastName;
+            db.People.Find(id).Contact = obj.Contact;
+            db.People.Find(id).Address = obj.Address;
+            db.People.Find(id).DateOfBirth = obj.DateOfBirth;
+
+            db.SaveChanges();
+            return RedirectToAction("Teacher");
         }
 
 
