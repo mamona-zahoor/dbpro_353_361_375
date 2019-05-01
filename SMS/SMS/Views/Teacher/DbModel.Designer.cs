@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'E:\6th Semester\DBMS\Lab\School Management System Finals Project\Latest\dbpro_353_361_375\SMS\SMS\Models\DbModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Admin\Desktop\New folder (6)\New folder (6)\dbpro_353_361_375\SMS\SMS\Views\Teacher\DbModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

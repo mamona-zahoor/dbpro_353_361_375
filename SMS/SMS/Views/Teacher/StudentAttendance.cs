@@ -7,17 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SMS.Models
+namespace SMS.Views.Teacher
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class ClassDateSheet
+    public partial class StudentAttendance
     {
-        public int DateSheetId { get; set; }
-        public int CourseId { get; set; }
-        public System.DateTime Date { get; set; }
-        public System.TimeSpan StartTime { get; set; }
-        public System.TimeSpan EndTime { get; set; }
+        public int AttendanceId { get; set; }
+        public int StudentId { get; set; }
+        public int Status { get; set; }
+    
+        public virtual Attendance Attendance { get; set; }
+        public virtual LookUp LookUp { get; set; }
+        public virtual Student Student { get; set; }
     }
 }

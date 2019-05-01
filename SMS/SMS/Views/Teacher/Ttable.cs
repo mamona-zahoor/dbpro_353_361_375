@@ -7,25 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SMS.Models
+namespace SMS.Views.Teacher
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class SectionTimetable
+    public partial class Ttable
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SectionTimetable()
+        public Ttable()
         {
-            this.Lectures = new HashSet<Lecture>();
+            this.TeacherTimetables = new HashSet<TeacherTimetable>();
         }
     
-        public int TimetableId { get; set; }
-        public string Day { get; set; }
         public int Id { get; set; }
+        public int TeacherId { get; set; }
+        public string Day { get; set; }
     
+        public virtual Teacher Teacher { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Lecture> Lectures { get; set; }
-        public virtual Timetable Timetable { get; set; }
+        public virtual ICollection<TeacherTimetable> TeacherTimetables { get; set; }
     }
 }

@@ -113,7 +113,7 @@ namespace SMS.Controllers
 
 
 
-            return View(Time);
+            return View(Time.OrderBy(x => x.day));
         }
 
         // GET: Admin/Create
@@ -460,7 +460,7 @@ namespace SMS.Controllers
                 db.SaveChanges();
                 u.TimetableId = tt.TimetableId;
             }
-            foreach (SectionTimetable c in db.SectionTimetables)
+            foreach (SectionTimetable c in db.SectionTimetables.ToList())
             {
                 if (c.TimetableId == u.TimetableId && c.Day == t.Day)
                 {
@@ -469,7 +469,10 @@ namespace SMS.Controllers
                     {
 
                         db.Lectures.Where(x => x.Id == c.Id).SingleOrDefault().Lecture1 = t.CourseId;
+
+
                     }
+
                     if (t.EndTime == DateTime.Parse("10:00 AM").TimeOfDay)
                     {
                         db.Lectures.Where(x => x.Id == c.Id).SingleOrDefault().Lecture2 = t.CourseId;
@@ -529,11 +532,103 @@ namespace SMS.Controllers
 
 
 
-
+            Timetable(t);
             db.SaveChanges();
             return View();
 
         }
+
+        public void Timetable(TimeTableVM V)
+        {
+            DB35Entities db = new DB35Entities();
+            int cid = V.CourseId;
+            int tid = db.Courses.Where(x => x.CourseId == cid).SingleOrDefault().TeacherId;
+            bool check = true;
+            foreach (Ttable t in db.Ttables.ToList())
+            {
+                if (t.TeacherId == tid && t.Day == V.Day)
+                {
+                    check = false;
+                    break;
+                }
+            }
+            if (check == false)
+            {
+                TeacherTimetable tt = new TeacherTimetable();
+                int z = db.Ttables.Where(x => x.TeacherId == tid && x.Day == V.Day).SingleOrDefault().Id;
+                if (V.EndTime == DateTime.Parse("9:00 AM").TimeOfDay)
+                {
+                    db.TeacherTimetables.Where(x => x.TId == z).SingleOrDefault().Lecture1 = cid;
+                    db.TeacherTimetables.Where(x => x.TId == z).SingleOrDefault().Class1 = V.SectionId;
+
+                }
+                if (V.EndTime == DateTime.Parse("10:00 AM").TimeOfDay)
+                {
+
+                    db.TeacherTimetables.Where(x => x.TId == z).SingleOrDefault().Lecture2 = cid;
+                    db.TeacherTimetables.Where(x => x.TId == z).SingleOrDefault().Class2 = V.SectionId;
+                }
+                if (V.EndTime == DateTime.Parse("11:00 AM").TimeOfDay)
+                {
+                    db.TeacherTimetables.Where(x => x.TId == z).SingleOrDefault().Lecture3 = cid;
+                    db.TeacherTimetables.Where(x => x.TId == z).SingleOrDefault().Class3 = V.SectionId;
+
+                }
+                if (V.EndTime == DateTime.Parse("12:00 PM").TimeOfDay)
+                {
+                    db.TeacherTimetables.Where(x => x.TId == z).SingleOrDefault().Lecture4 = cid;
+                    db.TeacherTimetables.Where(x => x.TId == z).SingleOrDefault().Class4 = V.SectionId;
+                }
+
+                if (V.EndTime == DateTime.Parse("02:00 PM").TimeOfDay)
+                {
+                    db.TeacherTimetables.Where(x => x.TId == z).SingleOrDefault().Lecture5 = cid;
+                    db.TeacherTimetables.Where(x => x.TId == z).SingleOrDefault().Class5 = V.SectionId;
+                }
+                db.SaveChanges();
+            }
+            else
+            {
+                TeacherTimetable q = new TeacherTimetable();
+                Ttable x = new Ttable();
+                x.Day = V.Day;
+                x.TeacherId = tid;
+                db.Ttables.Add(x);
+
+
+                if (V.EndTime == DateTime.Parse("09:00 AM").TimeOfDay)
+                {
+                    q.Lecture1 = cid;
+                    q.Class1 = V.SectionId;
+
+                }
+                if (V.EndTime == DateTime.Parse("10:00 AM").TimeOfDay)
+                {
+                    q.Lecture2 = cid;
+                    q.Class2 = V.SectionId;
+                }
+                if (V.EndTime == DateTime.Parse("11:00 AM").TimeOfDay)
+                {
+                    q.Lecture3 = cid;
+                    q.Class3 = V.SectionId;
+                }
+                if (V.EndTime == DateTime.Parse("12:00 pM").TimeOfDay)
+                {
+                    q.Lecture4 = cid;
+                    q.Class4 = V.SectionId;
+                }
+                if (V.EndTime == DateTime.Parse("2:00 PM").TimeOfDay)
+                {
+                    q.Lecture5 = cid;
+                    q.Class5 = V.SectionId;
+                }
+                db.TeacherTimetables.Add(q);
+                q.TId = x.Id;
+                db.SaveChanges();
+
+            }
+        }
+
 
         // GET: Admin/Edit/5
         public ActionResult Edit(int id)

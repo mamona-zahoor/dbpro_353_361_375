@@ -7,20 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SMS.Models
+namespace SMS.Views.Teacher
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Suggestion
+    public partial class ClassSection
     {
-        public int PersonId { get; set; }
-        public int SuggestionId { get; set; }
-        public string Subject { get; set; }
-        public string Description { get; set; }
-        public int Status { get; set; }
+        public int ClassId { get; set; }
+        public int SectionId { get; set; }
+        public int Id { get; set; }
     
-        public virtual LookUp LookUp { get; set; }
-        public virtual Person Person { get; set; }
+        public virtual Class Class { get; set; }
+        public virtual Section Section { get; set; }
     }
 }

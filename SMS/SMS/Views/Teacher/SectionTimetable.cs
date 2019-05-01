@@ -7,31 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SMS.Models
+namespace SMS.Views.Teacher
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Person
+    public partial class SectionTimetable
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Person()
+        public SectionTimetable()
         {
-            this.Suggestions = new HashSet<Suggestion>();
+            this.Lectures = new HashSet<Lecture>();
         }
     
+        public int TimetableId { get; set; }
+        public string Day { get; set; }
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Contact { get; set; }
-        public int Gender { get; set; }
-        public string Address { get; set; }
-        public System.DateTime DateOfBirth { get; set; }
     
-        public virtual LookUp LookUp { get; set; }
-        public virtual Student Student { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Suggestion> Suggestions { get; set; }
-        public virtual Teacher Teacher { get; set; }
+        public virtual ICollection<Lecture> Lectures { get; set; }
+        public virtual Timetable Timetable { get; set; }
     }
 }

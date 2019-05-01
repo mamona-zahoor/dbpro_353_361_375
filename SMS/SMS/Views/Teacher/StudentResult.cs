@@ -7,14 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SMS.Models
+namespace SMS.Views.Teacher
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Admin
+    public partial class StudentResult
     {
-        public string UserName { get; set; }
-        public string Password { get; set; }
+        public int ResultId { get; set; }
+        public int StudentId { get; set; }
+        public decimal ObtainedMarks { get; set; }
+    
+        public virtual Result Result { get; set; }
+        public virtual Student Student { get; set; }
     }
 }

@@ -7,19 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SMS.Models
+namespace SMS.Views.Teacher
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class StudentAttendance
+    public partial class StuAssignmentMark
     {
-        public int AttendanceId { get; set; }
         public int StudentId { get; set; }
-        public int Status { get; set; }
+        public int AssignmentId { get; set; }
+        public int TeacherId { get; set; }
+        public decimal ObtainedMarks { get; set; }
     
-        public virtual Attendance Attendance { get; set; }
-        public virtual LookUp LookUp { get; set; }
+        public virtual Assignment Assignment { get; set; }
         public virtual Student Student { get; set; }
+        public virtual Teacher Teacher { get; set; }
     }
 }

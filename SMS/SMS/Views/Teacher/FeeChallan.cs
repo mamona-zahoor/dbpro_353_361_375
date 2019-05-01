@@ -7,18 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SMS.Models
+namespace SMS.Views.Teacher
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class ClassSection
+    public partial class FeeChallan
     {
-        public int ClassId { get; set; }
-        public int SectionId { get; set; }
-        public int Id { get; set; }
+        public int FeeChallanId { get; set; }
+        public int StudentId { get; set; }
+        public decimal Fee { get; set; }
+        public Nullable<decimal> Scholarships { get; set; }
+        public Nullable<decimal> Fine { get; set; }
+        public decimal TotalFee { get; set; }
+        public int Status { get; set; }
     
-        public virtual Class Class { get; set; }
-        public virtual Section Section { get; set; }
+        public virtual LookUp LookUp { get; set; }
+        public virtual Student Student { get; set; }
     }
 }

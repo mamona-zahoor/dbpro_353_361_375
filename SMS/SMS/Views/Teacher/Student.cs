@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SMS.Models
+namespace SMS.Views.Teacher
 {
     using System;
     using System.Collections.Generic;
@@ -21,6 +21,7 @@ namespace SMS.Models
             this.StuAssignmentMarks = new HashSet<StuAssignmentMark>();
             this.StudentAttendances = new HashSet<StudentAttendance>();
             this.StudentResults = new HashSet<StudentResult>();
+            this.Sections = new HashSet<Section>();
         }
     
         public int Id { get; set; }
@@ -41,5 +42,7 @@ namespace SMS.Models
         public virtual ICollection<StudentAttendance> StudentAttendances { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StudentResult> StudentResults { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Section> Sections { get; set; }
     }
 }

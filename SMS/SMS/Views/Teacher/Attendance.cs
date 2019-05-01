@@ -7,28 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SMS.Models
+namespace SMS.Views.Teacher
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Result
+    public partial class Attendance
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Result()
+        public Attendance()
         {
-            this.StudentResults = new HashSet<StudentResult>();
+            this.StudentAttendances = new HashSet<StudentAttendance>();
         }
     
-        public int ResultId { get; set; }
+        public int AttendanceId { get; set; }
+        public int TeacherId { get; set; }
+        public System.DateTime AttendanceDate { get; set; }
         public int SectionId { get; set; }
-        public int CourseId { get; set; }
-        public string Title { get; set; }
-        public decimal TotalMarks { get; set; }
+        public int ClassId { get; set; }
     
-        public virtual Cours Cours { get; set; }
+        public virtual Class Class { get; set; }
         public virtual Section Section { get; set; }
+        public virtual Teacher Teacher { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StudentResult> StudentResults { get; set; }
+        public virtual ICollection<StudentAttendance> StudentAttendances { get; set; }
     }
 }

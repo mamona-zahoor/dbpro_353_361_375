@@ -19,6 +19,88 @@ namespace SMS.Controllers
         {
             return View();
         }
+        public ActionResult ViewTimetable(int id)
+        {
+            List<ViewTimeTable> to = new List<ViewTimeTable>();
+            DB35Entities db = new DB35Entities();
+            foreach (Ttable t in db.Ttables.Where(x => x.TeacherId == id).ToList())
+            {
+                foreach (TeacherTimetable tt in db.TeacherTimetables.Where(x => x.TId == t.Id))
+                {
+                    ViewTimeTable g = new ViewTimeTable();
+                    g.day = t.Day;
+                    Nullable<int> cid = null;
+                    cid = tt.Lecture1;
+                    if (cid == null)
+                    {
+                        g.R8to9 = "";
+                    }
+                    else
+                    {
+                        string i = db.Courses.Where(x => x.CourseId == cid).SingleOrDefault().Title;
+                        int C = db.ClassSections.Where(x => x.SectionId == tt.Class1).SingleOrDefault().ClassId;
+                        int classname = db.Classes.Where(x => x.ClassId == C).SingleOrDefault().Name;
+                        string Section = db.Sections.Where(x => x.SectionId == tt.Class1).SingleOrDefault().Name;
+                        g.R8to9 = i + "  Class:" + classname + "  Section:" + Section + "  ";
+                    }
+                    cid = tt.Lecture2;
+                    if (cid == null)
+                    {
+                        g.R9to10 = "";
+                    }
+                    else
+                    {
+                        string i = db.Courses.Where(x => x.CourseId == cid).SingleOrDefault().Title;
+                        int C = db.ClassSections.Where(x => x.SectionId == tt.Class2).SingleOrDefault().ClassId;
+                        int classname = db.Classes.Where(x => x.ClassId == C).SingleOrDefault().Name;
+                        string Section = db.Sections.Where(x => x.SectionId == tt.Class2).SingleOrDefault().Name;
+                        g.R9to10 = i + "  Class:" + classname + "  Section:" + Section + "  ";
+                    }
+                    cid = tt.Lecture3;
+                    if (cid == null)
+                    {
+                        g.R10to11 = "";
+                    }
+                    else
+                    {
+                        string i = db.Courses.Where(x => x.CourseId == cid).SingleOrDefault().Title;
+                        int C = db.ClassSections.Where(x => x.SectionId == tt.Class3).SingleOrDefault().ClassId;
+                        int classname = db.Classes.Where(x => x.ClassId == C).SingleOrDefault().Name;
+                        string Section = db.Sections.Where(x => x.SectionId == tt.Class3).SingleOrDefault().Name;
+                        g.R10to11 = i + "  Class:" + classname + "  Section:" + Section + "  ";
+                    }
+                    cid = tt.Lecture4;
+                    if (cid == null)
+                    {
+                        g.R11to12 = "";
+                    }
+                    else
+                    {
+                        string i = db.Courses.Where(x => x.CourseId == cid).SingleOrDefault().Title;
+                        int C = db.ClassSections.Where(x => x.SectionId == tt.Class4).SingleOrDefault().ClassId;
+                        int classname = db.Classes.Where(x => x.ClassId == C).SingleOrDefault().Name;
+                        string Section = db.Sections.Where(x => x.SectionId == tt.Class4).SingleOrDefault().Name;
+                        g.R11to12 = i + Environment.NewLine + "  Class:" + classname + Environment.NewLine + "  Section:" + Section + "  ";
+                    }
+                    cid = tt.Lecture5;
+                    if (cid == null)
+                    {
+                        g.R1to2 = "";
+                    }
+                    else
+                    {
+                        string i = db.Courses.Where(x => x.CourseId == cid).SingleOrDefault().Title;
+                        int C = db.ClassSections.Where(x => x.SectionId == tt.Class5).SingleOrDefault().ClassId;
+                        int classname = db.Classes.Where(x => x.ClassId == C).SingleOrDefault().Name;
+                        string Section = db.Sections.Where(x => x.SectionId == tt.Class5).SingleOrDefault().Name;
+                        g.R1to2 = i + "  Class:" + classname + "  Section:" + Section + "  ";
+                    }
+                    to.Add(g);
+
+                }
+            }
+            return View(to.OrderBy(x => x.day));
+        }
 
         // GET: Teacher/Details/5
         public ActionResult Details(int id)

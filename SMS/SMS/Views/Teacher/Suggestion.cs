@@ -7,23 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SMS.Models
+namespace SMS.Views.Teacher
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Payroll
+    public partial class Suggestion
     {
-        public int PayrollId { get; set; }
-        public int TeacherId { get; set; }
-        public decimal Salary { get; set; }
-        public Nullable<decimal> Bonus { get; set; }
-        public Nullable<decimal> Deductions { get; set; }
-        public decimal Payable { get; set; }
+        public int PersonId { get; set; }
+        public int SuggestionId { get; set; }
+        public string Subject { get; set; }
+        public string Description { get; set; }
         public int Status { get; set; }
-        public System.DateTime Date { get; set; }
     
         public virtual LookUp LookUp { get; set; }
-        public virtual Teacher Teacher { get; set; }
+        public virtual Person Person { get; set; }
     }
 }

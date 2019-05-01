@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SMS.Models
+namespace SMS.Views.Teacher
 {
     using System;
     using System.Data.Entity;
@@ -43,10 +43,12 @@ namespace SMS.Models
         public virtual DbSet<StuAssignmentMark> StuAssignmentMarks { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<StudentAttendance> StudentAttendances { get; set; }
-        public virtual DbSet<StudentResult> StudentResults { get; set; }
         public virtual DbSet<Suggestion> Suggestions { get; set; }
         public virtual DbSet<Teacher> Teachers { get; set; }
+        public virtual DbSet<TeacherTimetable> TeacherTimetables { get; set; }
         public virtual DbSet<Timetable> Timetables { get; set; }
+        public virtual DbSet<Ttable> Ttables { get; set; }
         public virtual DbSet<Admin> Admins { get; set; }
+        public virtual DbSet<StudentResult> StudentResults { get; set; }
     }
 }
