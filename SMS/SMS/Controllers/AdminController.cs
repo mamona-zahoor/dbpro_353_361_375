@@ -1135,14 +1135,12 @@ namespace SMS.Controllers
 
         public ActionResult Student(string RegNo)
         {
-
             DB35Entities db = new DB35Entities();
             var c = db.Students.ToList();
             using (db)
             {
                 if (RegNo != null)
-                {
-
+                { 
                     foreach (Student cl in db.Students)
                     {
                         if (cl.RegNo == RegNo)
@@ -1274,9 +1272,7 @@ namespace SMS.Controllers
 
             int ce = Convert.ToInt32(clas);
             st.ClassId = db.Classes.First(l => l.Name == ce).ClassId;
-
             int a = st.ClassId;
-
             //SqlConnection con = new SqlConnection("Data Source=FARVASARDAR-PC\\FARVASQL;Initial Catalog=DB35;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
             //con.Open();
             //string query = "Select sec.SectionId FROM ClassSections csec JOIN Section sec ON csec.SectionId = sec.SectionId AND csec.ClassId = " + a + " AND sec.Name = '" + sectn + "'";

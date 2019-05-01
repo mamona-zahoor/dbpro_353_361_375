@@ -207,116 +207,119 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Admin.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Assignment.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Attendance.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AttendanceVM.cs" />
+    <Compile Include="Models\Class.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClassDateSheet.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClassSection.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClassVM.cs" />
+    <Compile Include="Models\Cours.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\DateSheet.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DatesheetVM.cs" />
-    <Compile Include="Models\FeeChallanVM.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\LoginUsers.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\PayrollVM.cs" />
-    <Compile Include="Models\PersonVM.cs" />
-    <Compile Include="Models\ResultVM.cs" />
-    <Compile Include="Models\School_Class.cs" />
-    <Compile Include="Models\SectionVM.cs" />
-    <Compile Include="Models\StudentResultVM.cs" />
-    <Compile Include="Models\StudentVM.cs" />
-    <Compile Include="Models\TeacherVM.cs" />
-    <Compile Include="Models\TimeTableVM.cs" />
-    <Compile Include="Models\ViewTimeTable.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Startup.cs" />
-    <Compile Include="Views\Teacher\Admin.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Teacher\Assignment.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Teacher\Attendance.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Teacher\Class.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Teacher\ClassDateSheet.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Teacher\ClassSection.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Teacher\Cours.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Teacher\DateSheet.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Teacher\DbModel.Context.cs">
+    <Compile Include="Models\DbModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DbModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\Teacher\DbModel.cs">
+    <Compile Include="Models\DbModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\Teacher\DbModel.Designer.cs">
+    <Compile Include="Models\DbModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DbModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Views\Teacher\FeeChallan.cs">
+    <Compile Include="Models\FeeChallan.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\Teacher\Lecture.cs">
+    <Compile Include="Models\FeeChallanVM.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Lecture.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\Teacher\LookUp.cs">
+    <Compile Include="Models\LoginUsers.cs" />
+    <Compile Include="Models\LookUp.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\Teacher\Payroll.cs">
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Payroll.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\Teacher\Person.cs">
+    <Compile Include="Models\PayrollVM.cs" />
+    <Compile Include="Models\Person.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\Teacher\Result.cs">
+    <Compile Include="Models\PersonVM.cs" />
+    <Compile Include="Models\Result.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\Teacher\Section.cs">
+    <Compile Include="Models\ResultVM.cs" />
+    <Compile Include="Models\School_Class.cs" />
+    <Compile Include="Models\Section.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\Teacher\SectionTimetable.cs">
+    <Compile Include="Models\SectionTimetable.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\Teacher\StuAssignmentMark.cs">
+    <Compile Include="Models\SectionVM.cs" />
+    <Compile Include="Models\StuAssignmentMark.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\Teacher\Student.cs">
+    <Compile Include="Models\Student.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\Teacher\StudentAttendance.cs">
+    <Compile Include="Models\StudentAttendance.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\Teacher\StudentResult.cs">
+    <Compile Include="Models\StudentResult.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\Teacher\Suggestion.cs">
+    <Compile Include="Models\StudentResultVM.cs" />
+    <Compile Include="Models\StudentVM.cs" />
+    <Compile Include="Models\Suggestion.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\Teacher\Teacher.cs">
+    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\Teacher\TeacherTimetable.cs">
+    <Compile Include="Models\Teacher.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\Teacher\Timetable.cs">
+    <Compile Include="Models\TeacherTimetable.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\Teacher\Ttable.cs">
+    <Compile Include="Models\TeacherVM.cs" />
+    <Compile Include="Models\Timetable.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TimeTableVM.cs" />
+    <Compile Include="Models\Ttable.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewTimeTable.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -401,6 +404,16 @@
     <Content Include="js\core.min.js" />
     <Content Include="js\jquery-3.1.1.js" />
     <Content Include="js\script.js" />
+    <Content Include="Models\DbModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DbModel.edmx</DependentUpon>
+      <LastGenOutput>DbModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DbModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DbModel.edmx</DependentUpon>
+      <LastGenOutput>DbModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -431,6 +444,13 @@
     <Content Include="bat\rd-mailform.tpl" />
     <Content Include="bat\rd-search.php" />
     <Content Include="bat\reCaptcha.php" />
+    <EntityDeploy Include="Models\DbModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DbModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DbModel.edmx.diagram">
+      <DependentUpon>DbModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -443,16 +463,6 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Views\Teacher\DbModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DbModel.edmx</DependentUpon>
-      <LastGenOutput>DbModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Views\Teacher\DbModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DbModel.edmx</DependentUpon>
-      <LastGenOutput>DbModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -531,13 +541,7 @@
     <Content Include="Views\Admin\EditStudentDetails.cshtml" />
     <Content Include="Views\Admin\EditTeacherDetails.cshtml" />
     <Content Include="Views\Teacher\ViewTimetable.cshtml" />
-    <EntityDeploy Include="Views\Teacher\DbModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DbModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Views\Teacher\DbModel.edmx.diagram">
-      <DependentUpon>DbModel.edmx</DependentUpon>
-    </Content>
+    <Content Include="Views\Student\StudentFeeChallans.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

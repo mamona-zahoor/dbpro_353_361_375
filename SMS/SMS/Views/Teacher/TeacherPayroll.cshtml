@@ -89,7 +89,18 @@
         font-size: 19px;
     }
 </style>
+@{ 
+    var id = Request.Url.Segments[3];
+}
+<div class="navbar">
+    <div class="dropdown">
 
+        <div class="dropdown-content">
+          @Html.ActionLink("My Account","LoggedInView",new { id = id})
+              <a href="~/Home/Index">Logout</a>
+        </div>
+    </div>
+</div>
 <br />
 <br />
         &emsp; &emsp; &emsp;

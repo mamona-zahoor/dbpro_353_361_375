@@ -1,8 +1,7 @@
 ﻿@model IEnumerable<SMS.Models.FeeChallan>
-<title>Fee Details</title>
+
 @{ Layout = null;}
-
-
+<title>Dues Summary | Student</title>
 <style>
     body {
         font-family: Calisto MT;
@@ -89,29 +88,33 @@
     b {
         color: #ECCF3E;
         font-size: 19px;
-    }
-</style>
-
-<br />
-
-<h2 style="color  :#b18757; font-family : Calisto MT">&emsp; &emsp; Fee Details </h2>
-<br>
-<br>
-@{ 
+    }</style>
+    @{ 
     var id = Request.Url.Segments[3];
 }
+<div class="navbar">
+    <div class="dropdown">
+
+        <div class="dropdown-content">
+          @Html.ActionLink("My Account","LoggedInView",new { id = id})
+              <a href="~/Home/Index">Logout</a>
+        </div>
+    </div>
+</div>
+
+  &emsp; &emsp;<h2 style="color  :#b18757; font-family : Calisto MT">&emsp; &emsp; Dues Summary</h2>
+
 <br />
-    &emsp; &emsp; &emsp; &emsp; &emsp;@Html.ActionLink("Add New Record", "AddPayroll", new { id = id })
-
-    <br />
-    <br />
-
-
+<br />
         &emsp; &emsp; &emsp;
-<b>Student Registration Number :   &emsp;&emsp;   &emsp; &emsp;  @ViewBag.RegNo</b>
+<b>Student Name :   &emsp;&emsp;   &emsp; &emsp;  @ViewBag.SName</b>
 
 <br />
+        &emsp; &emsp; &emsp;
+<b>Registration Number :   &emsp;&emsp;   &emsp; &emsp;  @ViewBag.SRegNo</b>
+
 <br />
+
 <table align="center">
     <tr>
         <th>
@@ -124,15 +127,16 @@
             @Html.DisplayNameFor(model => model.Fine)
         </th>
         <th>
-           Payable
+            @Html.DisplayNameFor(model => model.TotalFee)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Status)
+            Paid
         </th>
-        <th></th>
     </tr>
-   @foreach (var item in Model) {
-    <tr><td>
+
+@foreach (var item in Model) {
+    <tr>
+       <td>
             @Html.DisplayFor(modelItem => item.Fee)
         </td>
         <td>
@@ -144,30 +148,20 @@
         <td>
             @Html.DisplayFor(modelItem => item.TotalFee)
         </td>
-
-        @if (item.Status == 4)
-        {
+       
+            @if (item.Status == 4)
+                {
             <td>
-                UnPaid
+                <input type="checkbox" onclick="return false;" />
             </td>
-        }
-        else
-        {
-            <td>
-                Paid
-            </td>
-        } <td>
-            @Html.ActionLink("Update", "EditFeeChallans", new {id = item.FeeChallanId, StudentId = id }) 
-            </td>
+            }
+            else
+            {
+                <td>
+                    <input type="checkbox" checked onclick="return false;" />
+                </td>
+            }  
     </tr>
 }
 
 </table>
-<br/>
-
-<br />
-<br />
-<div>
-
-    &emsp; &emsp; &emsp;     @Html.ActionLink("Back to Students", "Student")
-</div>

@@ -148,7 +148,6 @@
     <Property Name="Deductions" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="Payable" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
     <Property Name="Status" Type="Int32" Nullable="false" />
-    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="LookUp" Relationship="Self.FK_Payroll_LookUp" FromRole="Payroll" ToRole="LookUp" />
     <NavigationProperty Name="Teacher" Relationship="Self.FK_Payroll_Teacher" FromRole="Payroll" ToRole="Teacher" />
   </EntityType>
@@ -253,17 +252,6 @@
     <NavigationProperty Name="LookUp" Relationship="Self.FK_StudentAttendance_LookUp" FromRole="StudentAttendance" ToRole="LookUp" />
     <NavigationProperty Name="Student" Relationship="Self.FK_StudentAttendance_Student2" FromRole="StudentAttendance" ToRole="Student" />
   </EntityType>
-  <EntityType Name="StudentResult">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ResultId" Type="Int32" Nullable="false" />
-    <Property Name="StudentId" Type="Int32" Nullable="false" />
-    <Property Name="ObtainedMarks" Type="Decimal" Precision="18" Scale="1" Nullable="false" />
-    <NavigationProperty Name="Result" Relationship="Self.FK_StudentResult_Results" FromRole="StudentResult" ToRole="Results" />
-    <NavigationProperty Name="Student" Relationship="Self.FK_StudentResult_Student" FromRole="StudentResult" ToRole="Student" />
-  </EntityType>
   <EntityType Name="Suggestion">
     <Key>
       <PropertyRef Name="SuggestionId" />
@@ -275,16 +263,6 @@
     <Property Name="Status" Type="Int32" Nullable="false" />
     <NavigationProperty Name="LookUp" Relationship="Self.FK_Suggestions_LookUp" FromRole="Suggestions" ToRole="LookUp" />
     <NavigationProperty Name="Person" Relationship="Self.FK_Suggestions_Person" FromRole="Suggestions" ToRole="Person" />
-  </EntityType>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="Teacher">
     <Key>
@@ -353,6 +331,18 @@
     </Key>
     <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StudentResult">
+    <Key>
+      <PropertyRef Name="ResultId" />
+      <PropertyRef Name="StudentId" />
+      <PropertyRef Name="ObtainedMarks" />
+    </Key>
+    <Property Name="ResultId" Type="Int32" Nullable="false" />
+    <Property Name="StudentId" Type="Int32" Nullable="false" />
+    <Property Name="ObtainedMarks" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <NavigationProperty Name="Result" Relationship="Self.FK_StudentResult_Results" FromRole="StudentResult" ToRole="Results" />
+    <NavigationProperty Name="Student" Relationship="Self.FK_StudentResult_Student" FromRole="StudentResult" ToRole="Student" />
   </EntityType>
   <Association Name="FK_Assignments_Courses">
     <End Role="Courses" Type="Self.Cours" Multiplicity="1" />
@@ -917,14 +907,13 @@
     <EntitySet Name="StuAssignmentMarks" EntityType="Self.StuAssignmentMark" />
     <EntitySet Name="Students" EntityType="Self.Student" />
     <EntitySet Name="StudentAttendances" EntityType="Self.StudentAttendance" />
-    <EntitySet Name="StudentResults" EntityType="Self.StudentResult" />
     <EntitySet Name="Suggestions" EntityType="Self.Suggestion" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="Teachers" EntityType="Self.Teacher" />
     <EntitySet Name="TeacherTimetables" EntityType="Self.TeacherTimetable" />
     <EntitySet Name="Timetables" EntityType="Self.Timetable" />
     <EntitySet Name="Ttables" EntityType="Self.Ttable" />
     <EntitySet Name="Admins" EntityType="Self.Admin" />
+    <EntitySet Name="StudentResults" EntityType="Self.StudentResult" />
     <AssociationSet Name="FK_Assignments_Courses" Association="Self.FK_Assignments_Courses">
       <End Role="Courses" EntitySet="Courses" />
       <End Role="Assignments" EntitySet="Assignments" />

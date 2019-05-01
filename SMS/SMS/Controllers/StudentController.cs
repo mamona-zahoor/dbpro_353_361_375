@@ -17,6 +17,23 @@ namespace SMS.Controllers
                 return View(db.People.First(f => f.Id == id));
             }
         }
+
+        public ActionResult StudentFeeChallans(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            ViewBag.SName = db.People.First(d => d.Id == id).FirstName + ' ' + db.People.First(d => d.Id == id).LastName;
+            ViewBag.SRegNo = db.Students.First(d => d.Id == id).RegNo;
+            List<FeeChallan> pr = new List<FeeChallan>();
+            foreach (FeeChallan p in db.FeeChallans)
+            {
+                if (p.StudentId == id)
+                {
+                    pr.Add(p);
+                }
+            }
+            return View(pr);
+
+        }
         public ActionResult ViewDateSheet(int id)
         {
             DB35Entities db = new DB35Entities();
