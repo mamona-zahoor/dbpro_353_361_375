@@ -74,22 +74,41 @@ namespace SMS.Controllers
                     a.Add(b);
                 }
             }
+            foreach (SubmittedAssign s in db.SubmittedAssigns)
+            {
+                if (s.Assignemnt == id)
+                {
+                    ViewBag.DoneS.Add(s.SubmittedBy);
+                }
+            }
             return View(a);
         }
 
         public ActionResult SubmitFiles(int id, int Stu)
         {
+           
             return View();
         }
 
         [HttpPost]
-        public ActionResult SubmitFiles(HttpPostedFileBase Zip, SubmitFiles obj)
+        public ActionResult SubmitFiles(HttpPostedFileBase Zip, SubmitFiles obj, string q, int id)
         {
-          //  string extractPath = Server.MapPath("~/Files/");
-            var stream = new System.IO.MemoryStream();
-           // ZipFile.ExtractToDirectory("Files/2016-CS-353.zip", "sbc/");
-            return View();
+            string path = Path.Combine(Server.MapPath("~/Files"), Path.GetFileName(Zip.FileName));
+            Zip.SaveAs(path);
+            DB35Entities db = new DB35Entities();
+            SubmittedAssign sf = new Models.SubmittedAssign();
+            sf.FileName = Zip.FileName;
+            sf.Path = path;
+            sf.Assignemnt = id;
+            sf.Submited_On = DateTime.Now;
+            sf.SubmittedBy = Convert.ToInt32(q);
+            db.SubmittedAssigns.Add(sf);  
+            db.SaveChanges();
+            return SubmitFiles(id, Convert.ToInt32(q));
         }
+
+
+     
         // GET: Student
         public ActionResult Index()
         {

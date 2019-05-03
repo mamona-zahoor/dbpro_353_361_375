@@ -552,6 +552,8 @@
     <Content Include="Views\Admin\AddFeeChallan.cshtml" />
     <Content Include="Views\Student\UploadedAssign.cshtml" />
     <Content Include="Views\Student\SubmitFiles.cshtml" />
+    <Content Include="Views\Teacher\SectionAssign.cshtml" />
+    <Content Include="Views\Teacher\SubmittedAssign.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

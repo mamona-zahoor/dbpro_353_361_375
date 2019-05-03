@@ -12,7 +12,6 @@ namespace SMS.Models
         public int Assignemnt { get; set; }
         public System.DateTime Submited_On { get; set; }
         public string FileName { get; set; }
-        public byte[] Content { get; set; }
-      
+        public string Path { get; set; }
     }
 }

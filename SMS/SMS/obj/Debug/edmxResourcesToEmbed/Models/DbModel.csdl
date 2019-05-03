@@ -275,7 +275,7 @@
     <Property Name="Assignemnt" Type="Int32" Nullable="false" />
     <Property Name="Submited_On" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Content" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="Path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Assignment" Relationship="Self.FK_SubmittedAssign_Assignments" FromRole="SubmittedAssign" ToRole="Assignments" />
     <NavigationProperty Name="Student" Relationship="Self.FK_SubmittedAssign_Student" FromRole="SubmittedAssign" ToRole="Student" />
   </EntityType>

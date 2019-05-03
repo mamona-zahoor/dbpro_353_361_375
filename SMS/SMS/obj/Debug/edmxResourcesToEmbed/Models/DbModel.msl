@@ -217,7 +217,7 @@
           <ScalarProperty Name="Assignemnt" ColumnName="Assignemnt" />
           <ScalarProperty Name="Submited_On" ColumnName="Submited_On" />
           <ScalarProperty Name="FileName" ColumnName="FileName" />
-          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="Path" ColumnName="Path" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

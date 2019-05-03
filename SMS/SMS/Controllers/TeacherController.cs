@@ -552,6 +552,49 @@ namespace SMS.Controllers
             return View(pr);
         }
 
+        public ActionResult SectionAssign(int Sid, int Tid)
+        {
+            DB35Entities db = new DB35Entities();
+            List<Assignment> A = new List<Assignment>();
+            foreach (Assignment a in db.Assignments)
+            {
+                if (a.SectionId == Sid)
+                {
+                    int cid = db.Courses.First(f => f.CourseId == a.CourseId).TeacherId;
+                    if(cid == Tid)
+                    {
+                        A.Add(a);
+                    }          
+                }
+            }
+            return View(A);
+        }
+
+        public ActionResult SubmittedAssign(int id)
+        {
+            List<SubmittedAssign> s = new List<Models.SubmittedAssign>();
+            DB35Entities db = new DB35Entities();
+            foreach (SubmittedAssign a in db.SubmittedAssigns)
+            {
+                if (a.Assignemnt == id)
+                {
+                    s.Add(a);
+                }
+            }
+            return View(s);
+        }
+
+
+        public FileResult DownloadFiles(int id, int Sid)
+        {
+            DB35Entities db = new DB35Entities();
+            string RegNo = db.Students.First(f => f.Id == Sid).RegNo;
+            string name = db.SubmittedAssigns.First(f => f.SubmittedBy == Sid && f.Assignemnt == id).FileName;
+            byte[] fileBytes = System.IO.File.ReadAllBytes(db.SubmittedAssigns.First(f => f.Assignemnt == id).Path);
+            string fileName = RegNo+".zip";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
         //public ActionResult TeacherProfile(int id)
         //{
         //    DB35Entities db = new DB35Entities();
@@ -560,6 +603,6 @@ namespace SMS.Controllers
         //        return View(db.People.First(f => f.Id == id));
         //    }
         //}
-    
-}
+
+    }
 }

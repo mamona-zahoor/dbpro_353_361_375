@@ -220,7 +220,7 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     <Property Name="Assignemnt" Type="int" Nullable="false" />
     <Property Name="Submited_On" Type="datetime" Nullable="false" />
     <Property Name="FileName" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Content" Type="varbinary(max)" Nullable="false" />
+    <Property Name="Path" Type="varchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Suggestions">
     <Key>

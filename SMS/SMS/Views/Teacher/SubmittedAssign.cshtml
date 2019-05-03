@@ -1,0 +1,36 @@
+﻿@model IEnumerable<SMS.Models.SubmittedAssign>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SubmittedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Submited_On)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileName)
+        </th>
+        <th>
+            
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubmittedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Submited_On)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileName)
+        </td>
+        <td>
+            @Html.ActionLink("Download", "DownloadFiles", new { id = item.Assignemnt, Sid = item.SubmittedBy})
+        </td>
+    </tr>
+}
+
+</table>
