@@ -4,32 +4,32 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f4e79f8b8fd34ee2b57f44644f6b7e90" Name="Diagram1">
-        <EntityTypeShape EntityType="DB35Model.Assignment" Width="1.5" PointX="15" PointY="45.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.Attendance" Width="1.5" PointX="9.75" PointY="44.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.Class" Width="1.5" PointX="7.5" PointY="43.625" IsExpanded="true" />
+      <Diagram DiagramId="95a5ea51b45e4b6283522551d2abd2f2" Name="Diagram1">
+        <EntityTypeShape EntityType="DB35Model.Assignment" Width="1.5" PointX="15" PointY="41.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.Attendance" Width="1.5" PointX="9.75" PointY="40.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.Class" Width="1.5" PointX="7.5" PointY="40.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DB35Model.ClassDateSheet" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.ClassSection" Width="1.5" PointX="14.75" PointY="48.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.Cours" Width="1.5" PointX="12.75" PointY="42.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.DateSheet" Width="1.5" PointX="9.75" PointY="48" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.FeeChallan" Width="1.5" PointX="3" PointY="24.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.Lecture" Width="1.5" PointX="17" PointY="48.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.LookUp" Width="1.5" PointX="0.75" PointY="25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.Payroll" Width="1.5" PointX="7.5" PointY="32.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.Person" Width="1.5" PointX="3" PointY="31.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.Result" Width="1.5" PointX="18" PointY="45.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.Section" Width="1.5" PointX="7.5" PointY="47" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.SectionTimetable" Width="1.5" PointX="12" PointY="50.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.StuAssignmentMark" Width="1.5" PointX="17.25" PointY="41.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.Student" Width="1.5" PointX="9.75" PointY="39.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.StudentAttendance" Width="1.5" PointX="12" PointY="35" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.StudentResult" Width="1.5" PointX="20.25" PointY="42.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.Suggestion" Width="1.5" PointX="5.25" PointY="28.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.ClassSection" Width="1.5" PointX="14.75" PointY="45.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.Cours" Width="1.5" PointX="12.75" PointY="39" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.DateSheet" Width="1.5" PointX="9.75" PointY="44.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.FeeChallan" Width="1.5" PointX="12" PointY="35.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.Lecture" Width="1.5" PointX="17" PointY="45.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.LookUp" Width="1.5" PointX="0.75" PointY="25.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.Payroll" Width="1.5" PointX="7.5" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.Person" Width="1.5" PointX="3" PointY="28.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.Result" Width="1.5" PointX="18" PointY="41.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.Section" Width="1.5" PointX="7.5" PointY="43.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.SectionTimetable" Width="1.5" PointX="12" PointY="46.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.StuAssignmentMark" Width="1.5" PointX="17.25" PointY="37.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.Student" Width="1.5" PointX="9.75" PointY="35.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.StudentAttendance" Width="1.5" PointX="12" PointY="32.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.StudentResult" Width="1.5" PointX="20.25" PointY="38.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.Suggestion" Width="1.5" PointX="5.25" PointY="27.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DB35Model.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.Teacher" Width="1.5" PointX="5.25" PointY="39.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.TeacherTimetable" Width="1.5" PointX="20" PointY="48.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.Timetable" Width="1.5" PointX="9.75" PointY="50.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB35Model.Ttable" Width="1.5" PointX="7.5" PointY="51" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.Teacher" Width="1.5" PointX="5.25" PointY="35.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.TeacherTimetable" Width="1.5" PointX="20" PointY="45" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.Timetable" Width="1.5" PointX="9.75" PointY="47" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB35Model.Ttable" Width="1.5" PointX="7.5" PointY="47.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DB35Model.Admin" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <AssociationConnector Association="DB35Model.FK_Assignments_Courses" ManuallyRouted="false" />
         <AssociationConnector Association="DB35Model.FK_Assignments_Section" ManuallyRouted="false" />
@@ -54,7 +54,6 @@
         <AssociationConnector Association="DB35Model.FK_TeacherTimetable_Courses2" ManuallyRouted="false" />
         <AssociationConnector Association="DB35Model.FK_TeacherTimetable_Courses3" ManuallyRouted="false" />
         <AssociationConnector Association="DB35Model.FK_TeacherTimetable_Courses4" ManuallyRouted="false" />
-        <AssociationConnector Association="DB35Model.FK_FeeChallans_LookUp" ManuallyRouted="false" />
         <AssociationConnector Association="DB35Model.FK_FeeChallans_Student" ManuallyRouted="false" />
         <AssociationConnector Association="DB35Model.FK_Lectures_SectionTimetable" ManuallyRouted="false" />
         <AssociationConnector Association="DB35Model.FK_Payroll_LookUp" ManuallyRouted="false" />

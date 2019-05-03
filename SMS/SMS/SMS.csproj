@@ -542,6 +542,7 @@
     <Content Include="Views\Admin\EditTeacherDetails.cshtml" />
     <Content Include="Views\Teacher\ViewTimetable.cshtml" />
     <Content Include="Views\Student\StudentFeeChallans.cshtml" />
+    <Content Include="Views\Admin\AddFeeChallan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

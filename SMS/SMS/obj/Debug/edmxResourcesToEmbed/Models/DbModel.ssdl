@@ -86,6 +86,7 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     <Property Name="Fine" Type="decimal" Precision="18" Scale="0" />
     <Property Name="TotalFee" Type="decimal" Precision="18" Scale="0" Nullable="false" />
     <Property Name="Status" Type="int" Nullable="false" />
+    <Property Name="DueDate" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="Lectures">
     <Key>
@@ -389,18 +390,6 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
       </Principal>
       <Dependent Role="DateSheet">
         <PropertyRef Name="ClassId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_FeeChallans_LookUp">
-    <End Role="LookUp" Type="Self.LookUp" Multiplicity="1" />
-    <End Role="FeeChallans" Type="Self.FeeChallans" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="LookUp">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="FeeChallans">
-        <PropertyRef Name="Status" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -908,10 +897,6 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     <AssociationSet Name="FK_DateSheet_Class" Association="Self.FK_DateSheet_Class">
       <End Role="Class" EntitySet="Class" />
       <End Role="DateSheet" EntitySet="DateSheet" />
-    </AssociationSet>
-    <AssociationSet Name="FK_FeeChallans_LookUp" Association="Self.FK_FeeChallans_LookUp">
-      <End Role="LookUp" EntitySet="LookUp" />
-      <End Role="FeeChallans" EntitySet="FeeChallans" />
     </AssociationSet>
     <AssociationSet Name="FK_FeeChallans_Student" Association="Self.FK_FeeChallans_Student">
       <End Role="Student" EntitySet="Student" />

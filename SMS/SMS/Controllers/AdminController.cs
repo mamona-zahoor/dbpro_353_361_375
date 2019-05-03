@@ -35,9 +35,9 @@ namespace SMS.Controllers
                 i++;
             }
             return View(Time);
-           
+
         }
-       
+
         public ActionResult Index()
         {
             return View();
@@ -152,11 +152,11 @@ namespace SMS.Controllers
         {
             DB35Entities db = new DB35Entities();
             List<ClassSection> t = db.ClassSections.Where(b => b.ClassId == Item).ToList();
-          
+
             return Json(t.Select(x => new
             {
                 ID = x.SectionId,
-                Name = db.Sections.Where(b => b.SectionId == x.SectionId).SingleOrDefault().Name 
+                Name = db.Sections.Where(b => b.SectionId == x.SectionId).SingleOrDefault().Name
             }));
         }
 
@@ -220,12 +220,12 @@ namespace SMS.Controllers
                     {
                         check = true;
                         o = t.Id;
-                        
+
                     }
                 }
                 if (check == true)
                 {
-                   return RedirectToAction("LoggedInView", "Teacher",new { id = o});
+                    return RedirectToAction("LoggedInView", "Teacher", new { id = o });
                 }
                 else
                 {
@@ -238,7 +238,7 @@ namespace SMS.Controllers
             }
         }
 
-       
+
         public ActionResult SecretQuestionAnswer(int id)
         {
             DB35Entities db = new DB35Entities();
@@ -285,27 +285,27 @@ namespace SMS.Controllers
             List<ClassSection> Class = db.ClassSections.Where(x => x.ClassId == item).ToList();
 
             List<Cours> Course = db.Courses.ToList();
-          
-            
+
+
             foreach (ClassSection c in Class)
             {
 
                 foreach (Cours ci in db.Courses)
                 {
-                    if (c.SectionId == ci.SectionId )
+                    if (c.SectionId == ci.SectionId)
                     {
                         Cours cs = new Cours();
                         cs.CourseId = ci.CourseId;
 
                         cs.Title = ci.Title;
-                      
+
                         C.Add(cs);
-                       
-                       
+
+
                     }
                 }
             }
-            
+
             return Json(C.Select(x => new
             {
                 ID = x.CourseId,
@@ -320,13 +320,13 @@ namespace SMS.Controllers
             List<Teacher> teacher = db.Teachers.ToList();
             return Json(teacher.Select(x => new
             {
-               
+
                 Id = x.Id,
-                Name = x.Person.FirstName+' '+x.Person.LastName
+                Name = x.Person.FirstName + ' ' + x.Person.LastName
             }));
 
-            }
-        
+        }
+
 
         public ActionResult AllCourses()
         {
@@ -355,7 +355,7 @@ namespace SMS.Controllers
         public ActionResult AllCourse()
         {
             DB35Entities db = new DB35Entities();
-             return View(db.Courses.ToList());
+            return View(db.Courses.ToList());
         }
         public ActionResult AddCourse()
         {
@@ -367,7 +367,7 @@ namespace SMS.Controllers
             DB35Entities db = new DB35Entities();
             Cours cs = new Cours();
             Course CN = new Course();
-          
+
             cs.TeacherId = obj.TeacherId;
             cs.Title = obj.Title;
             cs.SectionId = obj.SectionId;
@@ -376,10 +376,10 @@ namespace SMS.Controllers
             obj.sectionName(obj.SectionId);
             obj.teacherName(obj.TeacherId);
             obj.className(obj.ClassId);
-            
-            
-            
-            
+
+
+
+
             db.SaveChanges();
             return View();
         }
@@ -397,15 +397,15 @@ namespace SMS.Controllers
             DateSheet dt = new DateSheet();
             foreach (DateSheet d in db.DateSheets)
             {
-                
-                if(d.ClassId == t.ClassId)
+
+                if (d.ClassId == t.ClassId)
                 {
                     cd.DateSheetId = d.DateSheetId;
                     check = false;
                     break;
                 }
             }
-            if(check == true)
+            if (check == true)
             {
                 dt.ClassId = t.ClassId;
                 db.DateSheets.Add(dt);
@@ -413,7 +413,7 @@ namespace SMS.Controllers
                 db.SaveChanges();
             }
             cd.CourseId = t.CourseId;
-            cd.EndTime =  t.EndTime;
+            cd.EndTime = t.EndTime;
             cd.StartTime = t.StartTime;
             cd.Date = t.Date;
             db.ClassDateSheets.Add(cd);
@@ -804,7 +804,7 @@ namespace SMS.Controllers
                 if (sec.SectionId == id)
                 {
                     db.Teachers.Find(sec.TeacherId).InchSec = null;
-                  
+
                     break;
                 }
             }
@@ -892,7 +892,7 @@ namespace SMS.Controllers
             foreach (Teacher t in db.Teachers)
             {
                 if (t.InchSec == id)
-                { 
+                {
                     int i = t.Id;
                     db.Teachers.Find(i).InchSec = null;
                     break;
@@ -908,8 +908,13 @@ namespace SMS.Controllers
             List<FeeChallan> fvm = new List<FeeChallan>();
             DB35Entities db = new DB35Entities();
             ViewBag.RegNo = db.Students.First(s => s.Id == id).RegNo;
-
-            fvm.Add(db.FeeChallans.First(f => f.StudentId == id));
+            foreach (FeeChallan f in db.FeeChallans)
+            {
+                if (f.StudentId == id)
+                {
+                    fvm.Add(f);
+                }
+            }
             return View(fvm);
         }
 
@@ -928,7 +933,7 @@ namespace SMS.Controllers
                     fvm.Fine = Convert.ToDecimal(f.Fine);
                     fvm.Scholarships = Convert.ToDecimal(f.Scholarships);
                     fvm.TotalFee = f.TotalFee;
-
+                    fvm.DueDate = f.DueDate;
                 }
             }
             return View(fvm);
@@ -940,18 +945,25 @@ namespace SMS.Controllers
         {
             DB35Entities db = new DB35Entities();
             int StuId = db.FeeChallans.Find(id).StudentId;
-            db.FeeChallans.Find(id).Fee = obj.Fee;
-            db.FeeChallans.Find(id).Scholarships = obj.Scholarships;
-            string s = "Unpaid";
-            if (obj.Status == 0)
+            int I = db.FeeChallans.Find(id).FeeChallanId;
+            if (ModelState.IsValid)
             {
-                s = "Paid";
+                db.FeeChallans.Find(id).Fee = obj.Fee;
+                db.FeeChallans.Find(id).Scholarships = obj.Scholarships;
+                string s = "Unpaid";
+                if (obj.Status == 0)
+                {
+                    s = "Paid";
+                }
+                db.FeeChallans.Find(id).Status = db.LookUps.First(l => l.Value == s).Id;
+                db.FeeChallans.Find(id).Fine = obj.Fine;
+                db.FeeChallans.Find(id).TotalFee = (obj.Fee + obj.Fine) - obj.Scholarships;
+                db.FeeChallans.Find(id).DueDate = obj.DueDate;
+                db.SaveChanges();
+                return RedirectToAction("FeeChallans", new { id = StuId });
+
             }
-            db.FeeChallans.Find(id).Status = db.LookUps.First(l => l.Value == s).Id;
-            db.FeeChallans.Find(id).Fine = obj.Fine;
-            db.FeeChallans.Find(id).TotalFee = (obj.Fee + obj.Fine) - obj.Scholarships;
-            db.SaveChanges();
-            return RedirectToAction("FeeChallans", "Admin", new { id = StuId });
+            return RedirectToAction("EditFeeChallans", new { id = I,Studentid = StuId });
 
         }
         public ActionResult Class(string Name)
@@ -987,9 +999,9 @@ namespace SMS.Controllers
             }
         }
 
-    
 
-    [HttpPost]
+
+        [HttpPost]
         public ActionResult CreateClass(School_Class c)
         {
             if (ModelState.IsValid)
@@ -1028,10 +1040,10 @@ namespace SMS.Controllers
             db.Classes.Find(id).Name = obj.Name;
             db.Classes.Find(id).CreatedOn = DateTime.Now;
             db.SaveChanges();
-         return RedirectToAction("Class");
+            return RedirectToAction("Class");
 
         }
-       // [HttpGet]
+        // [HttpGet]
         public ActionResult EditCourse(int id)
         {
             DB35Entities db = new DB35Entities();
@@ -1040,12 +1052,12 @@ namespace SMS.Controllers
             {
                 if (C.CourseId == id)
                 {
-                   // cs.ClassName = db.Classes.Where(x => x.Sect == cs.ClassId).SingleOrDefault().Name;
-                     cs.ClassId = db.ClassSections.Where(x => x.SectionId == C.SectionId).SingleOrDefault().ClassId;
+                    // cs.ClassName = db.Classes.Where(x => x.Sect == cs.ClassId).SingleOrDefault().Name;
+                    cs.ClassId = db.ClassSections.Where(x => x.SectionId == C.SectionId).SingleOrDefault().ClassId;
                     cs.ClassName = db.Classes.Where(x => x.ClassId == cs.ClassId).SingleOrDefault().Name;
                     cs.SectionName = db.Sections.Where(x => x.SectionId == C.SectionId).SingleOrDefault().Name;
                     //cs.SectionId = db
-                   // cs.TeacherName = db.People.Where(x => x.Id == cs.TeacherId).SingleOrDefault().FirstName + ' ' + db.People.Where(x => x.Id == cs.TeacherId).SingleOrDefault().LastName;
+                    // cs.TeacherName = db.People.Where(x => x.Id == cs.TeacherId).SingleOrDefault().FirstName + ' ' + db.People.Where(x => x.Id == cs.TeacherId).SingleOrDefault().LastName;
                     cs.Title = C.Title;
                     cs.Description = C.Description;
                 }
@@ -1053,7 +1065,7 @@ namespace SMS.Controllers
             return View(cs);
         }
         [HttpPost]
-        public ActionResult EditCourse(int id , Course CS)
+        public ActionResult EditCourse(int id, Course CS)
         {
             DB35Entities db = new DB35Entities();
             //id = 9;
@@ -1061,7 +1073,7 @@ namespace SMS.Controllers
             db.Courses.Find(id).Description = CS.Description;
             db.Courses.Find(id).SectionId = CS.SectionId;
             db.Courses.Find(id).TeacherId = CS.TeacherId;
-            
+
 
             db.SaveChanges();
             return RedirectToAction("AllCourses");
@@ -1069,9 +1081,9 @@ namespace SMS.Controllers
         public ActionResult DeleteCourse(int id)
         {
             DB35Entities db = new DB35Entities();
-            foreach(Cours C in db.Courses)
+            foreach (Cours C in db.Courses)
             {
-                if(C.CourseId == id)
+                if (C.CourseId == id)
                 {
                     db.Courses.Remove(C);
                     break;
@@ -1140,7 +1152,7 @@ namespace SMS.Controllers
             using (db)
             {
                 if (RegNo != null)
-                { 
+                {
                     foreach (Student cl in db.Students)
                     {
                         if (cl.RegNo == RegNo)
@@ -1306,6 +1318,7 @@ namespace SMS.Controllers
             fe.StudentId = db.Students.Max(u => u.Id);
             fe.TotalFee = Fee;
             fe.Status = db.LookUps.First(l => l.Value == "Unpaid").Id;
+            fe.DueDate = DateTime.Now.AddMonths(1);
             db.FeeChallans.Add(fe);
             db.SaveChanges();
 
@@ -1334,6 +1347,36 @@ namespace SMS.Controllers
 
         }
 
+
+        public ActionResult AddFeeChallan(int id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddFeeChallan(FeeChallanVM obj, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                FeeChallan f = new FeeChallan();
+                DB35Entities db = new DB35Entities();
+                f.DueDate = obj.DueDate;
+                f.Scholarships = obj.Scholarships;
+                string s = "Unpaid";
+                if (obj.Status == 0)
+                {
+                    s = "Paid";
+                }
+                f.Status = db.LookUps.First(l => l.Value == s).Id;
+                f.StudentId = Id;
+                f.TotalFee = obj.Fee + obj.Scholarships - obj.Fine;
+                db.FeeChallans.Add(f);
+                db.SaveChanges();
+            }
+            return View();
+
+
+        }
         public ActionResult EditStudent(int id)
         {
             DB35Entities db = new DB35Entities();
@@ -1412,7 +1455,6 @@ namespace SMS.Controllers
                 if (fc.StudentId == id)
                 {
                     db.FeeChallans.Remove(fc);
-                    break;
                 }
             }
             foreach (Student st in db.Students)

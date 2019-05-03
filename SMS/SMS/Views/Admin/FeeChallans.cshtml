@@ -101,7 +101,7 @@
     var id = Request.Url.Segments[3];
 }
 <br />
-    &emsp; &emsp; &emsp; &emsp; &emsp;@Html.ActionLink("Add New Record", "AddPayroll", new { id = id })
+    &emsp; &emsp; &emsp; &emsp; &emsp;@Html.ActionLink("Add New Record", "AddFeeChallan", new { id = id })
 
     <br />
     <br />
@@ -127,7 +127,11 @@
            Payable
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Status)
+            Due Date
+               </th>
+
+        <th>
+           Paid
         </th>
         <th></th>
     </tr>
@@ -144,19 +148,23 @@
         <td>
             @Html.DisplayFor(modelItem => item.TotalFee)
         </td>
+        <th>
+            @Html.DisplayFor(model => item.DueDate)
+
+        </th>
 
         @if (item.Status == 4)
-        {
+                {
             <td>
-                UnPaid
+                <input type="checkbox" onclick="return false;" />
             </td>
         }
         else
         {
             <td>
-                Paid
+                <input type="checkbox" checked onclick="return false;" />
             </td>
-        } <td>
+        }<td>
             @Html.ActionLink("Update", "EditFeeChallans", new {id = item.FeeChallanId, StudentId = id }) 
             </td>
     </tr>

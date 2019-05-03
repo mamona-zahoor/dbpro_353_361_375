@@ -21,8 +21,7 @@ namespace SMS.Models
         public Nullable<decimal> Fine { get; set; }
         public decimal TotalFee { get; set; }
         public int Status { get; set; }
-    
-        public virtual LookUp LookUp { get; set; }
+        public System.DateTime DueDate { get; set; }   
         public virtual Student Student { get; set; }
     }
 }

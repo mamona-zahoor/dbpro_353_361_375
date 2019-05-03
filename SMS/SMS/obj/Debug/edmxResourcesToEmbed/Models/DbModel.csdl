@@ -103,7 +103,7 @@
     <Property Name="Fine" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalFee" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
     <Property Name="Status" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="LookUp" Relationship="Self.FK_FeeChallans_LookUp" FromRole="FeeChallans" ToRole="LookUp" />
+    <Property Name="DueDate" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="Student" Relationship="Self.FK_FeeChallans_Student" FromRole="FeeChallans" ToRole="Student" />
   </EntityType>
   <EntityType Name="Lecture">
@@ -131,7 +131,6 @@
     <Property Name="Id" Type="Int32" Nullable="false" />
     <Property Name="Category" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Value" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="FeeChallans" Relationship="Self.FK_FeeChallans_LookUp" FromRole="LookUp" ToRole="FeeChallans" />
     <NavigationProperty Name="Payrolls" Relationship="Self.FK_Payroll_LookUp" FromRole="LookUp" ToRole="Payroll" />
     <NavigationProperty Name="People" Relationship="Self.FK_Person_LookUp" FromRole="LookUp" ToRole="Person" />
     <NavigationProperty Name="StudentAttendances" Relationship="Self.FK_StudentAttendance_LookUp" FromRole="LookUp" ToRole="StudentAttendance" />
@@ -630,18 +629,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_FeeChallans_LookUp">
-    <End Role="LookUp" Type="Self.LookUp" Multiplicity="1" />
-    <End Role="FeeChallans" Type="Self.FeeChallan" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="LookUp">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="FeeChallans">
-        <PropertyRef Name="Status" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_FeeChallans_Student">
     <End Role="Student" Type="Self.Student" Multiplicity="1" />
     <End Role="FeeChallans" Type="Self.FeeChallan" Multiplicity="*" />
@@ -1016,10 +1003,6 @@
     <AssociationSet Name="FK_TeacherTimetable_Courses4" Association="Self.FK_TeacherTimetable_Courses4">
       <End Role="Courses" EntitySet="Courses" />
       <End Role="TeacherTimetable" EntitySet="TeacherTimetables" />
-    </AssociationSet>
-    <AssociationSet Name="FK_FeeChallans_LookUp" Association="Self.FK_FeeChallans_LookUp">
-      <End Role="LookUp" EntitySet="LookUps" />
-      <End Role="FeeChallans" EntitySet="FeeChallans" />
     </AssociationSet>
     <AssociationSet Name="FK_FeeChallans_Student" Association="Self.FK_FeeChallans_Student">
       <End Role="Student" EntitySet="Students" />
