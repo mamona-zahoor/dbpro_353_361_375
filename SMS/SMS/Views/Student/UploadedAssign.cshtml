@@ -1,0 +1,40 @@
+﻿@model IEnumerable<SMS.Models.Assignment>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalMarks)
+        </th>
+        <th>
+            Title
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseId)
+        </th>
+        <th>
+                Due Date
+        </th>
+        <th> Activity </th>
+    </tr>
+    @{ var Sid = Request.Url.Segments[3];}
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalMarks)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+         <td>
+            @Html.DisplayFor(modelItem => item.CourseId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DueDate)
+        </td>
+        <td>
+            @Html.ActionLink("Submit", "SubmitFiles", new { id=item.AssignmentId, Stu = Sid }) 
+         </td>
+    </tr>
+}
+
+</table>

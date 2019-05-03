@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SMS.Models;
+using System.IO;
+using System.IO.Compression;
 
 namespace SMS.Controllers
 {
@@ -39,10 +41,10 @@ namespace SMS.Controllers
             DB35Entities db = new DB35Entities();
             List<DatesheetVM> T = new List<DatesheetVM>();
             int cid = db.Students.Where(x => x.Id == id).SingleOrDefault().ClassId;
-            
+
             ViewBag.Class = db.Classes.Where(x => x.ClassId == cid).SingleOrDefault().Name;
             int did = db.DateSheets.Where(x => x.ClassId == cid).SingleOrDefault().DateSheetId;
-            foreach(ClassDateSheet f in db.ClassDateSheets.Where(x => x.DateSheetId == did).ToList())
+            foreach (ClassDateSheet f in db.ClassDateSheets.Where(x => x.DateSheetId == did).ToList())
             {
                 DatesheetVM d = new DatesheetVM();
                 d.CourseId = f.CourseId;
@@ -55,8 +57,38 @@ namespace SMS.Controllers
                 T.Add(d);
 
             }
-
+           
             return View(T);
+        }
+
+
+        public ActionResult UploadedAssign(int id)
+        {
+            List<Assignment> a = new List<Assignment>();
+            DB35Entities db = new DB35Entities();
+            int secId = db.Students.Find(id).SectionId;
+            foreach (Assignment b in db.Assignments)
+            {
+                if (b.SectionId == secId)
+                {
+                    a.Add(b);
+                }
+            }
+            return View(a);
+        }
+
+        public ActionResult SubmitFiles(int id, int Stu)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SubmitFiles(HttpPostedFileBase Zip, SubmitFiles obj)
+        {
+          //  string extractPath = Server.MapPath("~/Files/");
+            var stream = new System.IO.MemoryStream();
+           // ZipFile.ExtractToDirectory("Files/2016-CS-353.zip", "sbc/");
+            return View();
         }
         // GET: Student
         public ActionResult Index()

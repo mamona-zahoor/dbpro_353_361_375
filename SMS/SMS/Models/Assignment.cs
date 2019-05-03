@@ -18,6 +18,7 @@ namespace SMS.Models
         public Assignment()
         {
             this.StuAssignmentMarks = new HashSet<StuAssignmentMark>();
+            this.SubmittedAssigns = new HashSet<SubmittedAssign>();
         }
     
         public int AssignmentId { get; set; }
@@ -25,10 +26,13 @@ namespace SMS.Models
         public string Name { get; set; }
         public int SectionId { get; set; }
         public int CourseId { get; set; }
+        public System.DateTime DueDate { get; set; }
     
         public virtual Cours Cours { get; set; }
         public virtual Section Section { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StuAssignmentMark> StuAssignmentMarks { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SubmittedAssign> SubmittedAssigns { get; set; }
     }
 }

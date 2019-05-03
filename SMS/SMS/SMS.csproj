@@ -80,6 +80,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Log" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -297,6 +300,10 @@
     </Compile>
     <Compile Include="Models\StudentResultVM.cs" />
     <Compile Include="Models\StudentVM.cs" />
+    <Compile Include="Models\SubmitFiles.cs" />
+    <Compile Include="Models\SubmittedAssign.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Suggestion.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -543,9 +550,13 @@
     <Content Include="Views\Teacher\ViewTimetable.cshtml" />
     <Content Include="Views\Student\StudentFeeChallans.cshtml" />
     <Content Include="Views\Admin\AddFeeChallan.cshtml" />
+    <Content Include="Views\Student\UploadedAssign.cshtml" />
+    <Content Include="Views\Student\SubmitFiles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Files\" />
+    <Folder Include="sbc\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

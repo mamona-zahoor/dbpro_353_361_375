@@ -943,6 +943,7 @@ namespace SMS.Controllers
         [HttpPost]
         public ActionResult EditFeeChallans(int id, FeeChallanVM obj)
         {
+            
             DB35Entities db = new DB35Entities();
             int StuId = db.FeeChallans.Find(id).StudentId;
             int I = db.FeeChallans.Find(id).FeeChallanId;
@@ -955,6 +956,7 @@ namespace SMS.Controllers
                 {
                     s = "Paid";
                 }
+              
                 db.FeeChallans.Find(id).Status = db.LookUps.First(l => l.Value == s).Id;
                 db.FeeChallans.Find(id).Fine = obj.Fine;
                 db.FeeChallans.Find(id).TotalFee = (obj.Fee + obj.Fine) - obj.Scholarships;

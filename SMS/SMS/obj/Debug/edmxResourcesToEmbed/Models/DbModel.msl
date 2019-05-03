@@ -9,6 +9,7 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="SectionId" ColumnName="SectionId" />
           <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+          <ScalarProperty Name="DueDate" ColumnName="DueDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -205,6 +206,18 @@
           <ScalarProperty Name="ResultId" ColumnName="ResultId" />
           <ScalarProperty Name="StudentId" ColumnName="StudentId" />
           <ScalarProperty Name="ObtainedMarks" ColumnName="ObtainedMarks" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubmittedAssigns">
+      <EntityTypeMapping TypeName="DB35Model.SubmittedAssign">
+        <MappingFragment StoreEntitySet="SubmittedAssign">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SubmittedBy" ColumnName="SubmittedBy" />
+          <ScalarProperty Name="Assignemnt" ColumnName="Assignemnt" />
+          <ScalarProperty Name="Submited_On" ColumnName="Submited_On" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
