@@ -1,9 +1,21 @@
 ﻿@model IEnumerable<SMS.Models.Student>
 <title>Upload Result</title>
+@{
+    Layout = null;
+}
+
 <style>
     body {
         font-family: Calisto MT;
         margin: 0;
+    }
+
+    #cmb {
+        text-align: center;
+        height: 40px;
+        width: 240px;
+        border: 1px solid transparent;
+        border-color: black;
     }
 
     table {
@@ -30,22 +42,14 @@
         font-family: Calisto MT;
     }
 
-    #cmb {
-        text-align: center;
-        height: 40px;
-        width: 240px;
-        border: 1px solid transparent;
-        border-color: black;
-    }
-
-    .navbar a {
-        float: right;
-        font-size: 16px;
-        color: white;
-        text-align: center;
-        padding: 14px 17px;
-        text-decoration: none;
-    }
+        .navbar a {
+            float: right;
+            font-size: 16px;
+            color: white;
+            text-align: center;
+            padding: 14px 17px;
+            text-decoration: none;
+        }
 
 
     input {
@@ -76,7 +80,6 @@
         vertical-align: middle;
         padding: 12px 0;
         text-align: center;
-        color: 153;
     }
 
         .submit-link:hover {
@@ -91,8 +94,27 @@
     .dropdown:hover .dropdown-content {
         display: block;
     }
+
+    b {
+        color: #ECCF3E;
+        font-size: 19px;
+    }
 </style>
 
+@{
+    var d = Request.Url.Segments[3];
+}
+<div class="navbar">
+    <div class="dropdown">
+
+        <div class="dropdown-content">
+            @Html.ActionLink("My Account", "LoggedInView", new { id = d })
+            <a href="~/Home/Index">Logout</a>
+        </div>
+    </div>
+</div>
+<br />
+<br />
 @{ int i = 0;
     var id = Request.Url.Segments[3];
 }
@@ -102,6 +124,7 @@
     @Html.AntiForgeryToken()
 
     <b name="Id" style="display:none">@id</b>
+    <h2 style="color  :#b18757; font-family : Calisto MT">&emsp; &emsp; Upload Result for Students </h2>
 
     <font size="4">
         <p> &emsp;&emsp;Course : @ViewBag.co<br /></p>
@@ -111,33 +134,35 @@
         <p>
             &emsp;&emsp; Total Marks : @ViewBag.Total
     </font>
-        <font size="3">
-            <br />    &emsp;&emsp;  <b>Student Registration Number</b>
-            &emsp;&emsp;
-            <select name="StuRegNo" id="cmb">
+    <font size="3">
+        <br />    &emsp;&emsp;  <b>Student Registration Number</b>
+        &emsp;&emsp;
+        <select name="StuRegNo" id="cmb">
 
-                @foreach (var stu in ViewBag.RegNo)
+            @foreach (var stu in ViewBag.RegNo)
                 {
-                    <option value="@ViewBag.Ids[i]">@stu</option>
-                    i++;
-                }
-            </select>
-            <br /><br />
-            &emsp;&emsp;  <b>Obtained Marks</b>
-            &emsp;&emsp;
-            <input type="Number" min="0" max=@ViewBag.Total step="0.5" name="OMarks" style="width:200px">
-        </font>
+                <option value="@ViewBag.Ids[i]">@stu</option>
+                i++;
+            }
+        </select>
+        <br /><br />
+        &emsp;&emsp;  <b>Obtained Marks</b>
+        &emsp;&emsp;
+        <input type="Number" min="0" max=@ViewBag.Total step="0.5" name="OMarks" style="width:200px">
+    </font>
 
         <div class="form-group">
 
             <div class="col-md-offset-2 col-md-10">
-                <input value="Add" class="btn btn-default" type="submit" />
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                <input value="Add" class="submit-link submit" type="submit" />
             </div>
         </div>
 }
-@{ 
+@{
     var Tid = ViewBag.Tid;
 }
+ &emsp;&emsp;&emsp;
 @Html.ActionLink("Back To Sections", "TeacherSections", new { id = Tid })
 
 

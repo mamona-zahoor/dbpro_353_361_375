@@ -289,12 +289,17 @@
 </head>
 
 <body>
+    @{
+        var w = Request.Url.Segments[3];
+    }
+
+
     <div class="navbar">
         <div class="dropdown">
 
             <div class="dropdown-content">
-                <a href="PersonalInformation.html">My Account</a>
-                <a href="">Logout</a>
+                @Html.ActionLink("My Account", "LoggedInView", new { id = w })
+                <a href="~/Home/Index">Logout</a>
             </div>
         </div>
     </div>
@@ -314,8 +319,6 @@
 
     &emsp; &emsp; @Html.ActionLink("Dues Summary", "StudentFeeChallans", new { id = Sid })
     &emsp; &emsp; @Html.ActionLink("Uploaded Assignments", "UploadedAssign", new { id = Sid })
-  
-    &emsp; &emsp; @Html.ActionLink("View Timetable", "Detail", new { id = Sid })
 
 
 
@@ -395,7 +398,7 @@
     <br><br><br><br>
 
 </body>
-   
+
 
 
 

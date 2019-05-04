@@ -764,19 +764,26 @@ namespace SMS.Controllers
             return View(A);
         }
 
-     public ActionResult SubmittedAssign(int id)
+
+        public ActionResult SubmittedAssign(int id)
         {
             List<SubmittedAssign> s = new List<Models.SubmittedAssign>();
             DB35Entities db = new DB35Entities();
+            List<string> R = new List<string>();
             foreach (SubmittedAssign a in db.SubmittedAssigns)
             {
                 if (a.Assignemnt == id)
                 {
                     s.Add(a);
+                    R.Add(db.Students.Find(a.SubmittedBy).RegNo);
                 }
             }
+            ViewBag.Reg = R;
             return View(s);
         }
+
+
+
 
 
         public FileResult DownloadFiles(int id, int Sid)
@@ -785,10 +792,10 @@ namespace SMS.Controllers
             string RegNo = db.Students.First(f => f.Id == Sid).RegNo;
             string name = db.SubmittedAssigns.First(f => f.SubmittedBy == Sid && f.Assignemnt == id).FileName;
             byte[] fileBytes = System.IO.File.ReadAllBytes(db.SubmittedAssigns.First(f => f.Assignemnt == id).Path);
-            string fileName = RegNo+".zip";
+            string fileName = RegNo + ".zip";
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
-        
+
 
         //public ActionResult TeacherProfile(int id)
         //{

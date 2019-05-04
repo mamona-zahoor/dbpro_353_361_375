@@ -308,6 +308,9 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SuggestionsVM.cs" />
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Teacher.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>

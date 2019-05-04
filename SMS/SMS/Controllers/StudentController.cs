@@ -65,55 +65,78 @@ namespace SMS.Controllers
         }
 
 
-      public ActionResult UploadedAssign(int id)
+        public ActionResult UploadedAssign(int id)
         {
             List<Assignment> a = new List<Assignment>();
             DB35Entities db = new DB35Entities();
             int secId = db.Students.Find(id).SectionId;
+            List<string> C = new List<string>();
+            List<int> D = new List<int>();
             foreach (Assignment b in db.Assignments)
             {
                 if (b.SectionId == secId)
                 {
                     a.Add(b);
+                    C.Add(db.Courses.Find(b.CourseId).Title);
                 }
             }
             foreach (SubmittedAssign s in db.SubmittedAssigns)
             {
-                if (s.Assignemnt == id)
-                {
-                    ViewBag.DoneS.Add(s.SubmittedBy);
-                }
+                D.Add(s.SubmittedBy);
             }
+            ViewBag.DoneS = D;
+            ViewBag.C = C;
             return View(a);
         }
-        
+
 
         public ActionResult SubmitFiles(int id, int Stu)
         {
-           
+
             return View();
         }
+
 
         [HttpPost]
         public ActionResult SubmitFiles(HttpPostedFileBase Zip, SubmitFiles obj, string q, int id)
         {
-            string path = Path.Combine(Server.MapPath("~/Files"), Path.GetFileName(Zip.FileName));
-            Zip.SaveAs(path);
+            string path = "";
             DB35Entities db = new DB35Entities();
+            bool done = false;
+            foreach (SubmittedAssign e in db.SubmittedAssigns)
+            {
+                if (e.SubmittedBy == Convert.ToInt32(q) && e.Assignemnt == id)
+                {
+                    path = Path.Combine(Server.MapPath("~/Files"), Path.GetFileName(Zip.FileName));
+                    e.Path = path;
+                    Zip.SaveAs(path);
+                    e.FileName = Zip.FileName;
+                    e.Submited_On = DateTime.Now;
+                    done = true;
+                    break;
+                }
+            }
+            if (done)
+            {
+                db.SaveChanges();
+                return RedirectToAction("UploadedAssign", new { id = Convert.ToInt32(q) });
+            }
+            path = Path.Combine(Server.MapPath("~/Files"), Path.GetFileName(Zip.FileName));
+            Zip.SaveAs(path);
             SubmittedAssign sf = new Models.SubmittedAssign();
             sf.FileName = Zip.FileName;
             sf.Path = path;
             sf.Assignemnt = id;
             sf.Submited_On = DateTime.Now;
             sf.SubmittedBy = Convert.ToInt32(q);
-            db.SubmittedAssigns.Add(sf);  
+            db.SubmittedAssigns.Add(sf);
             db.SaveChanges();
-            return SubmitFiles(id, Convert.ToInt32(q));
+            return RedirectToAction("UploadedAssign", new { id = Convert.ToInt32(q) });
         }
 
 
 
-            public void Calculate(int id)
+        public void Calculate(int id)
         {
             DB35Entities db = new DB35Entities();
 
