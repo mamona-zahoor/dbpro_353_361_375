@@ -12,17 +12,16 @@ namespace SMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class FeeChallan
+    public partial class SubmittedAssign
     {
-        public int FeeChallanId { get; set; }
-        public int StudentId { get; set; }
-        public decimal Fee { get; set; }
-        public Nullable<decimal> Scholarships { get; set; }
-        public Nullable<decimal> Fine { get; set; }
-        public decimal TotalFee { get; set; }
-        public int Status { get; set; }
-        public System.DateTime DueDate { get; set; }
+        public int Id { get; set; }
+        public int SubmittedBy { get; set; }
+        public int Assignemnt { get; set; }
+        public System.DateTime Submited_On { get; set; }
+        public string FileName { get; set; }
+        public string Path { get; set; }
     
+        public virtual Assignment Assignment { get; set; }
         public virtual Student Student { get; set; }
     }
 }

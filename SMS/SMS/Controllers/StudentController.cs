@@ -111,7 +111,7 @@ namespace SMS.Controllers
             return SubmitFiles(id, Convert.ToInt32(q));
         }
 
-*/
+
 
             public void Calculate(int id)
         {

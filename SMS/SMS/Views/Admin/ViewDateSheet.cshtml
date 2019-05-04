@@ -24,7 +24,6 @@
     }
 </style>
 
-
 <table class="table">
     <tr>
        
@@ -75,4 +74,12 @@
 }
 
 </table>
+@{
+    if (ViewBag.Color == "red")
+    {
+        <div class="alert alert-danger">
+            <strong>Error!</strong> @ViewBag.Message
+        </div>
+    }
+}
 

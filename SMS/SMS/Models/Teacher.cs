@@ -21,7 +21,6 @@ namespace SMS.Models
             this.Attendances = new HashSet<Attendance>();
             this.Courses = new HashSet<Cours>();
             this.Payrolls = new HashSet<Payroll>();
-            this.Sections = new HashSet<Section>();
             this.StuAssignmentMarks = new HashSet<StuAssignmentMark>();
             this.Ttables = new HashSet<Ttable>();
         }
@@ -42,8 +41,7 @@ namespace SMS.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payroll> Payrolls { get; set; }
         public virtual Person Person { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Section> Sections { get; set; }
+        public virtual Section Section { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StuAssignmentMark> StuAssignmentMarks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

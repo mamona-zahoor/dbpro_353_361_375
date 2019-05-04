@@ -18,7 +18,58 @@ namespace SMS.Controllers
         public static int var2;
 
         SqlConnection con = new SqlConnection("Data Source=FARVASARDAR-PC\\FARVASQL;Initial Catalog=DB35;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
+        public ActionResult ViewDatesheets()
+        {
+            DB35Entities db = new DB35Entities();
+            List<DatesheetVM> VM = new List<DatesheetVM>();
+           foreach(DateSheet d in db.DateSheets.ToList())
+            {
+                DatesheetVM g = new DatesheetVM();
+                int id = d.ClassId;
+                g.ClassId = id;
+                g.ClassName = db.Classes.Where(x => x.ClassId == id).SingleOrDefault().Name.ToString();
+                VM.Add(g);
 
+            }
+            return View(VM);
+        }
+
+
+        public ActionResult ViewDateSheet(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            List<DatesheetVM> T = new List<DatesheetVM>();
+            int cid = id;
+
+            ViewBag.Class = db.Classes.Where(x => x.ClassId == cid).SingleOrDefault().Name;
+            int did = db.DateSheets.Where(x => x.ClassId == cid).SingleOrDefault().DateSheetId;
+            List<ClassDateSheet> F = db.ClassDateSheets.Where(x => x.DateSheetId == did).ToList();
+            if (F.Count == 0)
+            {
+                ViewBag.Color = "red";
+                ViewBag.Message = "Datesheet is not finalized yet";
+            }
+            else
+            {
+                foreach (ClassDateSheet f in F)
+                {
+
+
+                    DatesheetVM d = new DatesheetVM();
+                    d.CourseId = f.CourseId;
+                    d.Date = f.Date;
+                    DayOfWeek g = d.Date.DayOfWeek;
+                    d.day = g;
+                    d.EndTime = f.EndTime;
+                    d.StartTime = f.StartTime;
+                    d.Title = db.Courses.Where(x => x.CourseId == d.CourseId).SingleOrDefault().Title;
+                    T.Add(d);
+
+                }
+            }
+           
+            return View(T);
+        }
 
         public ActionResult ViewTimeTable()
         {
@@ -417,6 +468,7 @@ namespace SMS.Controllers
         public ActionResult AddDatesheet(DatesheetVM t)
         {
             bool check = true;
+            bool k = true;
             DB35Entities db = new DB35Entities();
             ClassDateSheet cd = new ClassDateSheet();
             DateSheet dt = new DateSheet();
@@ -436,13 +488,43 @@ namespace SMS.Controllers
                 db.DateSheets.Add(dt);
                 cd.DateSheetId = dt.DateSheetId;
                 db.SaveChanges();
+                cd.CourseId = t.CourseId;
+                cd.EndTime = t.EndTime;
+                cd.StartTime = t.StartTime;
+                cd.Date = t.Date;
+                db.ClassDateSheets.Add(cd);
+                db.SaveChanges();
             }
-            cd.CourseId = t.CourseId;
-            cd.EndTime = t.EndTime;
-            cd.StartTime = t.StartTime;
-            cd.Date = t.Date;
-            db.ClassDateSheets.Add(cd);
-            db.SaveChanges();
+            else if(check == false)
+            {
+                foreach(ClassDateSheet j in db.ClassDateSheets.ToList())
+                {
+                    if(cd.DateSheetId == j.DateSheetId && t.CourseId == j.CourseId )
+                    {
+                        ViewBag.Color = "red";
+                        ViewBag.message = "Exam for this subject will be conducted on "+j.Date;
+                        k = false;
+                        break;
+                    }
+                    else
+                    {
+                        ViewBag.Color = "green";
+                        ViewBag.message = "Added Successfully";
+                        k = true;
+                       
+                    }
+                }
+                if( k == true)
+                {
+                    cd.CourseId = t.CourseId;
+                    cd.EndTime = t.EndTime;
+                    cd.StartTime = t.StartTime;
+                    cd.Date = t.Date;
+                    db.ClassDateSheets.Add(cd);
+                    db.SaveChanges();
+                }
+            }
+          
             return View();
         }
 
@@ -678,9 +760,21 @@ namespace SMS.Controllers
         }
 
         // GET: Admin/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Deletes(int id)
         {
-            return View();
+            DB35Entities db = new DB35Entities();
+            int y = db.DateSheets.Where(x => x.ClassId == id).SingleOrDefault().DateSheetId;
+            foreach(ClassDateSheet f in db.ClassDateSheets.Where(x => x.DateSheetId == y))
+            {
+                db.ClassDateSheets.Remove(f);
+            }
+            foreach(DateSheet v in db.DateSheets.Where(x => x.DateSheetId == y))
+            {
+                db.DateSheets.Remove(v);
+            }
+            db.SaveChanges();
+
+            return RedirectToAction("ViewDateSheets", "Admin");
         }
 
         // POST: Admin/Delete/5
@@ -1007,7 +1101,7 @@ namespace SMS.Controllers
             return RedirectToAction("EditFeeChallans", new { id = I,Studentid = StuId });
 
         }
-        */
+        
         public ActionResult Class(string Name)
         {
 

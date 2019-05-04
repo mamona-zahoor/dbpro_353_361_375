@@ -1,0 +1,31 @@
+﻿@model IEnumerable<SMS.Models.DatesheetVM>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ClassName)
+        </th>
+       
+    </tr>
+    <tr></tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClassName)
+        </td>
+      
+        <td>
+          
+           
+            @Html.ActionLink("View Datesheet", "ViewDateSheet", new {  id=item.ClassId }) |
+            @Html.ActionLink("Delete", "Deletes", new { id = item.ClassId }) |
+          
+        </td>
+    </tr>
+}
+
+</table>

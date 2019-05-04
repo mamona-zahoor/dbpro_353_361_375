@@ -60,7 +60,19 @@
         </div>
     </div>
 }
-
+@{ if (ViewBag.Color == "green")
+            {
+        <div class="alert alert-success">
+            <strong>Success!</strong> @ViewBag.message
+        </div>
+    }
+    else if (ViewBag.Color == "red")
+    {
+        <div class="alert alert-danger">
+            <strong>Error!</strong> @ViewBag.message
+        </div>
+    }
+}
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
