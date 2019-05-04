@@ -66,7 +66,6 @@ namespace SMS.Controllers
                 throw;
             }
         }
-
         public ActionResult ViewDatesheets()
         {
             DB35Entities db = new DB35Entities();
