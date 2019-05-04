@@ -123,7 +123,7 @@ namespace SMS.Controllers
             a.DueDate = DateTime.Now;
             a.TotalMarks = 0;
 
-            return Uploadassignments(tid, cid, secid);
+            return RedirectToAction("ViewAll", "Teacher", new { id = tid });
 
 
 

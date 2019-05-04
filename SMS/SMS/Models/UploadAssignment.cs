@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+using System.ComponentModel.DataAnnotations;
+
 namespace SMS.Models
 {
     public class UploadAssignment
     {
         public int AssignmentId { get; set; }
         public string Title { get; set; }
+        [DataType(DataType.DateTime)]
         public DateTime Duedate { get; set; }
         public string Desription { get; set; }
       public string filename { get; set; }
