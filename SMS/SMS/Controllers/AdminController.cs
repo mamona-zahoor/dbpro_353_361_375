@@ -45,7 +45,6 @@ namespace SMS.Controllers
                 throw;
             }
         }
-
         public ActionResult ExportTeacherReport()
         {
             DB35Entities db = new DB35Entities();
