@@ -20,15 +20,15 @@ namespace SMS.Models
         public TimeSpan EndTime { get; set; }
         [Display (Name = "DAY")]
         public string day { get; set; }
-        [Display(Name = "8-9")]
+        [Display(Name = "8:00 to 9:00")]
         public string R8to9 { get; set; }
-        [Display(Name = "9-10")]
+        [Display(Name = "9:00 to 10:00")]
         public string R9to10 { get; set; }
-        [Display(Name = "10-11")]
+        [Display(Name = "10:00 to 11:00")]
         public string R10to11 { get; set; }
-        [Display(Name = "11-12")]
+        [Display(Name = "11:00 to 12:00")]
         public string R11to12 { get; set; }
-        [Display(Name = "1-2")]
+        [Display(Name = "1:00 to 2:00")]
         public string R1to2 { get; set; }
     }
 }

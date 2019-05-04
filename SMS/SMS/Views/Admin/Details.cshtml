@@ -1,9 +1,34 @@
 ﻿@model IEnumerable<SMS.Models.ViewTimeTable>
 
+<hr>
+<br /><br />
+@ViewBag.Class
+@ViewBag.Section
 <p>
     @Html.ActionLink("ADD TimeTable", "AddTimetable")
 </p>
-<table class="table">
+<br /><br /><br />
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 80%;
+        height: 90%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: center;
+        padding: 8px;
+        height:70px;
+        width:50px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<table>
     <tr>
        
         <th>
@@ -24,13 +49,13 @@
         <th>
             @Html.DisplayNameFor(model => model.R1to2)
         </th>
-        <th></th>
+      
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        
         <td>
+     
             @Html.DisplayFor(modelItem => item.day)
         </td>
         <td>
@@ -48,7 +73,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.R1to2)
         </td>
-       
+        
     </tr>
 }
 

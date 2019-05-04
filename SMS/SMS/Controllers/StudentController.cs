@@ -65,7 +65,7 @@ namespace SMS.Controllers
         }
 
 
-       public ActionResult UploadedAssign(int id)
+      public ActionResult UploadedAssign(int id)
         {
             List<Assignment> a = new List<Assignment>();
             DB35Entities db = new DB35Entities();
@@ -86,6 +86,7 @@ namespace SMS.Controllers
             }
             return View(a);
         }
+        
 
         public ActionResult SubmitFiles(int id, int Stu)
         {
@@ -110,7 +111,95 @@ namespace SMS.Controllers
             return SubmitFiles(id, Convert.ToInt32(q));
         }
 
+*/
 
+            public void Calculate(int id)
+        {
+            DB35Entities db = new DB35Entities();
+
+            int secid = db.Students.Where(x => x.Id == id).SingleOrDefault().SectionId;
+            Detail(secid);
+             
+        }
+
+        public ActionResult Detail(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            //ViewBag.Section = db.Sections.Where(x => x.SectionId == id).SingleOrDefault().Name;
+            int Id = db.Students.Where(x => x.Id == id).SingleOrDefault().SectionId;
+            id = Id;
+            int f = db.ClassSections.Where(x => x.SectionId == id).SingleOrDefault().ClassId;
+
+          //  ViewBag.Class = db.Classes.Where(x => x.ClassId == f).SingleOrDefault().Name;
+
+            List<ViewTimeTable> Time = new List<Models.ViewTimeTable>();
+            int tid = db.Timetables.Where(x => x.SectionId == id).SingleOrDefault().TimetableId;
+            List<SectionTimetable> S = db.SectionTimetables.Where(x => x.TimetableId == tid).ToList();
+            foreach (SectionTimetable m in S)
+            {
+                ViewTimeTable v = new Models.ViewTimeTable();
+                int s = m.Id;
+                v.day = m.Day;
+
+                Nullable<int> r = db.Lectures.Where(x => x.Id == s).SingleOrDefault().Lecture1;
+                if (r == null)
+                {
+                    v.R8to9 = "";
+                }
+                else
+                {
+                    //
+                    v.R8to9 = db.Courses.Where(x => x.CourseId == r).SingleOrDefault().Title;
+
+                }
+                r = db.Lectures.Where(x => x.Id == s).SingleOrDefault().Lecture2;
+                if (r == null)
+                {
+                    v.R9to10 = "";
+                }
+                else
+                {
+                    v.R9to10 = db.Courses.Where(x => x.CourseId == r).SingleOrDefault().Title;
+                }
+                r = db.Lectures.Where(x => x.Id == s).SingleOrDefault().Lecture3;
+                if (r == null)
+                {
+                    v.R10to11 = "";
+                }
+                else
+                {
+                    v.R10to11 = db.Courses.Where(x => x.CourseId == r).SingleOrDefault().Title;
+                }
+                r = db.Lectures.Where(x => x.Id == s).SingleOrDefault().Lecture4;
+                if (r == null)
+                {
+                    v.R11to12 = "";
+
+                }
+                else
+                {
+                    v.R11to12 = db.Courses.Where(x => x.CourseId == r).SingleOrDefault().Title;
+                }
+                r = db.Lectures.Where(x => x.Id == s).SingleOrDefault().Lecture5;
+                if (r == null)
+                {
+                    v.R1to2 = "";
+                }
+                else
+                {
+                    v.R1to2 = db.Courses.Where(x => x.CourseId == r).SingleOrDefault().Title;
+                }
+
+                Time.Add(v);
+
+            }
+
+
+
+
+
+            return View(Time.OrderBy(x => x.day));
+        }
 
         public ActionResult StudentRequests(string Id)
         {

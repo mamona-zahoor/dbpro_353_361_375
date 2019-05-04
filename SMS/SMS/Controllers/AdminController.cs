@@ -53,6 +53,11 @@ namespace SMS.Controllers
         public ActionResult Details(int id)
         {
             DB35Entities db = new DB35Entities();
+            ViewBag.Section = db.Sections.Where(x => x.SectionId == id).SingleOrDefault().Name;
+            int f = db.ClassSections.Where(x => x.SectionId == id).SingleOrDefault().ClassId;
+
+            ViewBag.Class = db.Classes.Where(x => x.ClassId == f).SingleOrDefault().Name;
+           
             List<ViewTimeTable> Time = new List<Models.ViewTimeTable>();
             int tid = db.Timetables.Where(x => x.SectionId == id).SingleOrDefault().TimetableId;
             List<SectionTimetable> S = db.SectionTimetables.Where(x => x.TimetableId == tid).ToList();
@@ -952,7 +957,7 @@ namespace SMS.Controllers
             return View(fvm);
         }
 
-   /*     public ActionResult EditFeeChallans(int id, int StudentId)
+        public ActionResult EditFeeChallans(int id, int StudentId)
         {
             DB35Entities db = new DB35Entities();
             ViewBag.RegNo = db.Students.First(s => s.Id == StudentId).RegNo;
@@ -1389,6 +1394,7 @@ namespace SMS.Controllers
 
 
         }
+        
         public ActionResult EditStudent(int id)
         {
             DB35Entities db = new DB35Entities();

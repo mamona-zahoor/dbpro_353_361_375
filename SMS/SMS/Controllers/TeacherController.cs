@@ -721,7 +721,7 @@ namespace SMS.Controllers
             return View(A);
         }
 
-       public ActionResult SubmittedAssign(int id)
+     public ActionResult SubmittedAssign(int id)
         {
             List<SubmittedAssign> s = new List<Models.SubmittedAssign>();
             DB35Entities db = new DB35Entities();
@@ -745,6 +745,7 @@ namespace SMS.Controllers
             string fileName = RegNo+".zip";
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
+        
 
         //public ActionResult TeacherProfile(int id)
         //{
