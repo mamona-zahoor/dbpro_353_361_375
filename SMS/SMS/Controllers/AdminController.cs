@@ -13,10 +13,21 @@ using System.IO;
 
 namespace SMS.Controllers
 {
+   
     public class AdminController : Controller
     {
         // GET: Admin
 
+         public ActionResult C()
+        {
+            DB35Entities db = new DB35Entities();
+            var c = (from b in db.Assignments select b).ToList();
+            CrystalReport3 rpt = new CrystalReport3();
+            rpt.Load();
+            rpt.SetDataSource(c);
+            Stream s = rpt.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            return File(s, "application/pdf");
+        }
         public static int var1;
         public static int var2;
 

@@ -17,6 +17,7 @@
             @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
         </div>
         <br />
+        <br /><br />
     </div>
         <div class="form-group">
             @Html.LabelFor(model => model.Desription, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -26,6 +27,8 @@
             </div>
         </div>
         <br />
+        <br />
+        <br /><br />
         <div class="form-group">
             @Html.LabelFor(model => model.Duedate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -33,7 +36,8 @@
                 @Html.ValidationMessageFor(model => model.Duedate, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <br />
+        <br /><br />
         <br />
         <div class="form-group">
             @Html.LabelFor(model => model.TotalMarks, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -43,6 +47,8 @@
             </div>
         </div>
         <br />
+        <br />
+        <br /><br />
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="file" name="file" />
@@ -55,6 +61,4 @@
 
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
