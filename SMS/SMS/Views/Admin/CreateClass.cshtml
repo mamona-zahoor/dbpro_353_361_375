@@ -127,12 +127,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <p>
-                    <font size="4">
-                        <input type="Number" id="name" name="Name" min="1" max="10" style="width : 200px">
-                    </font>
-                </p>
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                <select name="TeacherNames" id="cmb">
+
+                    @foreach (var t in ViewBag.Classes)
+                {
+                        <option value="@t">@t</option>
+                       
+                    }
+                </select>   @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
 

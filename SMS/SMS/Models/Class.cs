@@ -20,6 +20,7 @@ namespace SMS.Models
             this.Attendances = new HashSet<Attendance>();
             this.ClassSections = new HashSet<ClassSection>();
             this.DateSheets = new HashSet<DateSheet>();
+            this.Students = new HashSet<Student>();
         }
     
         public int ClassId { get; set; }
@@ -33,5 +34,7 @@ namespace SMS.Models
         public virtual ICollection<ClassSection> ClassSections { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DateSheet> DateSheets { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Student> Students { get; set; }
     }
 }

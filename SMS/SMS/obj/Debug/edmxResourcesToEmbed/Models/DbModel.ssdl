@@ -298,7 +298,9 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Assignments_Section">
-    <End Role="Section" Type="Self.Section" Multiplicity="1" />
+    <End Role="Section" Type="Self.Section" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Assignments" Type="Self.Assignments" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Section">
@@ -310,7 +312,9 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Attendance_Class">
-    <End Role="Class" Type="Self.Class" Multiplicity="1" />
+    <End Role="Class" Type="Self.Class" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Class">
@@ -322,7 +326,9 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Attendance_Section">
-    <End Role="Section" Type="Self.Section" Multiplicity="1" />
+    <End Role="Section" Type="Self.Section" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Section">
@@ -346,7 +352,9 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ClassSections_Class">
-    <End Role="Class" Type="Self.Class" Multiplicity="1" />
+    <End Role="Class" Type="Self.Class" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="ClassSections" Type="Self.ClassSections" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Class">
@@ -358,7 +366,9 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ClassSections_Section">
-    <End Role="Section" Type="Self.Section" Multiplicity="1" />
+    <End Role="Section" Type="Self.Section" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="ClassSections" Type="Self.ClassSections" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Section">
@@ -370,7 +380,9 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Courses_Section">
-    <End Role="Section" Type="Self.Section" Multiplicity="1" />
+    <End Role="Section" Type="Self.Section" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Courses" Type="Self.Courses" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Section">
@@ -382,7 +394,9 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Courses_Teacher">
-    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Courses" Type="Self.Courses" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Teacher">
@@ -394,7 +408,9 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_DateSheet_Class">
-    <End Role="Class" Type="Self.Class" Multiplicity="1" />
+    <End Role="Class" Type="Self.Class" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="DateSheet" Type="Self.DateSheet" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Class">
@@ -406,7 +422,9 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_FeeChallans_Student">
-    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="FeeChallans" Type="Self.FeeChallans" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Student">
@@ -430,7 +448,9 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Lectures_Courses1">
-    <End Role="Courses" Type="Self.Courses" Multiplicity="0..1" />
+    <End Role="Courses" Type="Self.Courses" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Lectures" Type="Self.Lectures" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Courses">
@@ -538,7 +558,9 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Results_Section">
-    <End Role="Section" Type="Self.Section" Multiplicity="1" />
+    <End Role="Section" Type="Self.Section" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Results" Type="Self.Results" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Section">
@@ -549,20 +571,10 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Section_Teacher">
-    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
-    <End Role="Section" Type="Self.Section" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Teacher">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Section">
-        <PropertyRef Name="TeacherId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_SectionStudents_Section">
-    <End Role="Section" Type="Self.Section" Multiplicity="1" />
+    <End Role="Section" Type="Self.Section" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="SectionStudents" Type="Self.SectionStudents" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Section">
@@ -633,15 +645,31 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Student_Person1">
-    <End Role="Person" Type="Self.Person" Multiplicity="1" />
-    <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+  <Association Name="FK_Student_Class">
+    <End Role="Class" Type="Self.Class" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Person">
-        <PropertyRef Name="Id" />
+      <Principal Role="Class">
+        <PropertyRef Name="ClassId" />
       </Principal>
       <Dependent Role="Student">
-        <PropertyRef Name="Id" />
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_Section">
+    <End Role="Section" Type="Self.Section" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Section">
+        <PropertyRef Name="SectionId" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="SectionId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -670,7 +698,9 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_StudentAttendance_Student2">
-    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="StudentAttendance" Type="Self.StudentAttendance" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Student">
@@ -694,7 +724,9 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_StudentResult_Student">
-    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="StudentResult" Type="Self.StudentResult" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Student">
@@ -718,7 +750,9 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_SubmittedAssign_Student">
-    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="SubmittedAssign" Type="Self.SubmittedAssign" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Student">
@@ -762,6 +796,18 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
       </Principal>
       <Dependent Role="Teacher">
         <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Teacher_Section">
+    <End Role="Section" Type="Self.Section" Multiplicity="0..1" />
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Section">
+        <PropertyRef Name="SectionId" />
+      </Principal>
+      <Dependent Role="Teacher">
+        <PropertyRef Name="InchSec" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -838,7 +884,9 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Timetable_Section">
-    <End Role="Section" Type="Self.Section" Multiplicity="1" />
+    <End Role="Section" Type="Self.Section" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Timetable" Type="Self.Timetable" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Section">
@@ -850,7 +898,9 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Ttable_Teacher">
-    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Ttable" Type="Self.Ttable" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Teacher">
@@ -983,10 +1033,6 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
       <End Role="Section" EntitySet="Section" />
       <End Role="Results" EntitySet="Results" />
     </AssociationSet>
-    <AssociationSet Name="FK_Section_Teacher" Association="Self.FK_Section_Teacher">
-      <End Role="Teacher" EntitySet="Teacher" />
-      <End Role="Section" EntitySet="Section" />
-    </AssociationSet>
     <AssociationSet Name="FK_SectionStudents_Section" Association="Self.FK_SectionStudents_Section">
       <End Role="Section" EntitySet="Section" />
       <End Role="SectionStudents" EntitySet="SectionStudents" />
@@ -1011,8 +1057,12 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
       <End Role="Teacher" EntitySet="Teacher" />
       <End Role="StuAssignmentMarks" EntitySet="StuAssignmentMarks" />
     </AssociationSet>
-    <AssociationSet Name="FK_Student_Person1" Association="Self.FK_Student_Person1">
-      <End Role="Person" EntitySet="Person" />
+    <AssociationSet Name="FK_Student_Class" Association="Self.FK_Student_Class">
+      <End Role="Class" EntitySet="Class" />
+      <End Role="Student" EntitySet="Student" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_Section" Association="Self.FK_Student_Section">
+      <End Role="Section" EntitySet="Section" />
       <End Role="Student" EntitySet="Student" />
     </AssociationSet>
     <AssociationSet Name="FK_StudentAttendance_Attendance" Association="Self.FK_StudentAttendance_Attendance">
@@ -1053,6 +1103,10 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     </AssociationSet>
     <AssociationSet Name="FK_Teacher_Person" Association="Self.FK_Teacher_Person">
       <End Role="Person" EntitySet="Person" />
+      <End Role="Teacher" EntitySet="Teacher" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Teacher_Section" Association="Self.FK_Teacher_Section">
+      <End Role="Section" EntitySet="Section" />
       <End Role="Teacher" EntitySet="Teacher" />
     </AssociationSet>
     <AssociationSet Name="FK_TeacherTimetable_Courses" Association="Self.FK_TeacherTimetable_Courses">

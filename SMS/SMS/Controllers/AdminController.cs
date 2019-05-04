@@ -784,12 +784,26 @@ namespace SMS.Controllers
         public ActionResult CreateClass()
         {
             DB35Entities db = new DB35Entities();
-            int count = 0;
+            List<int> cl = new List<int>();
             foreach (Class c in db.Classes)
             {
-                count++;
+                cl.Add(c.Name);
             }
-            ViewBag.Classes = count;
+            List<int> a = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+            
+            foreach (int cc in cl)
+            {
+                foreach (int q in a)
+                {
+                    if (cc == q)
+                    {
+                        a.Remove(q);
+                        break;
+                    }
+                }
+            }
+            ViewBag.Classes = a;
             return View();
         }
 

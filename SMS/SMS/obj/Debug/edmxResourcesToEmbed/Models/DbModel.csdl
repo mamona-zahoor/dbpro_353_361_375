@@ -40,6 +40,7 @@
     <NavigationProperty Name="Attendances" Relationship="Self.FK_Attendance_Class" FromRole="Class" ToRole="Attendance" />
     <NavigationProperty Name="ClassSections" Relationship="Self.FK_ClassSections_Class" FromRole="Class" ToRole="ClassSections" />
     <NavigationProperty Name="DateSheets" Relationship="Self.FK_DateSheet_Class" FromRole="Class" ToRole="DateSheet" />
+    <NavigationProperty Name="Students" Relationship="Self.FK_Student_Class" FromRole="Class" ToRole="Student" />
   </EntityType>
   <EntityType Name="ClassDateSheet">
     <Key>
@@ -165,7 +166,6 @@
     <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
     <NavigationProperty Name="LookUp" Relationship="Self.FK_Person_LookUp" FromRole="Person" ToRole="LookUp" />
-    <NavigationProperty Name="Student" Relationship="Self.FK_Student_Person1" FromRole="Person" ToRole="Student" />
     <NavigationProperty Name="Suggestions" Relationship="Self.FK_Suggestions_Person" FromRole="Person" ToRole="Suggestions" />
     <NavigationProperty Name="Teacher" Relationship="Self.FK_Teacher_Person" FromRole="Person" ToRole="Teacher" />
   </EntityType>
@@ -195,9 +195,10 @@
     <NavigationProperty Name="ClassSections" Relationship="Self.FK_ClassSections_Section" FromRole="Section" ToRole="ClassSections" />
     <NavigationProperty Name="Courses" Relationship="Self.FK_Courses_Section" FromRole="Section" ToRole="Courses" />
     <NavigationProperty Name="Results" Relationship="Self.FK_Results_Section" FromRole="Section" ToRole="Results" />
-    <NavigationProperty Name="Teacher" Relationship="Self.FK_Section_Teacher" FromRole="Section" ToRole="Teacher" />
+    <NavigationProperty Name="Students" Relationship="Self.FK_Student_Section" FromRole="Section" ToRole="Student" />
+    <NavigationProperty Name="Teachers" Relationship="Self.FK_Teacher_Section" FromRole="Section" ToRole="Teacher" />
     <NavigationProperty Name="Timetables" Relationship="Self.FK_Timetable_Section" FromRole="Section" ToRole="Timetable" />
-    <NavigationProperty Name="Students" Relationship="Self.SectionStudents" FromRole="Section" ToRole="Student" />
+    <NavigationProperty Name="Students1" Relationship="Self.SectionStudents" FromRole="Section" ToRole="Student" />
   </EntityType>
   <EntityType Name="SectionTimetable">
     <Key>
@@ -235,8 +236,9 @@
     <Property Name="SecretQuestion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="SecretAnswer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Fee" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <NavigationProperty Name="Class" Relationship="Self.FK_Student_Class" FromRole="Student" ToRole="Class" />
     <NavigationProperty Name="FeeChallans" Relationship="Self.FK_FeeChallans_Student" FromRole="Student" ToRole="FeeChallans" />
-    <NavigationProperty Name="Person" Relationship="Self.FK_Student_Person1" FromRole="Student" ToRole="Person" />
+    <NavigationProperty Name="Section" Relationship="Self.FK_Student_Section" FromRole="Student" ToRole="Section" />
     <NavigationProperty Name="StuAssignmentMarks" Relationship="Self.FK_StuAssignmentMarks_Student" FromRole="Student" ToRole="StuAssignmentMarks" />
     <NavigationProperty Name="StudentAttendances" Relationship="Self.FK_StudentAttendance_Student2" FromRole="Student" ToRole="StudentAttendance" />
     <NavigationProperty Name="StudentResults" Relationship="Self.FK_StudentResult_Student" FromRole="Student" ToRole="StudentResult" />
@@ -315,7 +317,7 @@
     <NavigationProperty Name="Courses" Relationship="Self.FK_Courses_Teacher" FromRole="Teacher" ToRole="Courses" />
     <NavigationProperty Name="Payrolls" Relationship="Self.FK_Payroll_Teacher" FromRole="Teacher" ToRole="Payroll" />
     <NavigationProperty Name="Person" Relationship="Self.FK_Teacher_Person" FromRole="Teacher" ToRole="Person" />
-    <NavigationProperty Name="Sections" Relationship="Self.FK_Section_Teacher" FromRole="Teacher" ToRole="Section" />
+    <NavigationProperty Name="Section" Relationship="Self.FK_Teacher_Section" FromRole="Teacher" ToRole="Section" />
     <NavigationProperty Name="StuAssignmentMarks" Relationship="Self.FK_StuAssignmentMarks_Teacher" FromRole="Teacher" ToRole="StuAssignmentMarks" />
     <NavigationProperty Name="Ttables" Relationship="Self.FK_Ttable_Teacher" FromRole="Teacher" ToRole="Ttable" />
   </EntityType>
@@ -382,7 +384,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Assignments_Section">
-    <End Role="Section" Type="Self.Section" Multiplicity="1" />
+    <End Role="Section" Type="Self.Section" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Assignments" Type="Self.Assignment" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Section">
@@ -418,7 +422,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Attendance_Class">
-    <End Role="Class" Type="Self.Class" Multiplicity="1" />
+    <End Role="Class" Type="Self.Class" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Class">
@@ -430,7 +436,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Attendance_Section">
-    <End Role="Section" Type="Self.Section" Multiplicity="1" />
+    <End Role="Section" Type="Self.Section" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Section">
@@ -466,7 +474,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ClassSections_Class">
-    <End Role="Class" Type="Self.Class" Multiplicity="1" />
+    <End Role="Class" Type="Self.Class" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="ClassSections" Type="Self.ClassSection" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Class">
@@ -478,7 +488,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_DateSheet_Class">
-    <End Role="Class" Type="Self.Class" Multiplicity="1" />
+    <End Role="Class" Type="Self.Class" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="DateSheet" Type="Self.DateSheet" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Class">
@@ -489,8 +501,24 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Student_Class">
+    <End Role="Class" Type="Self.Class" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Class">
+        <PropertyRef Name="ClassId" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ClassSections_Section">
-    <End Role="Section" Type="Self.Section" Multiplicity="1" />
+    <End Role="Section" Type="Self.Section" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="ClassSections" Type="Self.ClassSection" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Section">
@@ -502,7 +530,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Courses_Section">
-    <End Role="Section" Type="Self.Section" Multiplicity="1" />
+    <End Role="Section" Type="Self.Section" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Courses" Type="Self.Cours" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Section">
@@ -514,7 +544,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Courses_Teacher">
-    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Courses" Type="Self.Cours" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Teacher">
@@ -538,7 +570,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Lectures_Courses1">
-    <End Role="Courses" Type="Self.Cours" Multiplicity="0..1" />
+    <End Role="Courses" Type="Self.Cours" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Lectures" Type="Self.Lecture" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Courses">
@@ -658,7 +692,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_FeeChallans_Student">
-    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="FeeChallans" Type="Self.FeeChallan" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Student">
@@ -741,18 +777,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Student_Person1">
-    <End Role="Person" Type="Self.Person" Multiplicity="1" />
-    <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="Person">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Student">
-        <PropertyRef Name="Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Suggestions_Person">
     <End Role="Person" Type="Self.Person" Multiplicity="1" />
     <End Role="Suggestions" Type="Self.Suggestion" Multiplicity="*" />
@@ -778,7 +802,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Results_Section">
-    <End Role="Section" Type="Self.Section" Multiplicity="1" />
+    <End Role="Section" Type="Self.Section" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Results" Type="Self.Result" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Section">
@@ -801,20 +827,36 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Section_Teacher">
-    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
-    <End Role="Section" Type="Self.Section" Multiplicity="*" />
+  <Association Name="FK_Student_Section">
+    <End Role="Section" Type="Self.Section" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Teacher">
-        <PropertyRef Name="Id" />
+      <Principal Role="Section">
+        <PropertyRef Name="SectionId" />
       </Principal>
-      <Dependent Role="Section">
-        <PropertyRef Name="TeacherId" />
+      <Dependent Role="Student">
+        <PropertyRef Name="SectionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Teacher_Section">
+    <End Role="Section" Type="Self.Section" Multiplicity="0..1" />
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Section">
+        <PropertyRef Name="SectionId" />
+      </Principal>
+      <Dependent Role="Teacher">
+        <PropertyRef Name="InchSec" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Timetable_Section">
-    <End Role="Section" Type="Self.Section" Multiplicity="1" />
+    <End Role="Section" Type="Self.Section" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Timetable" Type="Self.Timetable" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Section">
@@ -862,7 +904,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_StudentAttendance_Student2">
-    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="StudentAttendance" Type="Self.StudentAttendance" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Student">
@@ -874,7 +918,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_StudentResult_Student">
-    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="StudentResult" Type="Self.StudentResult" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Student">
@@ -886,7 +932,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_SubmittedAssign_Student">
-    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="SubmittedAssign" Type="Self.SubmittedAssign" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Student">
@@ -898,7 +946,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Ttable_Teacher">
-    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Ttable" Type="Self.Ttable" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Teacher">
@@ -993,6 +1043,10 @@
       <End Role="Class" EntitySet="Classes" />
       <End Role="DateSheet" EntitySet="DateSheets" />
     </AssociationSet>
+    <AssociationSet Name="FK_Student_Class" Association="Self.FK_Student_Class">
+      <End Role="Class" EntitySet="Classes" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
     <AssociationSet Name="FK_ClassSections_Section" Association="Self.FK_ClassSections_Section">
       <End Role="Section" EntitySet="Sections" />
       <End Role="ClassSections" EntitySet="ClassSections" />
@@ -1077,10 +1131,6 @@
       <End Role="Teacher" EntitySet="Teachers" />
       <End Role="Payroll" EntitySet="Payrolls" />
     </AssociationSet>
-    <AssociationSet Name="FK_Student_Person1" Association="Self.FK_Student_Person1">
-      <End Role="Person" EntitySet="People" />
-      <End Role="Student" EntitySet="Students" />
-    </AssociationSet>
     <AssociationSet Name="FK_Suggestions_Person" Association="Self.FK_Suggestions_Person">
       <End Role="Person" EntitySet="People" />
       <End Role="Suggestions" EntitySet="Suggestions" />
@@ -1097,9 +1147,13 @@
       <End Role="Results" EntitySet="Results" />
       <End Role="StudentResult" EntitySet="StudentResults" />
     </AssociationSet>
-    <AssociationSet Name="FK_Section_Teacher" Association="Self.FK_Section_Teacher">
-      <End Role="Teacher" EntitySet="Teachers" />
+    <AssociationSet Name="FK_Student_Section" Association="Self.FK_Student_Section">
       <End Role="Section" EntitySet="Sections" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Teacher_Section" Association="Self.FK_Teacher_Section">
+      <End Role="Section" EntitySet="Sections" />
+      <End Role="Teacher" EntitySet="Teachers" />
     </AssociationSet>
     <AssociationSet Name="FK_Timetable_Section" Association="Self.FK_Timetable_Section">
       <End Role="Section" EntitySet="Sections" />
