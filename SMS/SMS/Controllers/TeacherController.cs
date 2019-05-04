@@ -15,6 +15,49 @@ namespace SMS.Controllers
 {
     public class TeacherController : Controller
     {
+        public ActionResult ViewDateSheet(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            List<DatesheetVM> T = new List<DatesheetVM>();
+            int cid = id;
+
+            ViewBag.Class = db.Classes.Where(x => x.ClassId == cid).SingleOrDefault().Name;
+            int did = db.DateSheets.Where(x => x.ClassId == cid).SingleOrDefault().DateSheetId;
+            foreach (ClassDateSheet f in db.ClassDateSheets.Where(x => x.DateSheetId == did).ToList())
+            {
+                DatesheetVM d = new DatesheetVM();
+                d.CourseId = f.CourseId;
+                d.Date = f.Date;
+                DayOfWeek g = d.Date.DayOfWeek;
+                d.day = g;
+                d.EndTime = f.EndTime;
+                d.StartTime = f.StartTime;
+                d.Title = db.Courses.Where(x => x.CourseId == d.CourseId).SingleOrDefault().Title;
+                T.Add(d);
+
+            }
+            return View(T);
+        }
+        public ActionResult ViewdateSheets(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            List<Cours> D = db.Courses.Where(x => x.TeacherId == id).ToList();
+            List<DatesheetVM> V = new List<DatesheetVM>();
+          
+            foreach(Cours c in D)
+            {
+                DatesheetVM b = new DatesheetVM();
+                int sec = c.SectionId;
+                int cl = db.ClassSections.Where(x => x.SectionId == sec).SingleOrDefault().ClassId;
+                int yu = db.Classes.Where(x => x.ClassId == cl).SingleOrDefault().Name;
+                b.ClassId = cl;
+                b.ClassName = yu.ToString();
+                V.Add(b);
+            }
+          
+            return View(V);
+            
+        }
        
 
         public static int b = AdminController.var2;
