@@ -11,6 +11,9 @@ namespace SMS.Controllers
 {
     public class StudentController : Controller
     {
+
+        public static int a = AdminController.var1;
+
         public ActionResult LoggedInView(int id)
         {
             DB35Entities db = new DB35Entities();
@@ -108,7 +111,67 @@ namespace SMS.Controllers
         }
 
 
-     
+
+        public ActionResult StudentRequests(string Id)
+        {
+            DB35Entities db = new DB35Entities();
+            var c = db.Suggestions.ToList();
+            using (db)
+            {
+                if (Id != null)
+                {
+
+                    foreach (Suggestion cl in db.Suggestions)
+                    {
+                        if (cl.SuggestionId == Convert.ToInt32(Id))
+                        {
+                            c = db.Suggestions.Where(x => (x.PersonId) == a || Id == null).ToList();
+                            //break;
+                        }
+
+                        c = db.Suggestions.Where(x => (x.PersonId) == a || Id == null).ToList();
+
+                    }
+                }
+                return View(c);
+
+            }
+        }
+
+
+        public ActionResult StudentRequestSubmit()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult StudentRequestSubmit(/* int id,*/ SuggestionsVM svm)
+        {
+            DB35Entities db = new DB35Entities();
+            Person p = new Person();
+            Student st = new Student();
+            Suggestion s = new Suggestion();
+
+            int var = AdminController.var1;
+
+            s.PersonId = var;
+            s.Subject = svm.Subject;
+            s.Description = svm.Description;
+            s.Status = db.LookUps.First(l => l.Value == "Pending").Id;
+
+            db.Suggestions.Add(s);
+
+            db.SaveChanges();
+
+            return RedirectToAction("LoggedInView", "Student", new { id = s.PersonId });
+        }
+
+
+
+
+
+
         // GET: Student
         public ActionResult Index()
         {

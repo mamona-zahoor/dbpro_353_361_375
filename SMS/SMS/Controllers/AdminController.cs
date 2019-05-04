@@ -14,6 +14,12 @@ namespace SMS.Controllers
     {
         // GET: Admin
 
+        public static int var1;
+        public static int var2;
+
+        SqlConnection con = new SqlConnection("Data Source=FARVASARDAR-PC\\FARVASQL;Initial Catalog=DB35;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
+
+
         public ActionResult ViewTimeTable()
         {
             DB35Entities db = new DB35Entities();
@@ -203,6 +209,13 @@ namespace SMS.Controllers
                 }
                 if (check == true)
                 {
+                    con.Open();
+                    string query = "Select Person.Id from Person INNER JOIN Student ON Person.Id=Student.Id where Student.RegNo = '" + obj.UserName + "' AND Student.Password = '" + obj.Password + "' ";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    int a = Convert.ToInt32(cmd.ExecuteScalar());
+                    var1 = a;
+                    con.Close();
+
                     return RedirectToAction("LoggedInView", "Student", new { id = o });
                 }
                 else
@@ -225,6 +238,13 @@ namespace SMS.Controllers
                 }
                 if (check == true)
                 {
+                    con.Open();
+                    string query = "Select Person.Id from Person INNER JOIN Teacher ON Person.Id=Teacher.Id where Teacher.Email = '" + obj.UserName + "' AND Teacher.Password = '" + obj.Password + "' ";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    int a = Convert.ToInt32(cmd.ExecuteScalar());
+                    var2 = a;
+                    con.Close();
+
                     return RedirectToAction("LoggedInView", "Teacher", new { id = o });
                 }
                 else
@@ -1182,12 +1202,7 @@ namespace SMS.Controllers
                     }
                 }
 
-                int count = 0;
-                foreach (Student s in db.Students)
-                {
-                    count++;
-                }
-                ViewBag.Students = count;
+               
                 return View(c);
 
             }
@@ -1210,14 +1225,11 @@ namespace SMS.Controllers
             {
                 if (pe.Id == p.Id)
                 {
-                    p.FirstName = pe.FirstName;
-                    p.LastName = pe.LastName;
+      
                     p.Contact = pe.Contact;
-                    //p.Gender = db.LookUps.First(l => l.Value == "Female").Id;
-                    //int a = p.Gender;
-                    //pe.Gender = a;
+   
                     p.Address = pe.Address;
-                    p.DateOfBirth = pe.DateOfBirth;
+     
                     break;
                 }
             }
@@ -1228,12 +1240,11 @@ namespace SMS.Controllers
         public ActionResult EditStudentDetails(int id, Person obj)
         {
             DB35Entities db = new DB35Entities();
-            db.People.Find(id).FirstName = obj.FirstName;
-            db.People.Find(id).LastName = obj.LastName;
+     
             db.People.Find(id).Contact = obj.Contact;
-            //db.People.Find(id).Gender = obj.Gender;
+      
             db.People.Find(id).Address = obj.Address;
-            db.People.Find(id).DateOfBirth = obj.DateOfBirth;
+      
 
             db.SaveChanges();
             return RedirectToAction("Student");
@@ -1255,15 +1266,7 @@ namespace SMS.Controllers
             return builder.ToString();
         }
 
-        private void AddConstraint(DataTable Student)
-        {
-            UniqueConstraint uniqueConstraint;
-            // Assuming a column named "UniqueColumn" exists, and 
-            // its Unique property is true.
-            uniqueConstraint = new UniqueConstraint(
-                Student.Columns["RegNo"]);
-            Student.Constraints.Add(uniqueConstraint);
-        }
+      
 
 
         public ActionResult AddStudent()
@@ -1280,7 +1283,7 @@ namespace SMS.Controllers
             Student st = new Student();
             Class cs = new Class();
             ClassSection csec = new ClassSection();
-            Section sec = new Section();
+            Models.Section sec = new Models.Section();
             Person pe = new Person();
             FeeChallan fe = new FeeChallan();
             pe.FirstName = p.FirstName;
@@ -1300,24 +1303,17 @@ namespace SMS.Controllers
 
             int ce = Convert.ToInt32(clas);
             st.ClassId = db.Classes.First(l => l.Name == ce).ClassId;
-            int a = st.ClassId;
-            //SqlConnection con = new SqlConnection("Data Source=FARVASARDAR-PC\\FARVASQL;Initial Catalog=DB35;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
-            //con.Open();
-            //string query = "Select sec.SectionId FROM ClassSections csec JOIN Section sec ON csec.SectionId = sec.SectionId AND csec.ClassId = " + a + " AND sec.Name = '" + sectn + "'";
-            //SqlCommand cmd = new SqlCommand(query, con);
-            //int b;
-            //b = (int)cmd.ExecuteScalar();
-            //con.Close();
 
-            int b = 0;
-            int id = db.ClassSections.First(c => c.ClassId == a).SectionId;
-            foreach (Section s in db.Sections)
-            {
-                if (s.Name == sectn)
-                {
-                    b = s.SectionId;
-                }
-            }
+            int a = st.ClassId;
+
+            SqlConnection con = new SqlConnection("Data Source=FARVASARDAR-PC\\FARVASQL;Initial Catalog=DB35;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
+            con.Open();
+            string query = "Select sec.SectionId FROM ClassSections csec JOIN Section sec ON csec.SectionId = sec.SectionId AND csec.ClassId = " + a + " AND sec.Name = '" + sectn + "'";
+            SqlCommand cmd = new SqlCommand(query, con);
+            int b;
+            b = (int)cmd.ExecuteScalar();
+            con.Close();
+
             st.SectionId = b;
 
 
@@ -1334,7 +1330,6 @@ namespace SMS.Controllers
             fe.StudentId = db.Students.Max(u => u.Id);
             fe.TotalFee = Fee;
             fe.Status = db.LookUps.First(l => l.Value == "Unpaid").Id;
-            fe.DueDate = DateTime.Now.AddMonths(1);
             db.FeeChallans.Add(fe);
             db.SaveChanges();
 
@@ -1349,7 +1344,7 @@ namespace SMS.Controllers
             db.SaveChanges();
 
 
-            foreach (Section c in db.Sections)
+            foreach (Models.Section c in db.Sections)
             {
                 if (c.SectionId == st.SectionId)
                 {
@@ -1425,22 +1420,21 @@ namespace SMS.Controllers
             var x = db.Students.Find(id).ClassId = db.Classes.First(l => l.Name == ce).ClassId;
 
             int a = x;
-            int b = 0;
-            int idd = db.ClassSections.First(cl => cl.ClassId == a).SectionId;
-            foreach (Section sec in db.Sections)
-            {
-                if (sec.Name == sectn)
-                {
-                    b = sec.SectionId;
-                }
-            }
+
+            con.Open();
+            string query = "Select sec.SectionId FROM ClassSections csec JOIN Section sec ON csec.SectionId = sec.SectionId AND csec.ClassId = " + a + " AND sec.Name = '" + sectn + "'";
+            SqlCommand cmd = new SqlCommand(query, con);
+            int b;
+            b = (int)cmd.ExecuteScalar();
+            con.Close();
+
             db.Students.Find(id).SectionId = b;
 
 
             int z = b;
 
             Class c = new Class();
-            Section s = new Section();
+            Models.Section s = new Models.Section();
 
             if (c.ClassId == a && s.SectionId == z)
             {
@@ -1543,11 +1537,10 @@ namespace SMS.Controllers
             {
                 if (pe.Id == p.Id)
                 {
-                    p.FirstName = pe.FirstName;
-                    p.LastName = pe.LastName;
+   
                     p.Contact = pe.Contact;
                     p.Address = pe.Address;
-                    p.DateOfBirth = pe.DateOfBirth;
+      
                     break;
                 }
             }
@@ -1558,11 +1551,10 @@ namespace SMS.Controllers
         public ActionResult EditTeacherDetails(int id, Person obj)
         {
             DB35Entities db = new DB35Entities();
-            db.People.Find(id).FirstName = obj.FirstName;
-            db.People.Find(id).LastName = obj.LastName;
+   
             db.People.Find(id).Contact = obj.Contact;
             db.People.Find(id).Address = obj.Address;
-            db.People.Find(id).DateOfBirth = obj.DateOfBirth;
+    
 
             db.SaveChanges();
             return RedirectToAction("Teacher");
@@ -1591,12 +1583,7 @@ namespace SMS.Controllers
                     }
                 }
 
-                int count = 0;
-                foreach (Teacher t in db.Teachers)
-                {
-                    count++;
-                }
-                ViewBag.Teachers = count;
+               
                 return View(c);
 
             }
@@ -1856,5 +1843,68 @@ namespace SMS.Controllers
         }
 
 
+
+
+        // --------------------------Manage Suggestions----------------------
+
+        public ActionResult Suggestions(string Id)
+        {
+            DB35Entities db = new DB35Entities();
+            var c = db.Suggestions.ToList();
+            using (db)
+            {
+                if (Id != null)
+                {
+
+                    foreach (Suggestion cl in db.Suggestions)
+                    {
+                        if (cl.SuggestionId == Convert.ToInt32(Id))
+                        {
+                            c = db.Suggestions.Where(x => (x.SuggestionId) == cl.SuggestionId || Id == null).ToList();
+                            break;
+                        }
+
+                        c = db.Suggestions.Where(x => (x.SuggestionId) == 0 || Id == null).ToList();
+
+                    }
+                }
+                return View(c);
+
+            }
+        }
+
+
+        public ActionResult EditSuggestion(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            SuggestionsVM svm = new SuggestionsVM();
+
+            foreach (Suggestion s in db.Suggestions)
+            {
+                if (s.SuggestionId == id)
+                {
+                    svm.Status = s.Status;
+                    break;
+                }
+            }
+            return View(svm);
+
+        }
+
+        [HttpPost]
+        public ActionResult EditSuggestion(int id, SuggestionsVM svm)
+        {
+            DB35Entities db = new DB35Entities();
+
+            db.Suggestions.Find(id).Status = db.LookUps.First(l => l.Value == "Fullfilled").Id;
+
+            db.SaveChanges();
+            return RedirectToAction("Suggestions", "Admin");
+
+        }
+
+
     }
 }
+
+

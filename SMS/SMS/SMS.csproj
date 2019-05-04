@@ -307,9 +307,7 @@
     <Compile Include="Models\Suggestion.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\SuggestionsVM.cs" />
     <Compile Include="Models\Teacher.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -554,6 +552,10 @@
     <Content Include="Views\Student\SubmitFiles.cshtml" />
     <Content Include="Views\Teacher\SectionAssign.cshtml" />
     <Content Include="Views\Teacher\SubmittedAssign.cshtml" />
+    <Content Include="Views\Student\StudentRequests.cshtml" />
+    <Content Include="Views\Student\StudentRequestSubmit.cshtml" />
+    <Content Include="Views\Admin\Suggestions.cshtml" />
+    <Content Include="Views\Admin\EditSuggestion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

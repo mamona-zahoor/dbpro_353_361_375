@@ -309,7 +309,8 @@
         var Sid = Request.Url.Segments[3];
     }
 
-    @Html.ActionLink("DateSheet", "ViewDatesheet", new { id = Sid })
+    @Html.ActionLink("DateSheet", "ViewDatesheet", new { id = Sid })|
+    &emsp; &emsp;@Html.ActionLink("My Requests", "StudentRequests", new { id = Sid })
 
     &emsp; &emsp; @Html.ActionLink("Dues Summary", "StudentFeeChallans", new { id = Sid })
     &emsp; &emsp; @Html.ActionLink("Uploaded Assignments", "UploadedAssign", new { id = Sid })

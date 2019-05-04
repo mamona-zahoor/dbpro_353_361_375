@@ -232,16 +232,6 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     <Property Name="Description" Type="varchar" MaxLength="200" Nullable="false" />
     <Property Name="Status" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
-  </EntityType>
   <EntityType Name="Teacher">
     <Key>
       <PropertyRef Name="Id" />
@@ -934,7 +924,6 @@ warning 6002: The table/view 'DB35.dbo.Admin' does not have a primary key define
     <EntitySet Name="StudentResult" EntityType="Self.StudentResult" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SubmittedAssign" EntityType="Self.SubmittedAssign" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Suggestions" EntityType="Self.Suggestions" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TeacherTimetable" EntityType="Self.TeacherTimetable" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Timetable" EntityType="Self.Timetable" Schema="dbo" store:Type="Tables" />
