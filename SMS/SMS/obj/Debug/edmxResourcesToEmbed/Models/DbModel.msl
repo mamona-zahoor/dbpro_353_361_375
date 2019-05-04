@@ -5,11 +5,15 @@
       <EntityTypeMapping TypeName="DB35Model.Assignment">
         <MappingFragment StoreEntitySet="Assignments">
           <ScalarProperty Name="AssignmentId" ColumnName="AssignmentId" />
-          <ScalarProperty Name="TotalMarks" ColumnName="TotalMarks" />
+          <ScalarProperty Name="Path" ColumnName="Path" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="SectionId" ColumnName="SectionId" />
           <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+          <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+          <ScalarProperty Name="TotalMarks" ColumnName="TotalMarks" />
           <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -83,7 +87,6 @@
           <ScalarProperty Name="Fine" ColumnName="Fine" />
           <ScalarProperty Name="TotalFee" ColumnName="TotalFee" />
           <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="DueDate" ColumnName="DueDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -206,18 +209,6 @@
           <ScalarProperty Name="ResultId" ColumnName="ResultId" />
           <ScalarProperty Name="StudentId" ColumnName="StudentId" />
           <ScalarProperty Name="ObtainedMarks" ColumnName="ObtainedMarks" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="SubmittedAssigns">
-      <EntityTypeMapping TypeName="DB35Model.SubmittedAssign">
-        <MappingFragment StoreEntitySet="SubmittedAssign">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="SubmittedBy" ColumnName="SubmittedBy" />
-          <ScalarProperty Name="Assignemnt" ColumnName="Assignemnt" />
-          <ScalarProperty Name="Submited_On" ColumnName="Submited_On" />
-          <ScalarProperty Name="FileName" ColumnName="FileName" />
-          <ScalarProperty Name="Path" ColumnName="Path" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

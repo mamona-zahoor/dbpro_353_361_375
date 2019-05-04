@@ -301,9 +301,6 @@
     <Compile Include="Models\StudentResultVM.cs" />
     <Compile Include="Models\StudentVM.cs" />
     <Compile Include="Models\SubmitFiles.cs" />
-    <Compile Include="Models\SubmittedAssign.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Suggestion.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -311,6 +308,7 @@
     <Compile Include="Models\Teacher.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TeacherClasses.cs" />
     <Compile Include="Models\TeacherTimetable.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -322,6 +320,7 @@
     <Compile Include="Models\Ttable.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UploadAssignment.cs" />
     <Compile Include="Models\ViewTimeTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -558,11 +557,15 @@
     <Content Include="Views\Admin\EditSuggestion.cshtml" />
     <Content Include="Views\Teacher\TeacherRequests.cshtml" />
     <Content Include="Views\Teacher\TeacherRequestSubmit.cshtml" />
+    <Content Include="Views\Teacher\Uploadassignments.cshtml" />
+    <Content Include="Views\Teacher\Uploadedassign.cshtml" />
+    <Content Include="Views\Teacher\ViewAll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Files\" />
     <Folder Include="sbc\" />
+    <Folder Include="TFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

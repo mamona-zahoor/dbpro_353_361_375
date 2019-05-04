@@ -21,7 +21,6 @@ namespace SMS.Models
             this.StuAssignmentMarks = new HashSet<StuAssignmentMark>();
             this.StudentAttendances = new HashSet<StudentAttendance>();
             this.StudentResults = new HashSet<StudentResult>();
-            this.SubmittedAssigns = new HashSet<SubmittedAssign>();
             this.Sections = new HashSet<Section>();
         }
     
@@ -34,18 +33,15 @@ namespace SMS.Models
         public string SecretAnswer { get; set; }
         public decimal Fee { get; set; }
     
-        public virtual Class Class { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FeeChallan> FeeChallans { get; set; }
-        public virtual Section Section { get; set; }
+        public virtual Person Person { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StuAssignmentMark> StuAssignmentMarks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StudentAttendance> StudentAttendances { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StudentResult> StudentResults { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SubmittedAssign> SubmittedAssigns { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Section> Sections { get; set; }
     }

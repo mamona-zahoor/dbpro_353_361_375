@@ -9,14 +9,103 @@ using System.Data;
 using System.Data.SqlClient;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace SMS.Controllers
 {
     public class TeacherController : Controller
     {
-        // GET: Teacher
+       
 
         public static int b = AdminController.var2;
+
+        public ActionResult Uploadedassign(int tid, int cid, int secid)
+        {
+            DB35Entities db = new DB35Entities();
+            List<UploadAssignment> a = new List<UploadAssignment>();
+            foreach (Assignment at in db.Assignments.Where(x => x.TeacherId == tid && x.CourseId == cid && x.SectionId == secid).ToList())
+            {
+                UploadAssignment f = new UploadAssignment();
+                f.AssignmentId = at.AssignmentId;
+                f.TeacherId = tid;
+                f.SectionId = secid;
+                f.Duedate = at.DueDate;
+                f.CourseId = cid;
+                f.Title = at.Title;
+                f.Desription = at.Description;
+                a.Add(f);
+
+            }
+            return View(a);
+        }
+        public FileResult Download(int id, string Title)
+        {
+            DB35Entities db = new DB35Entities();
+            byte[] fileBytes = System.IO.File.ReadAllBytes(db.Assignments.First(x => x.AssignmentId == id).Path);
+
+            string fileName = Title + ".pdf";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+        public ActionResult Uploadassignments(int tid, int cid, int secid)
+        {
+            return View();
+
+        }
+
+
+        [HttpPost]
+        public ActionResult Uploadassignments(int tid, int cid, int secid, UploadAssignment at, HttpPostedFileBase file)
+        {
+
+            DB35Entities db = new DB35Entities();
+            Assignment a = new Assignment();
+            a.Name = file.FileName;
+
+            a.TotalMarks = at.TotalMarks;
+            string path = Path.Combine(Server.MapPath("~/TFiles"), Path.GetFileName(file.FileName));
+            file.SaveAs(path);
+            a.Path = path;
+            at.filename = file.FileName;
+            a.TeacherId = tid;
+            a.SectionId = secid;
+            a.CourseId = cid;
+            a.Title = at.Title;
+            a.Description = at.Desription;
+            a.DueDate = at.Duedate;
+            db.Assignments.Add(a);
+            db.SaveChanges();
+
+            a.Title = "";
+            a.Description = "";
+            a.DueDate = DateTime.Now;
+            a.TotalMarks = 0;
+
+            return Uploadassignments(tid, cid, secid);
+
+
+
+        }
+        public ActionResult ViewAll(int id)
+        {
+            DB35Entities db = new DB35Entities();
+            List<TeacherClasses> tc = new List<TeacherClasses>();
+            foreach (Cours c in db.Courses.Where(x => x.TeacherId == id).ToList())
+            {
+
+                TeacherClasses t = new TeacherClasses();
+                t.TeacherId = id;
+                t.CourseID = c.CourseId;
+                t.CourseName = c.Title;
+                t.SectionId = c.SectionId;
+                t.SecName = db.Sections.Where(x => x.SectionId == t.SectionId).SingleOrDefault().Name;
+                t.ClassId = db.ClassSections.Where(x => x.SectionId == t.SectionId).SingleOrDefault().ClassId;
+                t.ClassName = Convert.ToInt32(db.Classes.Where(x => x.ClassId == t.ClassId).SingleOrDefault().Name);
+                tc.Add(t);
+
+            }
+            return View(tc);
+            
+        }
 
         public ActionResult Index()
         {
@@ -632,7 +721,7 @@ namespace SMS.Controllers
             return View(A);
         }
 
-        public ActionResult SubmittedAssign(int id)
+       public ActionResult SubmittedAssign(int id)
         {
             List<SubmittedAssign> s = new List<Models.SubmittedAssign>();
             DB35Entities db = new DB35Entities();

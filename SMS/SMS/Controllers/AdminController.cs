@@ -952,7 +952,7 @@ namespace SMS.Controllers
             return View(fvm);
         }
 
-        public ActionResult EditFeeChallans(int id, int StudentId)
+   /*     public ActionResult EditFeeChallans(int id, int StudentId)
         {
             DB35Entities db = new DB35Entities();
             ViewBag.RegNo = db.Students.First(s => s.Id == StudentId).RegNo;
@@ -1002,6 +1002,7 @@ namespace SMS.Controllers
             return RedirectToAction("EditFeeChallans", new { id = I,Studentid = StuId });
 
         }
+        */
         public ActionResult Class(string Name)
         {
 
@@ -1365,7 +1366,7 @@ namespace SMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddFeeChallan(FeeChallanVM obj, int Id)
+       public ActionResult AddFeeChallan(FeeChallanVM obj, int Id)
         {
             if (ModelState.IsValid)
             {
@@ -1406,8 +1407,8 @@ namespace SMS.Controllers
 
         }
 
-       
-        [HttpPost]
+      
+       [HttpPost]
         public ActionResult EditStudent(int id, Student obj)
         {
             DB35Entities db = new DB35Entities();

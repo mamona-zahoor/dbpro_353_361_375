@@ -1,0 +1,41 @@
+﻿@model IEnumerable<SMS.Models.TeacherClasses>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.ClassName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SecName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.ClassName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SecName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseName)
+        </td>
+        <td>
+            @Html.ActionLink("Upload Assignment", "Uploadassignments", new {  tid=item.TeacherId , cid = item.CourseID, secid = item.SectionId}) |
+            @Html.ActionLink("Uploaded Assignments", "Uploadedassign", new { tid = item.TeacherId, cid = item.CourseID, secid = item.SectionId } )|
+            @*Html.ActionLink("Submitted Assignments", "SectionAssign"// new { id =/*item.*/ }*@
+        </td>
+    </tr>
+}
+
+</table>

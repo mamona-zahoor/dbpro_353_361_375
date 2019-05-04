@@ -17,6 +17,7 @@ namespace SMS.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LookUp()
         {
+            this.FeeChallans = new HashSet<FeeChallan>();
             this.Payrolls = new HashSet<Payroll>();
             this.People = new HashSet<Person>();
             this.StudentAttendances = new HashSet<StudentAttendance>();
@@ -27,6 +28,8 @@ namespace SMS.Models
         public string Category { get; set; }
         public string Value { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FeeChallan> FeeChallans { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payroll> Payrolls { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

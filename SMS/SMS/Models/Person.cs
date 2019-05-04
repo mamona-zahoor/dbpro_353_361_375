@@ -29,6 +29,7 @@ namespace SMS.Models
         public System.DateTime DateOfBirth { get; set; }
     
         public virtual LookUp LookUp { get; set; }
+        public virtual Student Student { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Suggestion> Suggestions { get; set; }
         public virtual Teacher Teacher { get; set; }

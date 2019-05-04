@@ -65,7 +65,7 @@ namespace SMS.Controllers
         }
 
 
-        public ActionResult UploadedAssign(int id)
+       public ActionResult UploadedAssign(int id)
         {
             List<Assignment> a = new List<Assignment>();
             DB35Entities db = new DB35Entities();
