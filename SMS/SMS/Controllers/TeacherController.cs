@@ -15,6 +15,9 @@ namespace SMS.Controllers
     public class TeacherController : Controller
     {
         // GET: Teacher
+
+        public static int b = AdminController.var2;
+
         public ActionResult Index()
         {
             return View();
@@ -101,6 +104,65 @@ namespace SMS.Controllers
             }
             return View(to.OrderBy(x => x.day));
         }
+
+
+
+
+        public ActionResult TeacherRequests(string Id)
+        {
+            DB35Entities db = new DB35Entities();
+            var c = db.Suggestions.ToList();
+            using (db)
+            {
+                if (Id != null)
+                {
+
+                    foreach (Suggestion cl in db.Suggestions)
+                    {
+                        if (cl.SuggestionId == Convert.ToInt32(Id))
+                        {
+                            c = db.Suggestions.Where(x => (x.PersonId) == b || Id == null).ToList();
+                            //break;
+                        }
+
+                        c = db.Suggestions.Where(x => (x.PersonId) == b || Id == null).ToList();
+
+                    }
+                }
+                return View(c);
+
+            }
+        }
+
+        public ActionResult TeacherRequestSubmit()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult TeacherRequestSubmit(/* int id,*/ SuggestionsVM svm)
+        {
+            DB35Entities db = new DB35Entities();
+            Person p = new Person();
+            Teacher st = new Teacher();
+            Suggestion s = new Suggestion();
+            int var = AdminController.var2;
+            s.PersonId = var;
+            s.Subject = svm.Subject;
+            s.Description = svm.Description;
+            s.Status = db.LookUps.First(l => l.Value == "Pending").Id;
+
+            db.Suggestions.Add(s);
+
+            db.SaveChanges();
+
+            return RedirectToAction("LoggedInView", "Teacher", new { id = s.PersonId });
+        }
+
+
+
+
 
         // GET: Teacher/Details/5
         public ActionResult Details(int id)

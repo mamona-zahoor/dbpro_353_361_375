@@ -556,6 +556,8 @@
     <Content Include="Views\Student\StudentRequestSubmit.cshtml" />
     <Content Include="Views\Admin\Suggestions.cshtml" />
     <Content Include="Views\Admin\EditSuggestion.cshtml" />
+    <Content Include="Views\Teacher\TeacherRequests.cshtml" />
+    <Content Include="Views\Teacher\TeacherRequestSubmit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
