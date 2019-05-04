@@ -8,6 +8,9 @@ using System.Web.Mvc;
 using System.Data;
 using System.Data.SqlClient;
 using System.ComponentModel.DataAnnotations;
+using CrystalDecisions.CrystalReports.Engine;
+using System.IO;
+
 namespace SMS.Controllers
 {
     public class AdminController : Controller
@@ -17,7 +20,55 @@ namespace SMS.Controllers
         public static int var1;
         public static int var2;
 
+
         SqlConnection con = new SqlConnection("Data Source=FARVASARDAR-PC\\FARVASQL;Initial Catalog=DB35;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
+
+
+        public ActionResult ExportStudentReport()
+        {
+            DB35Entities db = new DB35Entities();
+            ReportDocument rd = new ReportDocument();
+            rd.Load(Path.Combine(Server.MapPath("~/Reports"), "AllStudentsReport.rpt"));
+            rd.SetDataSource(db.Students.ToList());
+            Response.Buffer = false;
+            Response.ClearContent();
+            Response.ClearHeaders();
+            try
+            {
+                Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+                stream.Seek(0, SeekOrigin.Begin);
+                return File(stream, "application/pdf", "AllStudentsList.pdf");
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
+        public ActionResult ExportTeacherReport()
+        {
+            DB35Entities db = new DB35Entities();
+            ReportDocument rd = new ReportDocument();
+            rd.Load(Path.Combine(Server.MapPath("~/Reports"), "AllTeachersReport.rpt"));
+            rd.SetDataSource(db.Teachers.ToList());
+            Response.Buffer = false;
+            Response.ClearContent();
+            Response.ClearHeaders();
+            try
+            {
+                Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+                stream.Seek(0, SeekOrigin.Begin);
+                return File(stream, "application/pdf", "AllTeachersList.pdf");
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public ActionResult ViewDatesheets()
         {
             DB35Entities db = new DB35Entities();
@@ -797,13 +848,13 @@ namespace SMS.Controllers
 
         public ActionResult Section(int id)
         {
-            List<Section> slist = new List<Section>();
+            List<Models.Section> slist = new List<Models.Section>();
             DB35Entities db = new DB35Entities();
             int i = 0;
             using (db)
             {
                 var cs = (db.ClassSections.Where(m => m.ClassId == id).ToList());
-                foreach (Section sec in db.Sections)
+                foreach (Models.Section sec in db.Sections)
                 {
                     if (i < cs.Count)
                     {
@@ -876,7 +927,7 @@ namespace SMS.Controllers
         public ActionResult CreateSection(SectionVM obj, int id, int TeacherNames)
         {
             DB35Entities db = new DB35Entities();
-            Section sec = new Models.Section();
+            Models.Section sec = new Models.Section();
             sec.Name = obj.Name;
             sec.TeacherId = TeacherNames;
             sec.NumOfStudents = 0;
@@ -884,7 +935,7 @@ namespace SMS.Controllers
             db.SaveChanges();
             ClassSection cs = new ClassSection();
             cs.ClassId = id;
-            foreach (Section s in db.Sections)
+            foreach (Models.Section s in db.Sections)
             {
                 if (s.TeacherId == TeacherNames)
                 {
@@ -932,7 +983,7 @@ namespace SMS.Controllers
         {
             DB35Entities db = new DB35Entities();
             SectionVM s = new SectionVM();
-            foreach (Section sec in db.Sections)
+            foreach (Models.Section sec in db.Sections)
             {
                 if (sec.SectionId == id)
                 {
@@ -942,7 +993,7 @@ namespace SMS.Controllers
                 }
             }
             db.SaveChanges();
-            foreach (Section sec in db.Sections)
+            foreach (Models.Section sec in db.Sections)
             {
                 if (sec.SectionId == id)
                 {
@@ -996,7 +1047,7 @@ namespace SMS.Controllers
                     break;
                 }
             }
-            foreach (Section s in db.Sections)
+            foreach (Models.Section s in db.Sections)
             {
                 if (s.SectionId == id)
                 {
@@ -1586,7 +1637,7 @@ namespace SMS.Controllers
                     db.SaveChanges();
 
 
-                    foreach (Section c in db.Sections)
+                    foreach (Models.Section c in db.Sections)
                     {
                         if (c.SectionId == b)
                         {
@@ -1877,7 +1928,7 @@ namespace SMS.Controllers
                 }
             }
 
-            foreach (Section fc in db.Sections)
+            foreach (Models.Section fc in db.Sections)
             {
                 if (fc.TeacherId == id)
                 {
