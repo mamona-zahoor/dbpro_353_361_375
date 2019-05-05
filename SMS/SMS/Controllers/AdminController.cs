@@ -24,6 +24,22 @@ namespace SMS.Controllers
         SqlConnection con = new SqlConnection("Data Source=FARVASARDAR-PC\\FARVASQL;Initial Catalog=DB35;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
 
 
+        public ActionResult LoggedInView()
+        {
+            return View();
+        }
+
+        public ActionResult AllClasses()
+        {
+            DB35Entities db = new DB35Entities();
+            var c = (from b in db.Classes select b).ToList();
+            C rpt = new C();
+            rpt.Load();
+            rpt.SetDataSource(c);
+            Stream s = rpt.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            return File(s, "application/pdf");
+        }
+
         public ActionResult ExportStudentReport()
         {
             DB35Entities db = new DB35Entities();

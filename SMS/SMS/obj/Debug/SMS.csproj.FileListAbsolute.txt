@@ -1326,3 +1326,19 @@ E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder (2)\
 E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder (2)\dbpro_353_361_375\SMS\SMS\obj\Debug\SMS.csprojResolveAssemblyReference.cache
 E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder (2)\dbpro_353_361_375\SMS\SMS\obj\Debug\SMS.dll
 E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder (2)\dbpro_353_361_375\SMS\SMS\obj\Debug\SMS.pdb
+C:\Users\Mamuna\Desktop\Latest\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.CrystalReports.Engine.dll
+C:\Users\Mamuna\Desktop\Latest\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportSource.dll
+C:\Users\Mamuna\Desktop\Latest\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.Shared.dll
+C:\Users\Mamuna\Desktop\Latest\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.DataDefModel.dll
+C:\Users\Mamuna\Desktop\Latest\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.ClientDoc.dll
+C:\Users\Mamuna\Desktop\Latest\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.ReportDefModel.dll
+C:\Users\Mamuna\Desktop\Latest\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.Controllers.dll
+C:\Users\Mamuna\Desktop\Latest\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.CommLayer.dll
+C:\Users\Mamuna\Desktop\Latest\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.DataSetConversion.dll
+C:\Users\Mamuna\Desktop\Latest\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.Prompting.dll
+C:\Users\Mamuna\Desktop\Latest\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.XmlSerialize.dll
+C:\Users\Mamuna\Desktop\Latest\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.CubeDefModel.dll
+C:\Users\Mamuna\Desktop\Latest\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.CommonObjectModel.dll
+C:\Users\Mamuna\Desktop\Latest\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.ObjectFactory.dll
+C:\Users\Mamuna\Desktop\Latest\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.CommonControls.dll
+C:\Users\Mamuna\Desktop\Latest\dbpro_353_361_375\SMS\SMS\bin\stdole.dll
