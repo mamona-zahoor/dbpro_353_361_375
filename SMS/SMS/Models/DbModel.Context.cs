@@ -51,7 +51,5 @@ namespace SMS.Models
         public virtual DbSet<Timetable> Timetables { get; set; }
         public virtual DbSet<Ttable> Ttables { get; set; }
         public virtual DbSet<Admin> Admins { get; set; }
-        public virtual DbSet<C> C { get; set; }
-        public virtual DbSet<rough> roughs { get; set; }
     }
 }

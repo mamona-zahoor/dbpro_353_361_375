@@ -1440,3 +1440,19 @@ C:\Users\Admin\Desktop\New folder (6)\New folder (8)\dbpro_353_361_375\SMS\SMS\b
 C:\Users\Admin\Desktop\New folder (6)\New folder (8)\dbpro_353_361_375\SMS\SMS\obj\Debug\SMS.csprojResolveAssemblyReference.cache
 C:\Users\Admin\Desktop\New folder (6)\New folder (8)\dbpro_353_361_375\SMS\SMS\obj\Debug\SMS.dll
 C:\Users\Admin\Desktop\New folder (6)\New folder (8)\dbpro_353_361_375\SMS\SMS\obj\Debug\SMS.pdb
+E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.CrystalReports.Engine.dll
+E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportSource.dll
+E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.Shared.dll
+E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.DataDefModel.dll
+E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.ClientDoc.dll
+E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.ReportDefModel.dll
+E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.Controllers.dll
+E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.CommLayer.dll
+E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.DataSetConversion.dll
+E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.Prompting.dll
+E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.XmlSerialize.dll
+E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.CubeDefModel.dll
+E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.CommonObjectModel.dll
+E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.ObjectFactory.dll
+E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder\dbpro_353_361_375\SMS\SMS\bin\CrystalDecisions.ReportAppServer.CommonControls.dll
+E:\6th Semester\DBMS\Lab\School Management System Finals Project\New folder\dbpro_353_361_375\SMS\SMS\bin\stdole.dll

@@ -291,21 +291,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="C">
-      <EntityTypeMapping TypeName="DB35Model.C">
-        <MappingFragment StoreEntitySet="C">
-          <ScalarProperty Name="SecName" ColumnName="SecName" />
-          <ScalarProperty Name="ClassName" ColumnName="ClassName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="roughs">
-      <EntityTypeMapping TypeName="DB35Model.rough">
-        <MappingFragment StoreEntitySet="rough">
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <AssociationSetMapping Name="SectionStudents" TypeName="DB35Model.SectionStudents" StoreEntitySet="SectionStudents">
       <EndProperty Name="Section">
         <ScalarProperty Name="SectionId" ColumnName="SectionId" />

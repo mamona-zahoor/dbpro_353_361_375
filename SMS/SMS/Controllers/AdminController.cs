@@ -28,6 +28,8 @@ namespace SMS.Controllers
             Stream s = rpt.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
             return File(s, "application/pdf");
         }
+
+
         public static int var1;
         public static int var2;
 
@@ -51,11 +53,12 @@ namespace SMS.Controllers
             return File(s, "application/pdf");
         }
 
+
         public ActionResult ExportStudentReport()
         {
             DB35Entities db = new DB35Entities();
             ReportDocument rd = new ReportDocument();
-            rd.Load(Path.Combine(Server.MapPath("~/Reports"), "AllStudentsReport.rpt"));
+            rd.Load(Path.Combine(Server.MapPath("~/Reportss"), "AllStudentsReport.rpt"));
             rd.SetDataSource(db.Students.ToList());
             Response.Buffer = false;
             Response.ClearContent();
@@ -72,11 +75,12 @@ namespace SMS.Controllers
                 throw;
             }
         }
+
         public ActionResult ExportTeacherReport()
         {
             DB35Entities db = new DB35Entities();
             ReportDocument rd = new ReportDocument();
-            rd.Load(Path.Combine(Server.MapPath("~/Reports"), "AllTeachersReport.rpt"));
+            rd.Load(Path.Combine(Server.MapPath("~/Reportss"), "AllTeachersReport.rpt"));
             rd.SetDataSource(db.Teachers.ToList());
             Response.Buffer = false;
             Response.ClearContent();
@@ -93,6 +97,33 @@ namespace SMS.Controllers
                 throw;
             }
         }
+
+
+        public ActionResult ExportSuggestionReport()
+        {
+            DB35Entities db = new DB35Entities();
+            ReportDocument rd = new ReportDocument();
+            rd.Load(Path.Combine(Server.MapPath("~/Reportss"), "AllSuggestionsReport.rpt"));
+            rd.SetDataSource(db.Suggestions.ToList());
+            Response.Buffer = false;
+            Response.ClearContent();
+            Response.ClearHeaders();
+            try
+            {
+                Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+                stream.Seek(0, SeekOrigin.Begin);
+                return File(stream, "application/pdf", "AllSuggestionsList.pdf");
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
+
+
         public ActionResult ViewDatesheets()
         {
             DB35Entities db = new DB35Entities();
@@ -1470,7 +1501,7 @@ namespace SMS.Controllers
             db.People.Add(pe);
 
             p.RegNo = regNum;
-            st.Id = p.Id;
+            st.Id = pe.Id;      
             st.RegNo = p.RegNo;
 
             string clas = st.RegNo.Split('-')[0];
@@ -1649,7 +1680,16 @@ namespace SMS.Controllers
                 {
                     int a = st.ClassId;
                     int b = st.SectionId;
+                    var x = st.Id;
                     db.Students.Remove(st);
+
+                    foreach (Suggestion s in db.Suggestions)
+                    {
+                        if (s.PersonId == x)
+                        {
+                            db.Suggestions.Remove(s);
+                        }
+                    }
 
                     foreach (Class c in db.Classes)
                     {
@@ -1658,8 +1698,6 @@ namespace SMS.Controllers
                             c.NumOfStudents--;
                         }
                     }
-                    db.SaveChanges();
-
 
                     foreach (Models.Section c in db.Sections)
                     {
@@ -1943,14 +1981,6 @@ namespace SMS.Controllers
         public ActionResult DeleteTeacher(int id)
         {
             DB35Entities db = new DB35Entities();
-            foreach (Payroll f in db.Payrolls)
-            {
-                if (f.TeacherId == id)
-                {
-                    db.Payrolls.Remove(f);
-                    break;
-                }
-            }
 
             foreach (Models.Section fc in db.Sections)
             {
@@ -1980,15 +2010,40 @@ namespace SMS.Controllers
                         if (c.SectionId == a)
                         {
                             int b = c.SectionId;
+                            var z = c.CourseId;
                             db.Courses.Remove(c);
                             foreach (Result r in db.Results)
                             {
                                 if (r.SectionId == b)
                                 {
+                                    var x = r.ResultId;
                                     db.Results.Remove(r);
+                                    foreach (StudentResult sr in db.StudentResults)
+                                    {
+                                        if (sr.ResultId == x)
+                                        {
+                                            db.StudentResults.Remove(sr);
+                                        }
+                                    }
                                 }
                             }
 
+                            foreach (Assignment assi in db.Assignments)
+                            {
+                                if (assi.CourseId == z)
+                                {
+                                    var y = assi.AssignmentId;
+                                    db.Assignments.Remove(assi);
+
+                                    foreach (SubmittedAssign sb in db.SubmittedAssigns)
+                                    {
+                                        if (sb.Assignemnt == y)
+                                        {
+                                            db.SubmittedAssigns.Remove(sb);
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
 
@@ -1999,8 +2054,24 @@ namespace SMS.Controllers
             {
                 if (t.Id == id)
                 {
+                    var w = t.Id;
                     db.Teachers.Remove(t);
 
+                    foreach (Payroll f in db.Payrolls)
+                    {
+                        if (f.TeacherId == w)
+                        {
+                            db.Payrolls.Remove(f);
+                        }
+                    }
+
+                    foreach (Suggestion s in db.Suggestions)
+                    {
+                        if (s.PersonId == w)
+                        {
+                            db.Suggestions.Remove(s);
+                        }
+                    }
                 }
             }
 
